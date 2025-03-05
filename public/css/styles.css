@@ -1,0 +1,53 @@
+
+
+  .texto-corto {
+    color: black;
+    max-height: 80px; /* Limita la altura para que solo se vea un poco del texto */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Muestra solo 3 líneas */
+    -webkit-box-orient: vertical;
+    transition: max-height 0.5s ease;
+  }
+  .texto-expandido {
+    max-height: none; /* Muestra todo el texto cuando se expande */
+  }
+
+  .card-color {
+    background-color: #c47a3d;
+  } 
+  .card-titulo {
+    color: black;
+  }
+
+  .infoFooter {
+    background-color: #222; /* Fondo oscuro para resaltar el footer */
+    color: #fff; /* Texto en color blanco para contraste */
+    padding: 40px 0; /* Espaciado interno */
+    text-align: center; /* Centrar contenido */
+}
+
+.infoFooter .widget img {
+    width: 150px; /* Tamaño del logo */
+    margin-bottom: 15px; /* Espaciado entre el logo y el texto */
+}
+
+.infoFooter .widget p {
+    margin: 5px 0; /* Espaciado entre párrafos */
+    font-size: 14px; /* Tamaño de fuente ajustado */
+}
+
+@media (max-width: 768px) {
+    .infoFooter {
+        padding: 20px 10px; /* Ajuste de espaciado en pantallas pequeñas */
+    }
+
+    .infoFooter .widget img {
+        width: 120px; /* Tamaño reducido del logo */
+    }
+
+    .infoFooter .widget p {
+        font-size: 12px; /* Fuente más pequeña en móviles */
+    }
+}
