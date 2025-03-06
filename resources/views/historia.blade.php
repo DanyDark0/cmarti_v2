@@ -5,7 +5,7 @@
   .content {
     text-align: justify; /* Justifica el texto */
     background-color: #F5F5DC; /* Color beige claro para el fondo */
-    border-left: 5px solid #6F4E37; /* Borde lateral café */
+    border-right: 5px solid #6F4E37; /* Borde lateral café */
     padding: 20px; /* Espaciado interno */
     margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */

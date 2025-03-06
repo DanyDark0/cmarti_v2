@@ -20,7 +20,8 @@
     overflow-y: auto; /* Permite desplazamiento si el contenido es grande */
     width: 250px; /* Fija el ancho del menú */
     flex-shrink: 0; /* Evita que el menú se reduzca en pantallas pequeñas */
-    border-right: 3px solid #752e0f; /* Borde derecho café */
+    border-right: 5px solid #6F4E37; /* Borde derecho café */
+    border-radius: 10px;
     padding: 20px; /* Espaciado interno */
     display: flex;
     flex-direction: column;
@@ -49,6 +50,7 @@
 
 .sidebar-menu ul li a:hover {
     background-color: #e6c4a5; /* Color de fondo cuando se pasa el mouse */
+    border-radius: 4px;
 }
 
 .custom-card {
@@ -222,7 +224,7 @@
             <a href="#" class="navbar-brand">
                 <img src="{{ asset('storage/image/udg.png') }}" alt="logo Universidad de Guadalajara" class="navbar-logo">
             </a>
-            <a class="navbar-brand" href="/">Cátedra José Martí</a>
+            <a class="navbar-brand" href="{{ route('home')}}">Cátedra José Martí</a>
             <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -249,6 +251,7 @@
 
     <!-- Imagen Destacada -->
     <div class="card custom-card">
+        <a class="navbar-brand" href="{{ route('home')}}">Cátedra José Martí</a>
         <div class="card-body">
             <a href="/">
                 <img src="{{ asset('storage/image/martiheader_0.jpg') }}" alt="Cátedra José Martí" class="img-fluid w-100">
@@ -274,7 +277,7 @@
         </ul>
     </div> 
         <!-- Contenido dinámico -->
-        <div class="flex-grow-1 pe-3">
+        <div class="flex-grow-1 px-3">
             @yield('content')
         </div>
     </div>

@@ -4,12 +4,43 @@
 <style>
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-.card-body-dir {
+/* .card-body-dir {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+} */
+.card-dir {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 250px;
+    min-height: 300px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.card-dir img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card-dir h4 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #752e0f;
+}
+
+.card-dir p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555;
 }
 </style>
 
@@ -36,33 +67,22 @@
                 </div>
 
                 @foreach ($directorioFiltrado as $persona)
-                    <div class="col-md-4 mb-4">
-                        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                            <div class="mainflip">
-                                <div class="frontside">
-                                    <div class="card">
-                                        <div class="card-body-dir text-center">
-                                            <p>
-                                                <img class="img-fluid rounded-circle" 
-                                                    src="{{ asset('storage/' . $persona->imagen) }}" 
-                                                    alt="Imagen de {{ $persona->nombre }}" 
-                                                    width="120" height="120">
-                                            </p>
-                                            <h4 class="card-title">{{ $persona->nombre }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="backside">
-                                    <div class="card">
-                                        <div class="card-body-dir text-center">
-                                            <h2 class="card-title">Teléfono</h2>
-                                            <p class="card-text">{{ $persona->telefono ?? 'No disponible' }}</p>
-                                            <h2 class="card-title">Correo</h2>
-                                            <p class="card-text">{{ $persona->correo ?? 'No disponible' }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-md-3 mb-4 d-flex justify-content-center">
+                    <div class="card-dir">
+                            <p>
+                                <img class="img-fluid rounded-circle" 
+                                    src="{{ asset('storage/' . $persona->imagen) }}" 
+                                    alt="Imagen de {{ $persona->nombre }}">
+                            </p>
+                            <h4 class="card-title">{{ $persona->nombre }}</h4>
+                            @if (!empty($persona->telefono))
+                                <h5>Teléfono</h5>
+                                <p class="card-text">{{ $persona->telefono }}</p>
+                            @endif
+                            @if (!empty($persona->correo))
+                                <h5>Correo</h5>
+                                <p class="card-text">{{ $persona->correo }}</p>
+                            @endif
                         </div>
                     </div>
                 @endforeach

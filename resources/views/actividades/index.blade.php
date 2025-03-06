@@ -55,9 +55,14 @@
     border-top-right-radius: 8px;
 }
 
-.boton-act{
+.boton-act {
     background-color: #d8910b;
 }
+
+.boton-act:hover {
+    background-color: #e19d65;
+}
+
 
 
 </style>

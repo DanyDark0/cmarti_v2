@@ -38,7 +38,7 @@ class actividadesController extends Controller
     }
     public function index()
     {
-        $actividades = Actividad::paginate(8);
+        $actividades = Actividad::paginate(6);
         //return response()->json($actividades);
         foreach ($actividades as $actividad) {
             $actividad->descripcion_truncado = $this->truncateHtml($actividad->descripcion, 100);
