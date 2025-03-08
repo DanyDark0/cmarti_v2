@@ -28,10 +28,10 @@
     <!-- Imágenes -->
     <div class="text-center my-4">
         @if($actividad->url_img1)
-            <img src="{{ asset('storage/' . $actividad->url_img1) }}" alt="Imagen 1" class="img-fluid rounded mb-3" style="max-width: 400px; height: auto; margin: auto;">
+            <img src="{{ asset($actividad->url_img1) }}" alt="Imagen 1" class="img-fluid rounded mb-3" style="max-width: 400px; height: auto; margin: auto;">
         @endif
         @if($actividad->url_img2)
-            <img src="{{ asset('storage/' . $actividad->url_img2) }}" alt="Imagen 2" class="img-fluid rounded" style="max-width: 400px; height: auto; margin: auto;">
+            <img src="{{ asset($actividad->url_img2) }}" alt="Imagen 2" class="img-fluid rounded" style="max-width: 400px; height: auto; margin: auto;">
         @endif
     </div>
     
@@ -52,10 +52,10 @@
         <h3>Archivos Adjuntos</h3>
         <ul>
             @if($actividad->archivo1)
-                <li><a href="{{ asset('storage/' . $actividad->archivo1) }}" target="_blank">Descargar Archivo 1</a></li>
+                <li><a href="{{ asset($actividad->archivo1) }}" target="_blank">Descargar Archivo 1</a></li>
             @endif
             @if($actividad->archivo2)
-                <li><a href="{{ asset('storage/' . $actividad->archivo2) }}" target="_blank">Descargar Archivo 2</a></li>
+                <li><a href="{{ asset($actividad->archivo2) }}" target="_blank">Descargar Archivo 2</a></li>
             @endif
         </ul>
     </div>

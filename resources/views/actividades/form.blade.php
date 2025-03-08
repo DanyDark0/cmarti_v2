@@ -25,7 +25,7 @@
         @if(isset($actividad) && $actividad->url_img1)
             <div class="mt-2">
                 <p>Imagen actual:</p>
-                <img src="{{ asset('storage/' . $actividad->url_img1) }}" alt="Imagen 1" width="150">
+                <img src="{{ asset($actividad->url_img1) }}" alt="Imagen 1" width="150">
             </div>
         @endif
     </div>
@@ -37,7 +37,7 @@
         @if(isset($actividad) && $actividad->url_img2)
             <div class="mt-2">
                 <p>Imagen actual:</p>
-                <img src="{{ asset('storage/' . $actividad->url_img2) }}" alt="Imagen 2" width="150">
+                <img src="{{ asset($actividad->url_img2) }}" alt="Imagen 2" width="150">
             </div>
         @endif
     </div>
@@ -48,7 +48,7 @@
         <input type="file" name="archivo1" id="archivo1" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
         @if(isset($actividad) && $actividad->archivo1)
             <div class="mt-2">
-                <p>Archivo actual: <a href="{{ asset('storage/' . $actividad->archivo1) }}" target="_blank">Ver archivo</a></p>
+                <p>Archivo actual: <a href="{{ asset($actividad->archivo1) }}" target="_blank">Ver archivo</a></p>
             </div>
         @endif
     </div>
@@ -59,7 +59,7 @@
         <input type="file" name="archivo2" id="archivo2" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
         @if(isset($actividad) && $actividad->archivo2)
             <div class="mt-2">
-                <p>Archivo actual: <a href="{{ asset('storage/' . $actividad->archivo2) }}" target="_blank">Ver archivo</a></p>
+                <p>Archivo actual: <a href="{{ asset($actividad->archivo2) }}" target="_blank">Ver archivo</a></p>
             </div>
         @endif
     </div>

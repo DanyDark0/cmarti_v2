@@ -15,7 +15,7 @@ class Actividad extends Model
     
     protected $dates = ['deleted_at'];
     protected $table = 'actividades'; 
-
+    
     protected $fillable = [
         'titulo',
         'descripcion',

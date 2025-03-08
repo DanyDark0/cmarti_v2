@@ -72,26 +72,29 @@ class actividadesController extends Controller
 
         if ($request->hasFile('url_img1')) {
             $fileName = Str::slug($request->titulo) . '-' . 'imagen1' . '-' . now()->timestamp . '.' . $request->file('url_img1')->getClientOriginalExtension();
-            $request->file('url_img1')->storeAs('image', $fileName); // Guardar en storage/app/image
-            $actividad->url_img1 = "image/$fileName";
+            $request->file('url_img1')->storeAs('image', $fileName, 'public'); // Guardar en storage/app/image
+            $actividad->url_img1 = "storage/image/$fileName";
         }
 
         if ($request->hasFile('url_img2')) {
             $fileName = Str::slug($request->titulo) . '-' . 'imagen2' . '-' . now()->timestamp . '.' . $request->file('url_img2')->getClientOriginalExtension();
-            $request->file('url_img2')->storeAs('image', $fileName);
-            $actividad->url_img2 = "image/$fileName";
+            $request->file('url_img2')->storeAs('image', $fileName,'public');
+            $actividad->url_img2 = "storage/image/$fileName";
         }
 
+        // Guardar archivos con nombre original
         if ($request->hasFile('archivo1')) {
-            $fileName = Str::slug($request->titulo) . '-' . 'archivo1' . '-' . now()->timestamp . '.' . $request->file('archivo1')->getClientOriginalExtension();
-            $request->file('archivo1')->storeAs('files', $fileName); // Guardar en storage/app/files
-            $actividad->archivo1 = "files/$fileName";
+            $file = $request->file('archivo1');
+            $fileName = $file->getClientOriginalName();
+            $file->storeAs('files', $fileName, 'public');
+            $actividad->archivo1 = "storage/files/$fileName";
         }
 
         if ($request->hasFile('archivo2')) {
-            $fileName = Str::slug($request->titulo) . '-' . 'archivo1' . '-' . now()->timestamp . '.' . $request->file('archivo2')->getClientOriginalExtension();
-            $request->file('archivo2')->storeAs('files', $fileName);
-            $actividad->archivo2 = "files/$fileName";
+            $file = $request->file('archivo2');
+            $fileName = $file->getClientOriginalName();
+            $file->storeAs('files', $fileName, 'public');
+            $actividad->archivo2 = "storage/files/$fileName";
         }
 
         //dd($request->all());
@@ -133,31 +136,57 @@ class actividadesController extends Controller
         $actividad->fecha = $request->fecha;
         $actividad->noticia = $request->has('noticia'); // Guarda como true o false
 
-
         // Actualizar imágenes
-        $actividad->url_img1 = $this->actualizarArchivo($request->file('url_img1'), $request->titulo, 'image', 'url_img1', $actividad, identificador: 'imagen1');
-        $actividad->url_img2 = $this->actualizarArchivo($request->file('url_img2'), $request->titulo, 'image', 'url_img2', $actividad, identificador: 'imagen2');
+        if ($request->hasFile('url_img1')) {
+            // Eliminar la imagen anterior si existe
+            if ($actividad->url_img1 && file_exists(storage_path('app/public/' . str_replace('storage/', '', $actividad->url_img1)))) {
+                unlink(storage_path('app/public/' . str_replace('storage/', '', $actividad->url_img1)));
+            }
+
+            // Subir nueva imagen
+            $fileName = Str::slug($request->titulo) . '-imagen1-' . now()->timestamp . '.' . $request->file('url_img1')->getClientOriginalExtension();
+            $request->file('url_img1')->storeAs('image', $fileName, 'public');
+            $actividad->url_img1 = "storage/image/$fileName";
+        }
+
+        if ($request->hasFile('url_img2')) {
+            if ($actividad->url_img2 && file_exists(storage_path('app/public/' . str_replace('storage/', '', $actividad->url_img2)))) {
+                unlink(storage_path('app/public/' . str_replace('storage/', '', $actividad->url_img2)));
+            }
+
+            $fileName = Str::slug($request->titulo) . '-imagen2-' . now()->timestamp . '.' . $request->file('url_img2')->getClientOriginalExtension();
+            $request->file('url_img2')->storeAs('image', $fileName, 'public');
+            $actividad->url_img2 = "storage/image/$fileName";
+        }
 
         // Actualizar archivos
-        $actividad->archivo1 = $this->actualizarArchivo($request->file('archivo1'), $request->titulo, 'files', 'archivo1', $actividad, identificador: 'archivo1');
-        $actividad->archivo2 = $this->actualizarArchivo($request->file('archivo2'), $request->titulo, 'files', 'archivo2', $actividad, identificador: 'archivo2');
+        if ($request->hasFile('archivo1')) {
+            if ($actividad->archivo1 && file_exists(storage_path('app/public/' . str_replace('storage/', '', $actividad->archivo1)))) {
+                unlink(storage_path('app/public/' . str_replace('storage/', '', $actividad->archivo1)));
+            }
+
+            $file = $request->file('archivo1');
+            $fileName = $file->getClientOriginalName();
+            $file->storeAs('files', $fileName, 'public');
+            $actividad->archivo1 = "storage/files/$fileName";
+        }
+
+        if ($request->hasFile('archivo2')) {
+            if ($actividad->archivo2 && file_exists(storage_path('app/public/' . str_replace('storage/', '', $actividad->archivo2)))) {
+                unlink(storage_path('app/public/' . str_replace('storage/', '', $actividad->archivo2)));
+            }
+
+            $file = $request->file('archivo2');
+            $fileName = $file->getClientOriginalName();
+            $file->storeAs('files', $fileName, 'public');
+            $actividad->archivo2 = "storage/files/$fileName";
+        }
 
         $actividad->save();
 
         return redirect()->route('actividades.admin')->with('success', 'Actividad actualizada correctamente');
     }
-   function actualizarArchivo($file, $titulo, $carpeta, $campo, $modelo, $identificador)
-    {
-        if ($file) {
-            if ($modelo->$campo) {
-                Storage::delete('storage/' . $modelo->$campo);
-            }
-            $fileName = Str::slug($titulo) . '-' . $identificador . '-' . now()->timestamp . '.' . $file->getClientOriginalExtension();
-            $file->storeAs($carpeta, $fileName);
-            return "$carpeta/$fileName";
-        }
-        return $modelo->$campo;
-    }
+
     public function destroy($id)
     {
         $actividad = Actividad::findOrFail($id);

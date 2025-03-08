@@ -93,7 +93,7 @@
           <div class="custom-card mb-4">
               <!-- Mostrar solo la primera imagen de la noticia -->
               @if ($noticia->url_img1)
-                  <img src="{{  asset('storage/' . $noticia->url_img1) }}" class="custom-card-img-top" alt="Imagen de noticia">
+                  <img src="{{  asset($noticia->url_img1) }}" class="custom-card-img-top" alt="Imagen de noticia">
               @else
                   <img src="{{ asset('./storage/image/Jose-Marti.jpg') }}" class="custom-card-img-top" alt="Imagen por defecto">
               @endif
