@@ -3,7 +3,7 @@
 /public/build
 /public/hot
 /public/storage
-!storage/public/catedra/
+!storage/app/public/catedra/
 /storage/*.key
 /storage/pail
 /vendor
