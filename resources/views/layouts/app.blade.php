@@ -74,7 +74,7 @@
 }
 
 .navbar-logo {
-    border-radius: 2%;
+    border-radius: 5px;
     height: 50px; /* Altura del logo */
     width: auto; /* Mantén la proporción original */
     object-fit: contain; /* Asegura que la imagen no se distorsione */
@@ -222,7 +222,7 @@
     <nav class="navbar navbar-expand-xl navbar-custom">
         <div class="container-fluid">
             <a href="#" class="navbar-brand">
-                <img src="{{ asset('storage/image/udg.png') }}" alt="logo Universidad de Guadalajara" class="navbar-logo">
+                <img src="{{ asset('storage/catedra/Jose-Marti.jpg') }}" alt="logo Universidad de Guadalajara" class="navbar-logo">
             </a>
             <a class="navbar-brand" href="{{ route('home')}}">Cátedra José Martí</a>
             <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -254,7 +254,7 @@
         <a class="navbar-brand" href="{{ route('home')}}">Cátedra José Martí</a>
         <div class="card-body">
             <a href="/">
-                <img src="{{ asset('storage/image/martiheader_0.jpg') }}" alt="Cátedra José Martí" class="img-fluid w-100">
+                <img src="{{ asset('storage/catedra/martiheader_0.jpg') }}" alt="Cátedra José Martí" class="img-fluid w-100">
             </a>
         </div>
     </div>
