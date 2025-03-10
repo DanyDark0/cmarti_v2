@@ -71,6 +71,16 @@ class actividadesController extends Controller
                 ->withInput();
         }
 
+        // Generar slug único
+        $slug = Str::slug($request->titulo);
+        $contador = 1;
+
+        // Verificar si el slug ya existe y modificarlo si es necesario
+        while (Actividad::where('slug', $slug)->exists()) {
+            $slug = Str::slug($request->titulo) . '-' . $contador;
+            $contador++;
+        }
+
         $actividad = new Actividad();
         $actividad->titulo = $request->titulo;
         $actividad->descripcion = $request->descripcion;
@@ -144,6 +154,20 @@ class actividadesController extends Controller
         }
 
         $actividad = Actividad::where('slug', $slug)->firstOrFail();
+
+        if ($request->titulo !== $actividad->titulo) {
+            $nuevoSlug = Str::slug($request->titulo);
+            $contador = 1;
+    
+            // Asegurar que el slug sea único
+            while (Actividad::where('slug', $nuevoSlug)->where('id', '!=', $actividad->id)->exists()) {
+                $nuevoSlug = Str::slug($request->titulo) . '-' . $contador;
+                $contador++;
+            }
+    
+            $actividad->slug = $nuevoSlug;
+        }
+
         $actividad->titulo = $request->titulo;
         $actividad->descripcion = $request->descripcion;
         $actividad->fecha = $request->fecha;

@@ -88,6 +88,14 @@ class convocatoriasController extends Controller
                 ->withInput();
         }
 
+        $slug = Str::slug($request->titulo);
+        $contador = 1;
+
+        while (Convocatorias::where('slug', $slug)->exists()) {
+            $slug = Str::slug($request->titulo) . '-' . $contador;
+            $contador++;
+        }
+
         $convocatoria = new Convocatorias();
         $convocatoria->titulo = $request->titulo;
         $convocatoria->descripcion = $request->descripcion;
@@ -175,6 +183,17 @@ class convocatoriasController extends Controller
         }
 
         $convocatoria = Convocatorias::where('slug', $slug)->firstOrFail();
+
+        if ($convocatoria->titulo !== $request->titulo) { 
+            $nuevoSlug = Str::slug($request->titulo);
+            $contador = 1;
+        }
+
+        while (Convocatorias::where('slug', $nuevoSlug)->where('id', '!=', $convocatoria->id)->exists()) {
+            $nuevoSlug = Str::slug($request->titulo) . '-' . $contador;
+            $contador++;
+        }
+
         $convocatoria->titulo = $request->titulo;
         $convocatoria->descripcion = $request->descripcion;
         $convocatoria->fecha = $request->fecha;
