@@ -59,12 +59,6 @@ class directorioController extends Controller
         return redirect()->route('directorio.admin')->with('success', 'Directorio agregado correctamente');
     }
 
-    public function show($id)
-    {
-        $directorio = Directorio::findOrFail($id);
-        return view('directorio.show', compact('directorio'));
-    }
-
     public function edit($id)
     {
         $directorio = Directorio::findOrFail($id);

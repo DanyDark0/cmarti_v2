@@ -1,16 +1,26 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 @section('content')
 
 <style>
+.date-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 100px; /* Ajusta según sea necesario */
+    position: relative;
+}
+.fecha-publicacion {
+    font-size: 16px; /* Tamaño más pequeño */
+    color: gray; /* Opcional, para que se vea más sutil */
+}
   .content {
     text-align: justify; /* Justifica el texto */
     background-color: #ffffff; /* Color beige claro para el fondo */
-    border-left: 5px solid #6F4E37; /* Borde lateral café */
     padding: 20px; /* Espaciado interno */
     margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-shadow: 3px 3px 10px #752e0f; /* Sombra suave */
 }
 
 .title {
@@ -20,7 +30,6 @@
     margin-bottom: 15px;
 }
 </style>
-
 
 <div class="container mt-5">
     <h1 class="title text-center">{{ $actividad->titulo }}</h1>
@@ -40,18 +49,23 @@
     
     <!-- Descripción -->
     <div class="mb-4">
-        <h3>Descripción</h3>
         <p>{!! $actividad->descripcion !!}</p>
     </div>
 
-        <!-- Separador -->
-        <hr>
+    <!-- Fecha de Publicación -->
+    <div class="date-content">
+        <p class="fecha-publicacion"><strong>Fecha de Publicación:</strong> {{ $actividad->fecha }}</p> 
+    </div>
+
+    <!-- Separador -->
+    <hr>
     
     <!-- Archivos -->
     <div>
+        @if($actividad->archivo1)
         <h3>Archivos Adjuntos</h3>
         <ul>
-            @if($actividad->archivo1)
+            
                 <li><a href="{{ asset($actividad->archivo1) }}" target="_blank">Descargar Archivo 1</a></li>
             @endif
             @if($actividad->archivo2)

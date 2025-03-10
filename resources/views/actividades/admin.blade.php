@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 @section('content')
 <style>
@@ -50,10 +50,10 @@
                     <td>{{ $actividad->fecha }}</td>
                     <td>
                         <!-- Editar -->
-                        <a href="{{ route('actividades.edit', $actividad->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="{{ route('actividades.edit', $actividad->slug) }}" class="btn btn-warning btn-sm">Editar</a>
 
                         <!-- Eliminar -->
-                        <form action="{{ route('actividades.destroy', $actividad->id) }}" method="POST" style="display:inline-block;">
+                        <form action="{{ route('actividades.destroy', $actividad->slug) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta actividad?');">Eliminar</button>

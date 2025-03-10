@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 @section('content')
 <style>
@@ -12,6 +12,7 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 .card-act {
+    border-right: 5px solid #752e0f;/* Borde lateral café */
     height: 100%; /* Para que todas las tarjetas tengan la misma altura */
     display: flex;
     flex-direction: column;
@@ -69,13 +70,13 @@
 <div class="container-act mt-4">
     <div class="row">
         @foreach($actividades as $actividad)
-            <div class="col-md-3 mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="card-act mb-4">
                     <img src="{{ $actividad->url_img1 ? asset($actividad->url_img1) : asset('./storage/catedra/Jose-Marti.jpg') }}" class="card-img-top-act" alt="Imagen de actividad">
                     <div class="card-body-act">
                         <h5 class="card-title-act">{{ $actividad->titulo }}</h5> <!-- Mostrar título -->
                         <p class="card-text-act">{!! $actividad->descripcion_truncado !!}</p> <!-- Mostrar descripción -->
-                        <a href="{{ route('actividades.show', $actividad->id) }}" class="boton-act btn">Ver más</a>
+                        <a href="{{ route('actividades.show', $actividad->slug) }}" class="boton-act btn">Ver más</a>
                     </div>
                 </div>
             </div>

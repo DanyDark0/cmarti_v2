@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 @section('content')
 <style>
   .content {
     text-align: justify; /* Justifica el texto */
-    background-color: #F5F5DC; /* Color beige claro para el fondo */
-    border-right: 5px solid #6F4E37; /* Borde lateral café */
+    border-right: 5px solid #752e0f;/* Borde lateral café */ /* Borde lateral café */
     padding: 20px; /* Espaciado interno */
     margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */

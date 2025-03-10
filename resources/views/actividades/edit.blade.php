@@ -1,10 +1,20 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 @section('content')
 <div class="container">
     <h1>Editar Actividad</h1>
+            <!-- Muestra errores generales -->
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-    <form action="{{ route('actividades.update', $actividad->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('actividades.update', $actividad->slug) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 

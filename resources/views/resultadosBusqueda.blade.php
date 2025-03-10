@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 @section('content')
 <style>
@@ -106,9 +106,9 @@
     @endif
 </div>
 
-    {{-- <!--paginacion-->
+    <!--paginacion-->
     <div class="d-flex justify-content-center mt-4">
         {{ $actividades->links() }}
-    </div> --}}
+    </div> 
 </div>
 @endsection

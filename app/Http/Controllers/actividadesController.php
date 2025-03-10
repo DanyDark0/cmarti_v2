@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Actividad;
 use illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 class actividadesController extends Controller
 {
 
@@ -53,16 +54,22 @@ class actividadesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'titulo' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
+            'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'archivo1' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120',
             'archivo2' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120',
-            'fecha' => 'nullable|date',
+            'fecha' => 'required|date',
             'noticia' => 'nullable|boolean',
         ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $actividad = new Actividad();
         $actividad->titulo = $request->titulo;
@@ -103,34 +110,40 @@ class actividadesController extends Controller
         return redirect()->route('actividades.admin')->with('success', 'Actividad creada correctamente');
     }
 
-    public function edit($id)
+    public function edit($slug)
     {
-        $actividad = Actividad::findOrFail($id);
+        $actividad = Actividad::where('slug', $slug)->firstOrFail();
         return view('actividades.edit', compact('actividad'));
     }
-    public function show($id)
+    public function show($slug)
     {
         // Buscar la actividad por ID
-        $actividad = Actividad::findOrFail($id);
+        $actividad = Actividad::where('slug', $slug)->firstOrFail();
 
         // Retornar la vista con la actividad encontrada
         return view('actividades.show', compact('actividad'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'titulo' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'archivo1' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120',
             'archivo2' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120',
-            'fecha' => 'nullable|date',
+            'fecha' => 'required|date',
             'noticia' => 'nullable|boolean',
         ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-        $actividad = Actividad::findOrFail($id);
+        $actividad = Actividad::where('slug', $slug)->firstOrFail();
         $actividad->titulo = $request->titulo;
         $actividad->descripcion = $request->descripcion;
         $actividad->fecha = $request->fecha;
@@ -187,9 +200,9 @@ class actividadesController extends Controller
         return redirect()->route('actividades.admin')->with('success', 'Actividad actualizada correctamente');
     }
 
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $actividad = Actividad::findOrFail($id);
+        $actividad = Actividad::where('slug', $slug)->firstOrFail();
         $actividad->delete();
         return redirect()->route('actividades.admin')->with('success', 'Actividad eliminada correctamente');
     }

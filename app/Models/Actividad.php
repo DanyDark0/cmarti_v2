@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use Illuminate\Support\Str;
 
 class Actividad extends Model
 {
@@ -26,6 +27,18 @@ class Actividad extends Model
         'fecha',
         'noticia',
     ];
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($actividad) {
+            $actividad->slug = Str::slug($actividad->titulo);
+        });
+
+        static::updating(function ($actividad) {
+            $actividad->slug = Str::slug($actividad->titulo);
+        });
+    }
 
     public function toSearchableArray()
     {

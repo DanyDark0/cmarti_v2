@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 
 @section('content')
@@ -6,7 +6,6 @@
     .content {
     text-align: justify; /* Justifica el texto */
     background-color: #ffffff; /* Color beige claro para el fondo */
-    border-left: 5px solid #6F4E37; /* Borde lateral café */
     padding: 20px; /* Espaciado interno */
     margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */
@@ -20,6 +19,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-right: 5px solid #752e0f;/* Borde lateral café */
   }
 
 
@@ -32,7 +32,6 @@
 }
   
   .custom-card .card-body {
-
     padding: 15px; /* Ajusta el padding del contenido */
   }
   
@@ -40,7 +39,6 @@
     flex-grow: 1; /* Permite que el contenido de la tarjeta se expanda */
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
   .card-color {

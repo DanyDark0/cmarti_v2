@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 @section('content')
 <style>
@@ -8,12 +8,22 @@
 </style>
 <div class="container">
     <h1>Crear Nueva Actividad</h1>
+            <!-- Muestra errores generales -->
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     <form action="{{ route('actividades.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <!-- Título -->
         <div class="mb-3">
             <label for="titulo" class="form-label">Título</label>
-            <input type="text" name="titulo" id="titulo" class="form-control" required>
+            <input type="text" name="titulo" id="titulo" class="form-control" >
         </div>
         
         <!-- Descripción -->
@@ -25,7 +35,7 @@
         <!-- Fecha -->
         <div class="fecha mb-3">
             <label for="fecha" class="form-label">Fecha</label>
-            <input type="date" name="fecha" id="fecha" class="form-control" required>
+            <input type="date" name="fecha" id="fecha" class="form-control">
         </div>
         
         <!-- Imagen 1 -->

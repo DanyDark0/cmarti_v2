@@ -74,13 +74,19 @@
 <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
     <script>
         tinymce.init({
-            selector: '#descripcion', // Selector del textarea
+            selector: '#descripcion',
             plugins: 'link image media table codesample fullscreen',
             toolbar: 'undo redo | styleselect | bold italic | link image media | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table codesample fullscreen',
             height: 300,
             menubar: false,
             branding: false,
             automatic_uploads: true,
+
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save(); // Guarda el contenido en el <textarea>
+                });
+            }
         });
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -92,5 +98,16 @@
                 this.value = nuevaFecha;
             }
         });
+
+        form.addEventListener("submit", function (event) {
+        tinymce.triggerSave(); // Fuerza la actualización del textarea oculto
+
+        const textarea = document.getElementById("descripcion");
+        if (!textarea.value.trim()) {
+            alert("El campo Descripción es obligatorio.");
+            event.preventDefault(); // Evita que el formulario se envíe
+        }
+    });
+    
     });
     </script>
