@@ -93,12 +93,12 @@
               @if ($noticia->url_img1)
                   <img src="{{  asset($noticia->url_img1) }}" class="custom-card-img-top" alt="Imagen de noticia">
               @else
-                  <img src="{{ asset('./storage/image/Jose-Marti.jpg') }}" class="custom-card-img-top" alt="Imagen por defecto">
+                  <img src="{{ asset('./catedra/Jose-Marti.jpg') }}" class="custom-card-img-top" alt="Imagen por defecto">
               @endif
               <div class="card-body">
                   <h5 class="card-title">{{ $noticia->titulo }}</h5> 
                   <p class="card-text">{!! strip_tags(Str::limit($noticia->descripcion, 300, '...')) !!}</p> 
-                  <a href="{{ route('actividades.show', $noticia->id) }}" class="boton-act btn">Ver más</a>
+                  <a href="{{ route('actividades.show', $noticia->slug) }}" class="boton-act btn">Ver más</a>
               </div>
           </div>
       </div>

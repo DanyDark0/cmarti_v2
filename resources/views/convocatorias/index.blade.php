@@ -72,7 +72,7 @@
         @foreach($convocatorias as $convocatoria)
             <div class="col-md-4 mb-4">
                 <div class="card-act mb-4">
-                    <img src="{{ $convocatoria->url_img1 ? asset($convocatoria->url_img1) : asset('./storage/catedra/Jose-Marti.jpg') }}" class="card-img-top-act" alt="Imagen de convocatoria">
+                    <img src="{{ $convocatoria->url_img1 ? asset($convocatoria->url_img1) : asset('./catedra/Jose-Marti.jpg') }}" class="card-img-top-act" alt="Imagen de convocatoria">
                     <div class="card-body-act">
                         <h5 class="card-title-act">{{ $convocatoria->titulo }}</h5> <!-- Mostrar título -->
                         <p class="card-text-act">{!! $convocatoria->descripcion_truncado !!}</p> <!-- Mostrar descripción -->

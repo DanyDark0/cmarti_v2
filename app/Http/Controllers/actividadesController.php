@@ -55,14 +55,18 @@ class actividadesController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
-            'descripcion' => 'required|string',
+            'titulo' => 'required|string|max:255|unique:actividades',
+            'descripcion' => 'nullable|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'archivo1' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120',
             'archivo2' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120',
             'fecha' => 'required|date',
             'noticia' => 'nullable|boolean',
+        ], [
+            'titulo.required' => 'El título es obligatorio.',
+            'titulo.unique' => 'El título ya está en uso. Prueba con otro.',
+            'descripcion.required' => 'Agregue una descripción.',
         ]);
         
         if ($validator->fails()) {
@@ -137,7 +141,7 @@ class actividadesController extends Controller
     public function update(Request $request, $slug)
     {
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
+            'titulo' => 'required|string|max:255|unique:actividades',
             'descripcion' => 'nullable|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -145,6 +149,10 @@ class actividadesController extends Controller
             'archivo2' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120',
             'fecha' => 'required|date',
             'noticia' => 'nullable|boolean',
+        ], [
+            'titulo.required' => 'El título es obligatorio.',
+            'titulo.unique' => 'El título ya está en uso. Prueba con otro.',
+            'descripcion.required' => 'Agregue una descripción.',
         ]);
         
         if ($validator->fails()) {
@@ -154,20 +162,6 @@ class actividadesController extends Controller
         }
 
         $actividad = Actividad::where('slug', $slug)->firstOrFail();
-
-        if ($request->titulo !== $actividad->titulo) {
-            $nuevoSlug = Str::slug($request->titulo);
-            $contador = 1;
-    
-            // Asegurar que el slug sea único
-            while (Actividad::where('slug', $nuevoSlug)->where('id', '!=', $actividad->id)->exists()) {
-                $nuevoSlug = Str::slug($request->titulo) . '-' . $contador;
-                $contador++;
-            }
-    
-            $actividad->slug = $nuevoSlug;
-        }
-
         $actividad->titulo = $request->titulo;
         $actividad->descripcion = $request->descripcion;
         $actividad->fecha = $request->fecha;

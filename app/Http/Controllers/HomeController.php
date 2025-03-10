@@ -11,7 +11,7 @@ class HomeController extends Controller
     {
         // Obtener solo las últimas 4 actividades que son noticias
         $noticias = Actividad::where('noticia', true)
-            ->select('id', 'titulo', 'descripcion', 'url_img1', 'url_img2', 'archivo1', 'archivo2', 'fecha')
+            ->select('id', 'titulo', 'descripcion', 'url_img1', 'url_img2', 'archivo1', 'archivo2', 'fecha', 'slug')
             ->latest()
             ->take(4)
             ->get();

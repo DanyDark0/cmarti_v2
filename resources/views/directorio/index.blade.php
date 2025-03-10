@@ -11,6 +11,10 @@
     align-items: center;
     text-align: center;
 } */
+
+.card-title {
+    color: #752e0f;
+}
 .card-dir {
     display: flex;
     flex-direction: column;
@@ -71,10 +75,10 @@
                     <div class="card-dir">
                             <p>
                                 <img class="img-fluid rounded-circle" 
-                                    src="{{ asset('storage/' . $persona->imagen) }}" 
+                                    src="{{ $persona->imagen ? asset('storage/' . $persona->imagen) : asset('catedra/Jose-Marti.jpg') }}" 
                                     alt="Imagen de {{ $persona->nombre }}">
                             </p>
-                            <h4 class="card-title">{{ $persona->nombre }}</h4>
+                            <h2 class="card-title">{{ $persona->nombre }}</h2>
                             @if (!empty($persona->telefono))
                                 <h5>Teléfono</h5>
                                 <p class="card-text">{{ $persona->telefono }}</p>
