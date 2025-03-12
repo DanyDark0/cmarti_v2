@@ -19,7 +19,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-right: 5px solid #752e0f;/* Borde lateral café */
   }
 
 

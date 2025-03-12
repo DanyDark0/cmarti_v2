@@ -1,41 +1,55 @@
-<div class="container">
-    <h1 class="mb-4">Administración de Convocatorias</h1>
+<x-app-layout>
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-bold mb-6 text-center">Administración de Convocatorias</h1>
 
-    <!-- Botón para crear nueva convocatoria -->
-    <a href="{{ route('convocatorias.create') }}" class="btn btn-primary mb-3">Nueva convocatoria</a>
+        <!-- Botón para crear nueva convocatoria -->
+        <a href="{{ route('convocatorias.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4 inline-block">
+            <button>Nueva Convocatoria</button>
+        </a>
 
-    <!-- Tabla de convocatoriaes -->
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($convocatorias as $convocatoria)
-                <tr>
-                    <td>{{ $convocatoria->id }}</td>
-                    <td>{{ $convocatoria->titulo }}</td>
-                    <td>{{ $convocatoria->fecha }}</td>
-                    <td>
-                        <!-- Editar -->
-                        <a href="{{ route('convocatorias.edit', $convocatoria->slug) }}" class="btn btn-warning btn-sm">Editar</a>
+        <!-- Tabla de convocatorias -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <tr>
+                        <th class="py-3 px-6 text-left">ID</th>
+                        <th class="py-3 px-6 text-left">Título</th>
+                        <th class="py-3 px-6 text-left">Fecha</th>
+                        <th class="py-3 px-6 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+                    @foreach($convocatorias as $convocatoria)
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left">{{ $convocatoria->id }}</td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap overflow-hidden truncate max-w-[200px]">{{ Str::limit($convocatoria->titulo, 80, '...') }}</td>
+                            <td class="py-3 px-6 text-left">{{ $convocatoria->fecha }}</td>
+                            <td class="py-3 px-6 text-center">
+                                <div class="flex justify-center gap-2">
+                                    <!-- Botón Editar -->
+                                    <a href="{{ route('convocatorias.edit', $convocatoria->slug) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded text-sm">
+                                        Editar
+                                    </a>
 
-                        <!-- Eliminar -->
-                        <form action="{{ route('convocatorias.destroy', $convocatoria->slug) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta convocatoria?');">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-center mt-4">
-        {{ $convocatorias->links() }}
+                                    <!-- Botón Eliminar -->
+                                    <form action="{{ route('convocatorias.destroy', $convocatoria->slug) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta convocatoria?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="flex justify-center mt-6">
+            {{ $convocatorias->links() }}
+        </div>
     </div>
-</div>
+</x-app-layout>

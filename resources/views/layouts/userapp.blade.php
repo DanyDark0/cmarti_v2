@@ -254,10 +254,10 @@
 
     <!-- Imagen Destacada -->
     <div class="card custom-card">
-        <a class="navbar-brand" href="{{ route('home')}}">Cátedra José Martí</a>
+        <a class="navbar-brand">Cátedra José Martí</a>
         <div class="card-body">
-            <a href="/">
-                <img src="{{ asset('storage/catedra/martiheader_0.jpg') }}" alt="Cátedra José Martí" class="img-fluid w-100">
+            <a href="{{ route('home')}}">
+                <img src="{{ asset('./catedra/martiheader_0.jpg') }}" alt="Cátedra José Martí" class="img-fluid w-100">
             </a>
         </div>
     </div>

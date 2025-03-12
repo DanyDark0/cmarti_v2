@@ -8,13 +8,13 @@
     <!-- Descripción -->
     <div class="mb-3">
         <label for="descripcion" class="form-label">Descripción</label>
-        <textarea name="descripcion" id="descripcion" class="form-control" rows="4" required>{{ old('descripcion', $actividad->descripcion ?? '') }}</textarea>
+        <textarea name="descripcion" id="descripcion" class="form-control" rows="4">{{ old('descripcion', $actividad->descripcion ?? '') }}</textarea>
     </div>
 
 <!-- Fecha -->
 <div class="mb-3">
     <label for="fecha" class="form-label">Fecha</label>
-    <input type="date" name="fecha" id="fecha" class="form-control"
+    <input type="date" name="fecha" id="fecha" class="form-control w-32"
            value="{{ $actividad->fecha }}" required>
 </div>
 
@@ -65,10 +65,13 @@
     </div>
     
 <!-- Campo Noticia -->
-<div class="mb-3 form-check form-switch">
-    <input class="form-check-input" type="checkbox" name="noticia" id="noticia" value="1" 
+<div class="flex items-center">
+    <label for="noticia" class="relative inline-flex items-center cursor-pointer">
+    <input class="form-check-input sr-only peer" type="checkbox" name="noticia" id="noticia" value="1"
         {{ old('noticia', $actividad->noticia ?? 0) == 1 ? 'checked' : '' }}>
-    <label class="form-check-label w-full mb-5 text-sm" for="noticia">Marcar como noticia</label>
+        <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-2 peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"></div>
+    <span class="ml-3 text-gray-700 font-semibold" for="noticia">Marcar como noticia</span>
+    </label>
 </div>
 
 <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>

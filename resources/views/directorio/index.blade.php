@@ -11,6 +11,14 @@
     align-items: center;
     text-align: center;
 } */
+.container {
+    margin: 40px auto; /* Margen superior e inferior de 40px y centrado horizontal */
+    padding: 20px; /* Espaciado interno */
+    max-width: 1200px; /* Limita el ancho del contenedor */
+    background-color: #ffffff; /* Color de fondo ligero */
+    border-radius: 8px; /* Bordes redondeados */
+    border: none;
+}
 
 .card-title {
     color: #752e0f;
@@ -48,8 +56,8 @@
 }
 </style>
 
-<div class="container">
-    <h2 class="text-center mb-4">Directorio</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4" style="color: #752e0f">Directorio</h2>
         @php
             $ordenCatedras = [
                 'Coordinador',

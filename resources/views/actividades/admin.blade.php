@@ -1,70 +1,56 @@
-@extends('layouts.userapp')
+<x-app-layout>
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-bold mb-6 text-center">Administración de Actividades</h1>
+        
+        <!-- Botón para crear nueva actividad -->
+        <a href="{{ route('actividades.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold  py-2 px-4 rounded mb-4 inline-block">
+            <button>Nueva Actividad</button>
+        </a>
+        
+        <!-- Tabla de actividades -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <tr>
+                        <th class="py-3 px-6 text-left">ID</th>
+                        <th class="py-3 px-6 text-left">Título</th>
+                        <th class="py-3 px-6 text-left">Fecha</th>
+                        <th class="py-3 px-6 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+                    @foreach($actividades as $actividad)
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left">{{ $actividad->id }}</td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap overflow-hidden truncate max-w-[200px]">{{ Str::limit($actividad->titulo, 80, '...') }}</td>
+                            <td class="py-3 px-6 text-left">{{ $actividad->fecha }}</td>
+                            <td class="py-3 px-6 text-center">
+                                <div class="flex justify-center gap-2">
+                            
+                                <!-- Botón Editar -->
+                                <a href="{{ route('actividades.edit', $actividad->slug) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded text-sm">
+                                    Editar
+                                </a>
 
-@section('content')
-<style>
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.pagination .page-item.active .page-link {
-    background-color: #ff5733; /* Color de fondo del botón activo */
-    border-color: #ff5733;
-    color: white;
-}
-
-.pagination .page-link {
-    color: #333; /* Color de los enlaces */
-    border: 1px solid #ddd;
-}
-
-.pagination .page-link:hover {
-    background-color: #ffcc99; /* Color al pasar el mouse */
-    border-color: #ffcc99;
-    color: #000;
-}
-
-</style>
-<div class="container">
-    <h1 class="mb-4">Administración de Actividades</h1>
-
-    <!-- Botón para crear nueva actividad -->
-    <a href="{{ route('actividades.create') }}" class="btn btn-primary mb-3">Nueva Actividad</a>
-
-    <!-- Tabla de actividades -->
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($actividades as $actividad)
-                <tr>
-                    <td>{{ $actividad->id }}</td>
-                    <td>{{ $actividad->titulo }}</td>
-                    <td>{{ $actividad->fecha }}</td>
-                    <td>
-                        <!-- Editar -->
-                        <a href="{{ route('actividades.edit', $actividad->slug) }}" class="btn btn-warning btn-sm">Editar</a>
-
-                        <!-- Eliminar -->
-                        <form action="{{ route('actividades.destroy', $actividad->slug) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta actividad?');">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-center mt-4">
-        {{ $actividades->links() }}
+                                <!-- Botón Eliminar -->
+                                <form action="{{ route('actividades.destroy', $actividad->slug) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta actividad?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm">
+                                        Eliminar
+                                    </button>
+                                </form>
+                               </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Paginación -->
+        <div class="flex justify-center mt-6">
+            {{ $actividades->links() }}
+        </div>
     </div>
-</div>
-@endsection
+</x-app-layout>

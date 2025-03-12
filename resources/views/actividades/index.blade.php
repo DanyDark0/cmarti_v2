@@ -68,6 +68,7 @@
 
 </style>
 <div class="container-act mt-4">
+    <h2 class="text-center mb-4" style="color: #752e0f">Actividades</h2>
     <div class="row">
         @foreach($actividades as $actividad)
             <div class="col-md-4 mb-4">

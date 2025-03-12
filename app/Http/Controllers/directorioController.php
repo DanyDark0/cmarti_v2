@@ -12,7 +12,7 @@ use illuminate\Support\Str;
 class directorioController extends Controller
 {
     public function admin() {
-        $directorio = Directorio::all();
+        $directorio = Directorio::paginate(10);
         return view('directorio.admin', compact('directorio'));
     }
     public function index() {

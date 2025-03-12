@@ -7,19 +7,42 @@ use App\Models\Actividad;
 use illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 class actividadesController extends Controller
 {
 
     public function search_actividad(Request $request) {
 
-        $query = $request->input('keyword');
+        $mensajes = [
+            'keyword.required' => 'Se requiere agregar un texto.',
+            'keyword.string' => 'El dato a buscar debe ser un texto.',
+            'keyword.min' => 'Su busqueda debe contener minimo 3 caracteres.',
+        ];
 
-        $actividades = Actividad::search($query)->paginate(24);
-        foreach ($actividades as $actividad) {
-            $actividad->descripcion_truncado = $this->truncateHtml($actividad->descripcion, 100);
+        $validator = Validator::make($request->all(), [
+            'keyword' => 'required|string|min:3',
+        ],$mensajes);
+
+        if ($validator->fails()) {
+            return redirect()->route('actividades') // Cambia por la ruta de tu formulario
+                ->withErrors($validator) // Enviar errores a la vista
+                ->withInput();
         }
 
-        return view ("actividades" , compact('actividades', 'query'));
+        // Obtener el término de búsqueda
+        $query = $request->input('keyword');
+
+        // Realizar la búsqueda con Scout
+        $actividades = Actividad::search($query)->paginate(6);
+
+        foreach ($actividades as $actividad) {
+            $actividad->cuerpo_truncado = $this->truncateHtml($actividad->cuerpo, 100);
+        }
+
+        $totalResultados = $actividades->total();
+
+        return view("actividades.search", compact('actividades', 'query', 'totalResultados'));
     }
 
     function truncateHtml($html, $limit = 100)
@@ -140,8 +163,10 @@ class actividadesController extends Controller
 
     public function update(Request $request, $slug)
     {
+        $actividad = Actividad::where('slug', $slug)->firstOrFail();
+        
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255|unique:actividades',
+            'titulo' => ['required','string','max:255',Rule::unique('actividades')->ignore($actividad->id), ],
             'descripcion' => 'nullable|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -161,7 +186,6 @@ class actividadesController extends Controller
                 ->withInput();
         }
 
-        $actividad = Actividad::where('slug', $slug)->firstOrFail();
         $actividad->titulo = $request->titulo;
         $actividad->descripcion = $request->descripcion;
         $actividad->fecha = $request->fecha;

@@ -1,7 +1,5 @@
-@extends('layouts.userapp')
-
-@section('content')
-<div class="container">
+<x-app-layout>
+    <div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-md">
     <h2 class="mb-4">Editar Registro del Directorio</h2>
 
     @if ($errors->any())
@@ -57,4 +55,4 @@
         <a href="{{ route('directorio.admin') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
-@endsection
+</x-app-layout>

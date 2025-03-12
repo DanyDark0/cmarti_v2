@@ -68,6 +68,7 @@
 
 </style>
 <div class="container-act mt-4">
+    <h2 class="text-center mb-4" style="color: #752e0f">Convocatorias</h2>
     <div class="row">
         @foreach($convocatorias as $convocatoria)
             <div class="col-md-4 mb-4">

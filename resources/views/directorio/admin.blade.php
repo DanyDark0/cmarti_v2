@@ -1,49 +1,69 @@
-@extends('layouts.userapp')
+<x-app-layout>
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-bold mb-6 text-center">Directorio</h1>
 
-@section('content')
-<div class="container">
-    <h1 class="mb-4">Directorio</h1>
+        <!-- Botón para agregar nuevo -->
+        <a href="{{ route('directorio.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4 inline-block">
+            <button>Agregar Nuevo</button>
+        </a>
 
-    <a href="{{ route('directorio.create') }}" class="btn btn-primary mb-3">Agregar Nuevo</a>
+        <!-- Tabla de directorio -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <tr>
+                        <th class="py-3 px-6 text-left">ID</th>
+                        <th class="py-3 px-6 text-left">Nombre</th>
+                        <th class="py-3 px-6 text-center">Imagen</th>
+                        <th class="py-3 px-6 text-left">Cátedra</th>
+                        <th class="py-3 px-6 text-left">Correo</th>
+                        <th class="py-3 px-6 text-left">Teléfono</th>
+                        <th class="py-3 px-6 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+                    @foreach ($directorio as $persona)
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left">{{ $persona->id }}</td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap overflow-hidden truncate max-w-[200px]">
+                                {{ Str::limit($persona->nombre, 15, '...') }}
+                            </td>
+                            <td class="py-3 px-6 text-center">
+                                @if($persona->imagen)
+                                    <img src="{{ asset('storage/' . $persona->imagen) }}" alt="Imagen" class="w-16 h-16 object-cover rounded-full mx-auto">
+                                @else
+                                    <span class="text-gray-500">Sin imagen</span>
+                                @endif
+                            </td>
+                            <td class="py-3 px-6 text-left">{{ $persona->catedra }}</td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap overflow-hidden truncate max-w-[200px]">{{ Str::limit($persona->correo, 15) }}</td>
+                            <td class="py-3 px-6 text-left">{{ $persona->telefono }}</td>
+                            <td class="py-3 px-6 text-center">
+                                <div class="flex justify-center gap-2">
+                                    <!-- Botón Editar -->
+                                    <a href="{{ route('directorio.edit', $persona->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded text-sm">
+                                        Editar
+                                    </a>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Imagen</th>
-                <th>Cátedra</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($directorio as $persona)
-                <tr>
-                    <td>{{ $persona->id }}</td>
-                    <td>{{ $persona->nombre }}</td>
-                    <td>
-                        @if($persona->imagen)
-                            <img src="{{ asset('storage/' . $persona->imagen) }}" alt="Imagen" width="60">
-                        @else
-                            Sin imagen
-                        @endif
-                    </td>
-                    <td>{{ $persona->catedra }}</td>
-                    <td>{{ $persona->correo }}</td>
-                    <td>{{ $persona->telefono }}</td>
-                    <td>
-                        <a href="{{ route('directorio.edit', $persona->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('directorio.destroy', $persona->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-@endsection
+                                    <!-- Botón Eliminar -->
+                                    <form action="{{ route('directorio.destroy', $persona->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este registro?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="flex justify-center mt-6">
+            {{ $directorio->links() }}
+        </div>
+    </div>
+</x-app-layout>
