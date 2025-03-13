@@ -15,7 +15,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'welcome'])->name('home');
 
 Route::get('/historia', function() {
     return view('historia');
@@ -41,6 +41,14 @@ Route::get('/convocatorias', function() {
 // Route::get('/actividades', function () {
 //     return view('actividades');
 // })->name('actividades');
+
+//Ruta del filtro de años
+Route::get('/filtrar-fecha', [HomeController::class, 'getYears'])->name('filtrar.fecha');
+
+
+Route::get('/resultados-fechas', [HomeController::class, 'filtrarFecha'])->name('resultados.fechas');
+
+
 
 Route::get('galerias/crear', [GaleriaController::class, 'create'])->name('crear_Galeria');
 Route::post('galerias/store', [GaleriaController::class, 'store'])->name('galerias.store');

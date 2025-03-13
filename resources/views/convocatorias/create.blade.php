@@ -79,16 +79,25 @@
             <div class="mb-3">
                 <label for="archivo1" class="form-label font-bold">Archivo 1</label>
                 <input type="file" name="archivo1" id="archivo1" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
+                @if(isset($convocatoria) && $convocatoria->archivo1)
+                        <p>Archivo actual: <a href="{{ asset($convocatoria->archivo1) }}" target="_blank">Ver {{basename($convocatoria->archivo1)}}</a></p>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="eliminarArchivo('{{ route('convocatorias.eliminarArchivo', ['slug' => $convocatoria->slug, 'campo' => 'archivo1']) }}')">Eliminar</button>
+                @endif
             </div>
-            
+    
             <!-- Archivo 2 -->
             <div class="mb-3">
                 <label for="archivo2" class="form-label font-bold">Archivo 2</label>
                 <input type="file" name="archivo2" id="archivo2" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
+                @if(isset($convocatoria) && $convocatoria->archivo2)
+                    <div class="mt-2">
+                        <p>Archivo actual: <a href="{{ asset($convocatoria->archivo2) }}" target="_blank">Ver {{basename($convocatoria->archivo2)}}</a></p>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="eliminarArchivo('{{ route('convocatorias.eliminarArchivo', ['slug' => $convocatoria->slug, 'campo' => 'archivo2']) }}')">Eliminar</button>
+                    </div>
+                @endif
             </div>
-            <div class="flex h-16">
-            <button type="submit" class="w-30 bg-green-500 hover:bg-green-600 text-white  py-2 px-3 text-center rounded">Guardar Convocatoria</button>
-            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Guardar</button>
         </form>
     </div>
     

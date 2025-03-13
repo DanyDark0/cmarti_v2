@@ -116,12 +116,25 @@
     </div>
   </div>
 
-  <div class="container px-4 py-5">
-
-    
-  </div>
-
-
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Filtrar por Año</h2>
+    <form action="{{ route('filtrar.fecha') }}" method="GET">
+      @csrf
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <select name="year" class="form-control">
+                    <option value="">Seleccione un año</option>
+                    @foreach ($years as $year)
+                        <option value="{{ $year }}">{{ $year }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </form>
+</div>
 
   @endsection
  

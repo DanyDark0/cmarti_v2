@@ -12,6 +12,16 @@ use Illuminate\Validation\Rule;
 class convocatoriasController extends Controller
 {
     //
+        public function getYears()
+    {
+        // Obtiene los años únicos de las fechas de las convocatorias
+        $years = Convocatorias::selectRaw('YEAR(fecha) as year')
+                            ->distinct()
+                            ->orderBy('year', 'desc')
+                            ->pluck('year');
+
+        return view('welcome', compact('years'));
+    }
     public function search_convocatoria(Request $request) {
 
         $query = $request->input('keyword');

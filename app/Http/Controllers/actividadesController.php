@@ -11,6 +11,16 @@ use Illuminate\Validation\Rule;
 
 class actividadesController extends Controller
 {
+        public function getYears()
+    {
+        // Obtiene los años únicos de las fechas de las actividades
+        $years = Actividad::selectRaw('YEAR(fecha) as year')
+                            ->distinct()
+                            ->orderBy('year', 'desc')
+                            ->pluck('year');
+
+        return view('welcome', compact('years'));
+    }
 
     public function search_actividad(Request $request) {
 

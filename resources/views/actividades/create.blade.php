@@ -45,52 +45,60 @@
                     @enderror
             </div>
             
-            <!-- Imagen 1 -->
-            <div>
-                <label for="url_img1" class="form-label font-bold">Imagen 1</label>
-                <input type="file" name="url_img1" id="url_img1" accept=".jpeg,.png,.jpg" class="form-control" onchange="previewImage(event, 'preview_img1', 'text_img1')">
-                    <!-- Campo oculto para mantener la imagen si la validación falla -->
-                <input type="hidden" name="old_url_img1" value="{{ old('old_url_img1', $actividad->url_img1 ?? '') }}">
-                <div class="mt-2">
-                    <p id="text_img1" style="{{ old('old_url_img1', $actividad->url_img1 ?? '') ? 'display:block;' : 'display:none;' }}">Imagen actual:</p>
-                    <img id="preview_img1" 
-                    src="{{ old('old_url_img1',isset($actividad) && $actividad->url_img1 ? asset($actividad->url_img1) : '') }}" 
-                    alt="Previsualización" 
-                    width="150" 
-                    style="{{ old('old_url_img1', $actividad->url_img1 ?? '') ? 'display:block;' : 'display:none;' }}">
+            <!-- Imagen 1 Actividad-->
+                <div class="mb-3">
+                    <label for="url_img1" class="form-label font-bold">Imagen 1</label>
+                    <input type="file" name="url_img1" id="url_img1" class="form-control" accept=".jpeg,.png,.jpg,.gif" onchange="previewImage(event, 'preview_img1', 'text_img1', 'btn_eliminar_img1')">
+                    @if(isset($actividad) && $actividad->url_img1)
+                            <p id="text_img1">Imagen actual:</p>
+                            <img id="preview_img1" src="{{ asset($actividad->url_img1) }}" alt="Imagen 1" width="150">
+                            <button type="button" id="btn_eliminar_img1" class="btn btn-danger btn-sm mt-2" onclick="eliminarArchivo('{{ route('actividades.eliminarArchivo', ['slug' => $actividad->slug, 'campo' => 'url_img1']) }}', 'preview_img1', 'text_img1' , 'btn_eliminar_img1', 'url_img1')">Eliminar</button>
+                        @else
+                            <p id="text_img1" style="display:none;">Imagen seleccionada:</p>
+                            <img id="preview_img1" src="" alt="Previsualización" width="150" style="display:none;">
+                            <button type="button" id="btn_eliminar_img1" style="display:none;" class="btn btn-danger btn-sm mt-2" onclick="eliminarArchivo('', 'preview_img1', 'text_img1' , 'btn_eliminar_img1', 'url_img1')">Eliminar</button>
+                    @endif
                 </div>
-            </div>
             
             <!-- Imagen 2 -->
-            <div>
-                <label for="url_img2" class="form-label font-bold">Imagen 2</label>
-                <input type="file" name="url_img2" id="url_img2" accept=".jpeg,.png,.jpg"  class="form-control" onchange="previewImage(event, 'preview_img2', 'text_img2')">
-                    <!-- Campo oculto para mantener la imagen si la validación falla -->
-                <input type="hidden" name="old_url_img2" value="{{ old('old_url_img2', $actividad->url_img2 ?? '') }}">
-                <div class="mt-2">
-                    <p id="text_img2" style="{{ old('old_url_img2', $actividad->url_img2 ?? '') ? 'display:block;' : 'display:none;' }}">Imagen actual:</p>
-                    <img id="preview_img2" 
-                    src="{{ old('old_url_img2', isset($actividad) && $actividad->url_img2 ? asset($actividad->url_img2) : '') }}" 
-                    alt="Previsualización" 
-                    width="150" 
-                    style="{{ old('old_url_img2', $actividad->url_img2 ?? '') ? 'display:block;' : 'display:none;' }}">
+                <div class="mb-3">
+                    <label for="url_img2" class="form-label font-bold">Imagen 2</label>
+                    <input type="file" name="url_img2" id="url_img2" class="form-control" accept=".jpeg,.png,.jpg,.gif" onchange="previewImage(event, 'preview_img2', 'text_img2', 'btn_eliminar_img2')">
+                    @if(isset($actividad) && $actividad->url_img1)
+                            <p id="text_img2">Imagen actual:</p>
+                            <img id="preview_img2" src="{{ asset($actividad->url_img1) }}" alt="Imagen 1" width="150">
+                            <button type="button" id="btn_eliminar_img2" class="btn btn-danger btn-sm mt-2" onclick="eliminarArchivo('{{ route('actividades.eliminarArchivo', ['slug' => $actividad->slug, 'campo' => 'url_img2']) }}', 'preview_img2', 'text_img2' , 'btn_eliminar_img2', 'url_img2')">Eliminar</button>
+                        @else
+                            <p id="text_img2" style="display:none;">Imagen seleccionada:</p>
+                            <img id="preview_img2" src="" alt="Previsualización" width="150" style="display:none;">
+                            <button type="button" id="btn_eliminar_img2" style="display:none;" class="btn btn-danger btn-sm mt-2" onclick="eliminarArchivo('', 'preview_img2', 'text_img2' , 'btn_eliminar_img2', 'url_img2')">Eliminar</button>
+                    @endif
                 </div>
-            </div>
             
             <!-- Archivo 1 -->
-            <div>
+            <div class="mb-3">
                 <label for="archivo1" class="form-label font-bold">Archivo 1</label>
-                <input type="file" name="archivo1" id="archivo1" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" class="form-control">
+                <input type="file" name="archivo1" id="archivo1" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
+                @if(isset($actividad) && $actividad->archivo1)
+                        <p>Archivo actual: <a href="{{ asset($actividad->archivo1) }}" target="_blank">Ver {{basename($actividad->archivo1)}}</a></p>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="eliminarArchivo('{{ route('actividades.eliminarArchivo', ['slug' => $actividad->slug, 'campo' => 'archivo1']) }}')">Eliminar</button>
+                @endif
             </div>
             
             <!-- Archivo 2 -->
-            <div>
+            <div class="mb-3">
                 <label for="archivo2" class="form-label font-bold">Archivo 2</label>
-                <input type="file" name="archivo2" id="archivo2" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" class="form-control">
+                <input type="file" name="archivo2" id="archivo2" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
+                @if(isset($actividad) && $actividad->archivo2)
+                    <div class="mt-2">
+                        <p>Archivo actual: <a href="{{ asset($actividad->archivo2) }}" target="_blank">Ver {{basename($actividad->archivo2)}}</a></p>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="eliminarArchivo('{{ route('actividades.eliminarArchivo', ['slug' => $actividad->slug, 'campo' => 'archivo2']) }}')">Eliminar</button>
+                    </div>
+                @endif
             </div>
             
             <!-- Campo Noticia -->
-            <div class="flex items-center">
+            <div class="flex items-center mx-auto">
                 <label for="noticia" class="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" name="noticia" id="noticia" value="1" class="sr-only peer">
                     <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"></div>
@@ -146,20 +154,72 @@
         });
     });
 
-    function previewImage(event, previewId, textId) {
-        const input = event.target;
-        const preview = document.getElementById(previewId);
-        const text = document.getElementById(textId);
+    function previewImage(event, previewId, textId, buttonId) {
+    const input = event.target;
+    const preview = document.getElementById(previewId);
+    const text = document.getElementById(textId);
+    const button = document.getElementById(buttonId);
 
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-                text.style.display = 'block'; // Muestra el texto cuando se selecciona una imagen
-            };
-            reader.readAsDataURL(input.files[0]);
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            text.style.display = 'block';
+            button.style.display = 'inline-block'; // Muestra el botón
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        preview.style.display = 'none';
+        text.style.display = 'none';
+        button.style.display = 'none'; // Oculta el botón si no hay imagen
+    }
+}
+
+function eliminarArchivo(url, previewId = null, textId = null, btnId = null, inputId = null) {
+    if (!url) {
+        // Si no hay URL, es una previsualización local, solo ocultar la imagen
+        if (previewId) {
+            document.getElementById(previewId).style.display = 'none';
+        }
+        if (textId) {
+            document.getElementById(textId).style.display = 'none'
+        }
+        if (btnId) {
+            document.getElementById(btnId).style.display = 'none';
+        }
+        if (inputId) {
+            document.getElementById(inputId).value = ''; // Limpiar el input de tipo file
+        }
+        alert("La imagen ha sido eliminada de la previsualización.");
+    } else {
+        // Si hay URL, realizar la eliminación en el servidor
+        if (confirm("¿Seguro que deseas eliminar este archivo?")) {
+            fetch(url, { method: 'DELETE', headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' } })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Archivo eliminado correctamente.");
+                        if (previewId) {
+                            document.getElementById(previewId).style.display = 'none';
+                        }
+                        if (btnId) {
+                            document.getElementById(btnId).style.display = 'none';
+                        }
+                        if (btnId) {
+                            document.getElementById(btnId).style.display = 'none';
+                        }
+                        if (inputId) {
+                            document.getElementById(inputId).value = ''; // Limpiar el input de tipo file
+                        }
+                        location.reload();
+                    } else {
+                        alert("Error al eliminar el archivo.");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
         }
     }
+}
 </script>
 </x-app-layout>

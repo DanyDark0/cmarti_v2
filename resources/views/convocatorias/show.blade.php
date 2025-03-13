@@ -32,12 +32,20 @@
     color: #6F4E37; /* Color café para el título */
     font-weight: bold;
     text-align: center;
+    display: inline-block;
     margin-bottom: 15px;
+    hyphens: auto;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    max-width: 400px;
+    width: 100%;
+    white-space: normal; /* Permitimos el salto de línea */
 }
 </style>
-<div class="container mt-5">
+<div class="container mt-5" style="text-align: center">
+    <h1 class="title">{{ $convocatorias->titulo }}</h1>
     <div class="content">
-            <h1 class="title text-center">{{ $convocatorias->titulo }}</h1>
+ 
 
                 <!-- Separador -->
                 <hr>
