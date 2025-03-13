@@ -38,13 +38,25 @@
     flex-grow: 1; /* Permite que el contenido de la tarjeta se expanda */
     display: flex;
     flex-direction: column;
+    min-height: 250px;
+    padding-bottom: 50px;
 }
 
   .card-color {
     background-color: #c47a3d;
   } 
   .card-title {
-    color: black;
+    text-align: center; /* Centra el texto */
+    color: rgb(0, 0, 0);
+    font-size: 1.7rem;
+    font-weight: bold;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Máximo 2 líneas */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    min-height: 3rem; /* Ajusta la altura mínima según el tamaño de la fuente */
+    word-wrap: break-word;
   }
   .card-text {
     display: -webkit-box;
@@ -64,7 +76,6 @@
     align-self: flex-start; /* Alinea el botón correctamente */
     background-color: #6F4E37; /* Color café */
     color: white; /* Letras blancas */
-    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     text-decoration: none;
@@ -83,10 +94,10 @@
 
 <div class="container px-4 py-5" id="custom-cards">
     <h2 class="pb-2 text-center">Noticias</h2>
-    <div class="content row row-cols-1 row-cols-lg-4 align-items-stretch g-4 py-5">
+    <div class="content row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-5">
       @foreach ($noticias as $noticia)
-      
-      <div class="col-md-3 mb-4 mx-2">
+    
+      <div class="col">
           <div class="custom-card mb-4">
               <!-- Mostrar solo la primera imagen de la noticia -->
               @if ($noticia->url_img1)
@@ -103,6 +114,11 @@
       </div>
   @endforeach
     </div>
+  </div>
+
+  <div class="container px-4 py-5">
+
+    
   </div>
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use illuminate\Support\Str;
 
 class BuscadorController extends Controller
@@ -10,6 +11,9 @@ class BuscadorController extends Controller
     //
     public function search(Request $request){
         // Validar el término de búsqueda
+        /* $validator = Validator::make([
+            'keyword' => 'required|string|min:3',
+        ]); */
         $request->validate([
             'keyword' => 'required|string|min:3',
         ]);
@@ -30,7 +34,7 @@ class BuscadorController extends Controller
         }
 
         foreach ($documentos as $documento) {
-            $documento->cuerpo_truncado = $this->truncateHtml($documento->cuerpo, 100);
+            $documento->descripcion_truncado = $this->truncateHtml($documento->descripcion, 100);
         }
 
         foreach ($convocatorias as $convocatoria) {

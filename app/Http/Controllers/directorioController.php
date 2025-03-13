@@ -117,4 +117,32 @@ class directorioController extends Controller
         $directorio->delete();
         return redirect()->route('directorio.admin')->with('success', 'Se elimino el elemnto correctamente');
     }
+
+    public function eliminarArchivo($id, $campo)
+    {
+        $directorio = Directorio::findOrFail($id);
+    
+        // Verificar si el campo es válido
+        if (!in_array($campo, ['imagen'])) {
+            return response()->json(['success' => false, 'message' => 'Campo inválido.']);
+        }
+    
+        // Verificar si el archivo existe
+        if ($directorio->$campo) {
+            $rutaArchivo = public_path($directorio->$campo);
+            
+            // Eliminar el archivo del servidor
+            if (file_exists($rutaArchivo)) {
+                unlink($rutaArchivo);
+            }
+    
+            // Eliminar referencia en la base de datos
+            $directorio->$campo = null;
+            $directorio->save();
+    
+            return response()->json(['success' => true, 'message' => 'Archivo eliminado correctamente.']);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'Archivo no encontrado.']);
+    }
 }

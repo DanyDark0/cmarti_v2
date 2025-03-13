@@ -27,5 +27,9 @@
       </div>
     </a>
     @endforeach
+          <!--paginacion-->
+          <div class="d-flex justify-content-center mt-4">
+            {{ $documentos->links() }}
+        </div>
   </div>
 @endsection

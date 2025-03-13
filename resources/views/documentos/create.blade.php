@@ -18,7 +18,7 @@
         <!-- Campo para el título -->
         <div class="mb-3">
             <label for="titulo" class="block text-gray-700 font-semibold">Título</label>
-            <input type="text" name="titulo" id="titulo" class="w-full p-2 border rounded-lg" value="{{ old('titulo')}}">
+            <input type="text"  name="titulo" id="titulo" class="form-control @error('titulo') is-invalid @enderror" value="{{ old('titulo')}}">
             @error('titulo')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror

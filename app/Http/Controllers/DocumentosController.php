@@ -27,7 +27,7 @@ class DocumentosController extends Controller
         return view ("convocatorias" , compact('convocatorias', 'query'));
     }   
     public function index() {
-        $documentos = Documentos::paginate(6);
+        $documentos = Documentos::paginate(8);
         return view('documentos.index', compact('documentos'));
     }
 
@@ -45,12 +45,16 @@ class DocumentosController extends Controller
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string|max:255|unique:documentos',
             'descripcion' => 'required|string',
-            'doc1' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
+            'doc1' => 'required|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
             'doc2' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
         ], [
             'titulo.required' => 'El título es obligatorio.',
             'titulo.unique' => 'El título ya está en uso. Prueba con otro.',
             'descripcion.required' => 'Agregue una descripción.',
+            'doc1.required' => 'Agrega minimo un documento',
+            'doc1.mimes' => 'El documento 1 debe ser de extension pdf,doc,docx,xls,xlsx,ppt,pptx',
+            'doc2.mimes' => 'El documento 1 debe ser de extension pdf,doc,docx,xls,xlsx,ppt,pptx',
+
         ]);
 
                 
@@ -115,6 +119,8 @@ class DocumentosController extends Controller
             'titulo.required' => 'El título es obligatorio.',
             'titulo.unique' => 'El título ya está en uso. Prueba con otro.',
             'descripcion.required' => 'Agregue una descripción.',
+            'doc1.mimes' => 'El documento 1 debe ser de extension pdf,doc,docx,xls,xlsx,ppt,pptx',
+            'doc2.mimes' => 'El documento 1 debe ser de extension pdf,doc,docx,xls,xlsx,ppt,pptx',
         ]);
 
         if ($validator->fails()) {
@@ -157,6 +163,5 @@ class DocumentosController extends Controller
         $documento->delete();
         return redirect()->route('documentos.admin')->with('success', 'Documentos eliminados correctamente');
     }
-
  }
 

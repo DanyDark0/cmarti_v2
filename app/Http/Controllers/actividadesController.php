@@ -79,7 +79,7 @@ class actividadesController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string|max:255|unique:actividades',
-            'descripcion' => 'nullable|string',
+            'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'archivo1' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120',
@@ -90,6 +90,7 @@ class actividadesController extends Controller
             'titulo.required' => 'El título es obligatorio.',
             'titulo.unique' => 'El título ya está en uso. Prueba con otro.',
             'descripcion.required' => 'Agregue una descripción.',
+            'fecha.required' => 'La fecha es requerida',
         ]);
         
         if ($validator->fails()) {
@@ -247,5 +248,32 @@ class actividadesController extends Controller
         $actividad = Actividad::where('slug', $slug)->firstOrFail();
         $actividad->delete();
         return redirect()->route('actividades.admin')->with('success', 'Actividad eliminada correctamente');
+    }
+    public function eliminarArchivo($slug, $campo)
+    {
+        $actividad = Actividad::where('slug', $slug)->firstOrFail();
+    
+        // Verificar si el campo es válido
+        if (!in_array($campo, ['url_img1', 'url_img2', 'archivo1', 'archivo2'])) {
+            return response()->json(['success' => false, 'message' => 'Campo inválido.']);
+        }
+    
+        // Verificar si el archivo existe
+        if ($actividad->$campo) {
+            $rutaArchivo = public_path($actividad->$campo);
+            
+            // Eliminar el archivo del servidor
+            if (file_exists($rutaArchivo)) {
+                unlink($rutaArchivo);
+            }
+    
+            // Eliminar referencia en la base de datos
+            $actividad->$campo = null;
+            $actividad->save();
+    
+            return response()->json(['success' => true, 'message' => 'Archivo eliminado correctamente.']);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'Archivo no encontrado.']);
     }
 }

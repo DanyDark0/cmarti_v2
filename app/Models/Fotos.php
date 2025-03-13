@@ -12,4 +12,6 @@ class Fotos extends Model
     {
         return $this->belongsTo(Galeria::class);
     }
+
+    
 }

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Convocatorias;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class convocatoriasController extends Controller
 {
@@ -63,11 +65,12 @@ class convocatoriasController extends Controller
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'archivo1' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
             'archivo2' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
-            'fecha' => 'nullable|date',
+            'fecha' => 'required|date',
         ], [
             'descripcion.required' => 'Agregue una descripcion.',
             'titulo.required' => 'El título es obligatorio.',
             'titulo.string' => 'El título debe ser un texto válido.',
+            'fecha.required' => 'Agrega una fecha.',
             'url_img1.image' => 'El archivo debe ser una imagen.',
             'url_img1.mimes' => 'La imagen debe ser de tipo: jpeg, png, jpg, gif o svg.',
             'url_img1.max' => 'La imagen no debe superar los 2MB.',
@@ -150,8 +153,9 @@ class convocatoriasController extends Controller
 
     public function update(Request $request, $slug)
     {
+        $convocatoria = Convocatorias::where('slug', $slug)->firstOrFail();
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255|unique:convocatorias',
+            'titulo' => ['required','string','max:255',Rule::unique('convocatorias')->ignore($convocatoria->id), ],
             'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -182,7 +186,6 @@ class convocatoriasController extends Controller
                 ->withInput();
         }
 
-        $convocatoria = Convocatorias::where('slug', $slug)->firstOrFail();
         $convocatoria->titulo = $request->titulo;
         $convocatoria->descripcion = $request->descripcion;
         $convocatoria->fecha = $request->fecha;
@@ -224,7 +227,7 @@ class convocatoriasController extends Controller
             }
             $file = $request->file('archivo2');
             $fileName = $file->getClientOriginalName();
-            $file->storeAs('public/convocatorias/files', $fileName, 'public');
+            $file->storeAs('convocatorias/files', $fileName, 'public');
             $convocatoria->archivo2 = "storage/convocatorias/files/$fileName";
         }
 
@@ -239,4 +242,32 @@ class convocatoriasController extends Controller
         $convocatoria->delete();
         return redirect()->route('convocatoria.admin')->with('success', 'convocatoria eliminada correctamente');
     }
+        // Eliminar imagen
+        public function eliminarArchivo($slug, $campo)
+        {
+            $convocatoria = Convocatorias::where('slug', $slug)->firstOrFail();
+        
+            // Verificar si el campo es válido
+            if (!in_array($campo, ['url_img1', 'url_img2', 'archivo1', 'archivo2'])) {
+                return response()->json(['success' => false, 'message' => 'Campo inválido.']);
+            }
+        
+            // Verificar si el archivo existe
+            if ($convocatoria->$campo) {
+                $rutaArchivo = public_path($convocatoria->$campo);
+                
+                // Eliminar el archivo del servidor
+                if (file_exists($rutaArchivo)) {
+                    unlink($rutaArchivo);
+                }
+        
+                // Eliminar referencia en la base de datos
+                $convocatoria->$campo = null;
+                $convocatoria->save();
+        
+                return response()->json(['success' => true, 'message' => 'Archivo eliminado correctamente.']);
+            }
+        
+            return response()->json(['success' => false, 'message' => 'Archivo no encontrado.']);
+        }
 }

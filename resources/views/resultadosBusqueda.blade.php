@@ -71,8 +71,10 @@
             @foreach($resultados['actividades'] as $actividad)
                 <div class="row">
                     <div class="col-sm-12">
-                            <h6>{{ $actividad->titulo }}</h6>
-                        <p>{!! $actividad->descripcion_truncado !!}</p>
+                        <a href="{{ route('actividades.show', $actividad->slug) }}">
+                                <h6>{{ $actividad->titulo }}</h6>
+                            <p>{!! $actividad->descripcion_truncado !!}</p>
+                        </a>
                     </div>
                 </div>
             @endforeach
@@ -83,8 +85,10 @@
             @foreach($resultados['documentos'] as $documento)
                 <div class="row">
                     <div class="col-sm-12">
+                        <a href="{{ route('documentos.show', $documento->slug) }}">
                             <h6>{{ $documento->titulo }}</h6>
-                        <p>{!! $documento->cuerpo_truncado !!}</p>
+                        <p>{!! $documento->descripcion_truncado !!}</p>
+                        </a>
                     </div>
                 </div>
             @endforeach
@@ -95,8 +99,10 @@
             @foreach($resultados['convocatorias'] as $convocatoria)
                 <div class="row">
                     <div class="col-sm-12">
-                            <h6>{{ $convocatoria->titulo }}</h6>
-                        <p>{!! $convocatoria->descripcion_truncado !!}</p>
+                        <a href="{{ route('convocatorias.show', $convocatoria->slug) }}">
+                                <h6>{{ $convocatoria->titulo }}</h6>
+                            <p>{!! $convocatoria->descripcion_truncado !!}</p>
+                        </a>
                     </div>
                 </div>
             @endforeach
@@ -107,8 +113,8 @@
 </div>
 
     <!--paginacion-->
-    <div class="d-flex justify-content-center mt-4">
+    {{-- <div class="d-flex justify-content-center mt-4">
         {{ $actividades->links() }}
-    </div> 
+    </div>  --}}
 </div>
 @endsection
