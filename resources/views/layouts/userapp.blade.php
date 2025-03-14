@@ -18,7 +18,7 @@
     top: 80px; /* Ajusta según la altura del navbar */
     height: 100vh; /* Hace que el menú abarque toda la altura de la pantalla */
     overflow-y: auto; /* Permite desplazamiento si el contenido es grande */
-    width: 250px; /* Fija el ancho del menú */
+    width: 200px; /* Fija el ancho del menú */
     flex-shrink: 0; /* Evita que el menú se reduzca en pantallas pequeñas */
     border-right: 5px solid #752e0f; /* Borde derecho café */
     border-radius: 10px;

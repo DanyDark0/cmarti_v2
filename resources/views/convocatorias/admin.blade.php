@@ -32,7 +32,7 @@
                                     </a>
 
                                     <!-- Botón Eliminar -->
-                                    <form action="{{ route('convocatorias.destroy', $convocatoria->slug) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta convocatoria?');">
+                                    <form action="{{ route('convocatorias.destroy', $convocatoria->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta convocatoria?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm">

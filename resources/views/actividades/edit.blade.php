@@ -58,7 +58,7 @@
         @if(isset($actividad) && $actividad->url_img2)
                 <p id="text_img2">Imagen actual:</p>
                     <img id="preview_img2" src="{{ asset($actividad->url_img2) }}" alt="Imagen 2" width="150">
-                    <button type="button" class="btn btn-danger btn-sm mt-2" onclick="eliminarArchivo('{{ route('actividades.eliminarArchivo', ['slug' => $actividad->slug, 'campo' => 'url_img2']) }}', 'preview_img2', 'text_img2', 'btn_eliminar_img2')">Eliminar</button>
+                    <button type="button" id="btn_eliminar_img2" class="btn btn-danger btn-sm mt-2" onclick="eliminarArchivo('{{ route('actividades.eliminarArchivo', ['slug' => $actividad->slug, 'campo' => 'url_img2']) }}', 'preview_img2', 'text_img2', 'btn_eliminar_img2', 'url_img2')">Eliminar</button>
             @else
                 <p id="text_img2" style="display:none;">Imagen seleccionada:</p>
                 <img id="preview_img2" src="" alt="Previsualización" width="150" style="display:none;">
@@ -145,7 +145,7 @@
     
     });
 
-    function previewImage(event, previewId, textId, buttonId) {
+    function previewImage(event, previewId = null, textId = null, buttonId = null) {
     const input = event.target;
     const preview = document.getElementById(previewId);
     const text = document.getElementById(textId);

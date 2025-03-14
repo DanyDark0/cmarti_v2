@@ -68,10 +68,10 @@ Route::delete('galerias/subir_archivos/delete/{id}', [FotosController::class, 'd
 //Rutas del CRUD de documentos
 Route::middleware('auth')->group(function () {
     Route::get('/documentos/admin', [DocumentosController::class, 'admin'])->name('documentos.admin');
-    Route::get('/documentos/crear', [DocumentosController::class, 'create'])->name('documentos.create');
+    Route::get('/documentos/admin/crear', [DocumentosController::class, 'create'])->name('documentos.create');
     Route::post('/documentos', [DocumentosController::class, 'store'])->name('documentos.store');
-    Route::get('/documentos/{slug}/editar', [DocumentosController::class, 'edit'])->name('documentos.edit');
-    Route::put('/documentos/{slug}', [DocumentosController::class, 'update'])->name('documentos.update');
+    Route::get('/documentos/admin/{slug}/editar', [DocumentosController::class, 'edit'])->name('documentos.edit');
+    Route::put('/documentos/admin/{slug}', [DocumentosController::class, 'update'])->name('documentos.update');
     Route::delete('/documentos/{id}', [DocumentosController::class, 'destroy'])->name('documentos.destroy');
 });
 Route::get('/documentos', [DocumentosController::class, 'index'])->name('documentos');
@@ -81,11 +81,11 @@ Route::get('/documentos/{slug}', [DocumentosController::class, 'show'])->name('d
 //rutas del CRUD de actividades 
 Route::middleware('auth')->group(function () {
     Route::get('/actividades/admin', [actividadesController::class, 'admin'])->name('actividades.admin');
-    Route::get('/actividades/crear', [actividadesController::class, 'create'])->name('actividades.create');
+    Route::get('/actividades/admin/crear', [actividadesController::class, 'create'])->name('actividades.create');
     Route::post('/actividades', [actividadesController::class, 'store'])->name('actividades.store');
-    Route::get('/actividades/{slug}/editar', [actividadesController::class, 'edit'])->name('actividades.edit');
-    Route::put('/actividades/{slug}', [actividadesController::class, 'update'])->name('actividades.update');
-    Route::delete('/actividades/{slug}', [actividadesController::class, 'destroy'])->name('actividades.destroy');
+    Route::get('/actividades/admin/{slug}/editar', [actividadesController::class, 'edit'])->name('actividades.edit');
+    Route::put('/actividades/admin/{slug}', [actividadesController::class, 'update'])->name('actividades.update');
+    Route::delete('/actividades/admin/{slug}', [actividadesController::class, 'destroy'])->name('actividades.destroy');
     Route::delete('/actividades/eliminarArchivo/{slug}/{campo}', [actividadesController::class, 'eliminarArchivo'])->name('actividades.eliminarArchivo');
 });
 Route::post('/actividades/buscar', [actividadesController::class, 'search_actividad'])->name('actividades.buscar');
@@ -96,11 +96,11 @@ Route::get('/actividades/{slug}', [actividadesController::class, 'show'])->name(
  //Rutas del CRUD de directorio
  Route::middleware('auth')->group(function () {
     Route::get('/directorio/admin', [directorioController::class, 'admin'])->name('directorio.admin');
-    Route::get('/directorio/crear', [directorioController::class, 'create'])->name('directorio.create');
+    Route::get('/directorio/admin/crear', [directorioController::class, 'create'])->name('directorio.create');
     Route::post('/directorio', [directorioController::class, 'store'])->name('directorio.store');
-    Route::get('/directorio/{id}/editar', [directorioController::class, 'edit'])->name('directorio.edit');
-    Route::put('/directorio/{id}', [directorioController::class, 'update'])->name('directorio.update');
-    Route::delete('/directorio/{id}', [directorioController::class, 'destroy'])->name('directorio.destroy');
+    Route::get('/directorio/admin/{id}/editar', [directorioController::class, 'edit'])->name('directorio.edit');
+    Route::put('/directorio/admin/{id}', [directorioController::class, 'update'])->name('directorio.update');
+    Route::delete('/directorio/admin/{id}', [directorioController::class, 'destroy'])->name('directorio.destroy');
     Route::delete('/directorio/eliminarArchivo/{id}/{campo}', [directorioController::class, 'eliminarArchivo'])->name('directorios.eliminarArchivo');
  });
  Route::get('/directorio', [directorioController::class, 'index'])->name('directorio.index');
@@ -109,14 +109,15 @@ Route::get('/actividades/{slug}', [actividadesController::class, 'show'])->name(
 //Rutas del CRUD de convocatorias protegidas
 Route::middleware('auth')->group(function () {
     Route::get('/convocatorias/admin', [convocatoriasController::class, 'admin'])->name('convocatorias.admin');
-    Route::get('/convocatorias/crear', [convocatoriasController::class, 'create'])->name('convocatorias.create');
+    Route::get('/convocatorias/admin/crear', [convocatoriasController::class, 'create'])->name('convocatorias.create');
     Route::post('/convocatorias', [convocatoriasController::class, 'store'])->name('convocatorias.store');
-    Route::get('/convocatorias/{slug}/editar', [convocatoriasController::class, 'edit'])->name('convocatorias.edit');
-    Route::put('/convocatorias/{slug}', [convocatoriasController::class, 'update'])->name('convocatorias.update');
-    Route::delete('/convocatorias/{slug}', [convocatoriasController::class, 'destroy'])->name('convocatorias.destroy');
+    Route::get('/convocatorias/admin/{slug}/editar', [convocatoriasController::class, 'edit'])->name('convocatorias.edit');
+    Route::put('/convocatorias/admin/{slug}', [convocatoriasController::class, 'update'])->name('convocatorias.update');
+    Route::delete('/convocatorias/admin/{id}', [convocatoriasController::class, 'destroy'])->name('convocatorias.destroy');
     Route::delete('/convocatorias/eliminarArchivo/{slug}/{campo}', [convocatoriasController::class, 'eliminarArchivo'])->name('convocatorias.eliminarArchivo');
 });
 //Rutas del CRUD de convocatorias sin proteccion
+Route::post('/convocatorias/buscar', [convocatoriasController::class, 'search_convocatoria'])->name('convocatorias.buscar');
 Route::get('/convocatorias', [convocatoriasController::class, 'index'])->name('convocatorias');
 Route::get('/convocatorias/{slug}', [convocatoriasController::class, 'show'])->name('convocatorias.show');
 

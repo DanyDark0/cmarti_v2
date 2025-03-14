@@ -114,12 +114,21 @@ class directorioController extends Controller
     public function destroy($id)
     {
         $directorio = Directorio::findOrFail($id);
+            // Verificar si el directorio tiene archivos asociados 
+
+        // Obtener la ruta del archivo 
+        $filePath = public_path('storage/'.$directorio->imagen);
+        // Verificar si el archivo existe y eliminarlo
+        if ($directorio->imagen && file_exists($filePath)) {
+            unlink($filePath);
+        }
         $directorio->delete();
         return redirect()->route('directorio.admin')->with('success', 'Se elimino el elemnto correctamente');
     }
 
     public function eliminarArchivo($id, $campo)
     {
+        // Buscar el directorio por ID
         $directorio = Directorio::findOrFail($id);
     
         // Verificar si el campo es válido
@@ -127,14 +136,14 @@ class directorioController extends Controller
             return response()->json(['success' => false, 'message' => 'Campo inválido.']);
         }
     
-        // Verificar si el archivo existe
-        if ($directorio->$campo) {
-            $rutaArchivo = public_path($directorio->$campo);
-            
-            // Eliminar el archivo del servidor
-            if (file_exists($rutaArchivo)) {
-                unlink($rutaArchivo);
-            }
+            // Verificar si el archivo existe
+            if ($directorio->$campo) {
+                $rutaArchivo = public_path('storage/'.$directorio->$campo);
+                
+                // Eliminar el archivo del servidor
+                if (file_exists($rutaArchivo)) {
+                    unlink($rutaArchivo);
+                }
     
             // Eliminar referencia en la base de datos
             $directorio->$campo = null;

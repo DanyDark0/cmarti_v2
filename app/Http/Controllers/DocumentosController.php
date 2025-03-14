@@ -160,6 +160,27 @@ class DocumentosController extends Controller
 
     public function destroy($id) {
         $documento = Documentos::findOrFail($id);
+
+    // Verificar si el documento tiene archivos asociados (doc1 y doc2)
+    if ($documento->doc1) {
+        // Obtener la ruta del archivo doc1
+        $filePathDoc1 = public_path($documento->doc1);
+
+        // Verificar si el archivo doc1 existe y eliminarlo
+        if (file_exists($filePathDoc1)) {
+            unlink($filePathDoc1);
+        }
+    }
+
+    if ($documento->doc2) {
+        // Obtener la ruta del archivo doc2
+        $filePathDoc2 = public_path($documento->doc2);
+
+        // Verificar si el archivo doc2 existe y eliminarlo
+        if (file_exists($filePathDoc2)) {
+            unlink($filePathDoc2);
+        }
+    }
         $documento->delete();
         return redirect()->route('documentos.admin')->with('success', 'Documentos eliminados correctamente');
     }

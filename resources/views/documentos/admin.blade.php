@@ -3,7 +3,9 @@
     <h1 class="text-2xl font-bold mb-6 text-center">Administración de documentos</h1>
 
     <!-- Botón para crear nueva documento -->
-    <a href="{{ route('documentos.create') }}" class="btn btn-primary mb-3">Nueva documento</a>
+    <a href="{{ route('documentos.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4 inline-block">
+        <button>Nueva documento</button>
+    </a>
 
     <!-- Tabla de documentoes -->
     <div class="overflow-x-auto">
@@ -30,7 +32,7 @@
                         <a href="{{ route('documentos.edit', $documento->slug) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded text-sm">Editar</a>
 
                         <!-- Eliminar -->
-                        <form action="{{ route('documentos.destroy', $documento->slug) }}" method="POST" class="inline-block;">
+                        <form action="{{ route('documentos.destroy', $documento->id) }}" method="POST" class="inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm" onclick="return confirm('¿Estás seguro de eliminar esta documento?');">Eliminar</button>

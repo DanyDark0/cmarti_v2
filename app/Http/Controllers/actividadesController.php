@@ -256,27 +256,38 @@ class actividadesController extends Controller
     public function destroy($slug)
     {
         $actividad = Actividad::where('slug', $slug)->firstOrFail();
+        $campos = ['url_img1', 'url_img2', 'archivo1', 'archivo2'];
+        foreach ($campos as $campo) {
+            if(!empty($actividad->$campo)){
+                $rutaArchivo = public_path($actividad->$campo);
+                if(file_exists($rutaArchivo)) {
+                    unlink($rutaArchivo);
+                }
+            }
+        }
         $actividad->delete();
         return redirect()->route('actividades.admin')->with('success', 'Actividad eliminada correctamente');
     }
     public function eliminarArchivo($slug, $campo)
     {
-        $actividad = Actividad::where('slug', $slug)->firstOrFail();
-    
+        $actividad = Actividad::where('slug', $slug)->first();
+        
+        if (!$actividad) {
+            return response()->json(['error' => 'Actividad no encontrada'], 404);
+        }
+
         // Verificar si el campo es válido
         if (!in_array($campo, ['url_img1', 'url_img2', 'archivo1', 'archivo2'])) {
-            return response()->json(['success' => false, 'message' => 'Campo inválido.']);
+            return response()->json(['error' => 'Campo inválido.'], 400);
         }
     
         // Verificar si el archivo existe
-        if ($actividad->$campo) {
             $rutaArchivo = public_path($actividad->$campo);
             
             // Eliminar el archivo del servidor
-            if (file_exists($rutaArchivo)) {
+            if ($rutaArchivo && file_exists($rutaArchivo)) {
                 unlink($rutaArchivo);
-            }
-    
+        
             // Eliminar referencia en la base de datos
             $actividad->$campo = null;
             $actividad->save();
@@ -284,6 +295,6 @@ class actividadesController extends Controller
             return response()->json(['success' => true, 'message' => 'Archivo eliminado correctamente.']);
         }
     
-        return response()->json(['success' => false, 'message' => 'Archivo no encontrado.']);
+        return response()->json(['success' => false, 'message' => 'Archivo no encontrado.'], 404);
     }
 }

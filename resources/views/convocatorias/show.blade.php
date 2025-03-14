@@ -37,7 +37,7 @@
     hyphens: auto;
     word-wrap: break-word; 
     overflow-wrap: break-word; 
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
     white-space: normal; /* Permitimos el salto de línea */
 }

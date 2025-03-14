@@ -57,7 +57,7 @@
                 @if(isset($convocatoria) && $convocatoria->url_img2)
                         <p id="text_img2">Imagen actual:</p>
                             <img id="preview_img2" src="{{ asset($convocatoria->url_img2) }}" alt="Imagen 2" width="150">
-                            <button type="button" class="btn btn-danger btn-sm mt-2" onclick="eliminarArchivo('{{ route('convocatorias.eliminarArchivo', ['slug' => $convocatoria->slug, 'campo' => 'url_img2']) }}', 'preview_img2', 'text_img2', 'btn_eliminar_img2')">Eliminar</button>
+                            <button type="button" class="btn btn-danger btn-sm mt-2" onclick="eliminarArchivo('{{ route('convocatorias.eliminarArchivo', ['slug' => $convocatoria->slug, 'campo' => 'url_img2']) }}', 'preview_img2', 'text_img2', 'btn_eliminar_img2', 'url_img2')">Eliminar</button>
                     @else
                         <p id="text_img2" style="display:none;">Imagen seleccionada:</p>
                         <img id="preview_img2" src="" alt="Previsualización" width="150" style="display:none;">

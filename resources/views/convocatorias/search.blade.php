@@ -69,30 +69,28 @@
 }
 </style>
 <div class="container-act mt-4">
-        <h2 class="text-center" style="color: #752e0f">Resultados de la búsqueda</h2>
+        <h2 class="text-center mb-4" style="color: #752e0f">Resultados de la búsqueda</h2>
+        <h6>{{ $totalResultados }} coincidencias</h6>
         
         <!-- Buscador -->
-        <div class="d-flex justify-content-end mt-3">
-        <form action="{{ route('actividades.buscar') }}" method="POST" class="d-flex">
+        <form action="{{ route('convocatorias.buscar') }}" method="POST" class="custom-search-form d-flex">
             @csrf
-            <input type="text" name="keyword" value="{{ $query ?? '' }}" placeholder="Buscar actividades..." class="form-control me-2">
+            <input type="text" name="keyword" value="{{ $query ?? '' }}" placeholder="Buscar convocatorias..." class="w-5 content-end form-control rounded-pill">
             <button type="submit" class="btn" style="background-color: #752e0f color: #e19d65">Buscar</button>
         </form>
-        </div>
 
-
-    @if($actividades->isEmpty())
-        <p class="text-center mt-4">No se encontraron resultados.</p>
+    @if($convocatorias->isEmpty())
+        <p class="text-center">No se encontraron resultados.</p>
     @else
-        <div class="row mt-4">
-            @foreach($actividades as $actividad)
+        <div class="row-4">
+            @foreach($convocatorias as $convocatoria)
                 <div class="col-md-4 mb-4">
                     <div class="card-act">
-                        <img src="{{ $actividad->url_img1 ? asset($actividad->url_img1) : asset('./catedra/Jose-Marti.jpg') }}" class="card-img-top-act" alt="Imagen de actividad">
+                        <img src="{{ $convocatoria->url_img1 ? asset($convocatoria->url_img1) : asset('./catedra/Jose-Marti.jpg') }}" class="card-img-top-act" alt="Imagen de convocatoria">
                         <div class="card-body-act">
-                            <h5 class="card-title-buscador">{{ $actividad->titulo }}</h5>
-                            <div class="card-text">{!! Str::limit($actividad->descripcion, 100) !!}</div>
-                            <a href="{{ route('actividades.show', $actividad->slug) }}" class="btn boton-act">Ver más</a>
+                            <h5 class="card-title-buscador">{{ $convocatoria->titulo }}</h5>
+                            <div class="card-text">{!! Str::limit($convocatoria->descripcion, 100) !!}</div>
+                            <a href="{{ route('convocatorias.show', $convocatoria->slug) }}" class="btn boton-act">Ver más</a>
                         </div>
                         </div>
                     </div>
@@ -103,7 +101,7 @@
 
     <!-- Paginación -->
     <div class="mt-4">
-        {{ $actividades->appends(['keyword' => request('keyword')])->links() }}
+        {{ $convocatorias->appends(['keyword' => request('keyword')])->links() }}
     </div>
 </div>
 @endsection

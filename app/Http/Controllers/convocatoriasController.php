@@ -24,6 +24,22 @@ class convocatoriasController extends Controller
     }
     public function search_convocatoria(Request $request) {
 
+        $mensajes = [
+            'keyword.required' => 'Se requiere agregar un texto.',
+            'keyword.string' => 'El dato a buscar debe ser un texto.',
+            'keyword.min' => 'Su busqueda debe contener minimo 3 caracteres.',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'keyword' => 'required|string|min:3',
+        ],$mensajes);
+
+        if ($validator->fails()) {
+            return redirect()->route('convocatorias') // Cambia por la ruta de tu formulario
+                ->withErrors($validator) // Enviar errores a la vista
+                ->withInput();
+        }
+
         $query = $request->input('keyword');
 
         $convocatorias = Convocatorias::search($query)->paginate(24);
@@ -31,7 +47,9 @@ class convocatoriasController extends Controller
             $convocatoria->descripcion_truncado = $this->truncateHtml($convocatoria->descripcion, 100);
         }
 
-        return view ("convocatorias" , compact('convocatorias', 'query'));
+        $totalResultados = $convocatoria->total();
+
+        return view ("convocatorias.search" , compact('convocatorias', 'query', 'totalResultados'));
     }   
 
     function truncateHtml($html, $limit = 100)
@@ -249,8 +267,24 @@ class convocatoriasController extends Controller
     public function destroy($id) {
 
         $convocatoria = Convocatorias::findOrFail($id);
+            // Eliminar archivos relacionados con la convocatoria, si existen
+    if ($convocatoria->url_img1 && file_exists(public_path($convocatoria->url_img1))) {
+        unlink(public_path($convocatoria->url_img1));  // Eliminar archivo de imagen 1
+    }
+
+    if ($convocatoria->url_img2 && file_exists(public_path($convocatoria->url_img2))) {
+        unlink(public_path($convocatoria->url_img2));  // Eliminar archivo de imagen 2
+    }
+
+    if ($convocatoria->archivo1 && file_exists(public_path($convocatoria->archivo1))) {
+        unlink(public_path($convocatoria->archivo1));  // Eliminar archivo 1
+    }
+
+    if ($convocatoria->archivo2 && file_exists(public_path($convocatoria->archivo2))) {
+        unlink(public_path($convocatoria->archivo2));  // Eliminar archivo 2
+    }
         $convocatoria->delete();
-        return redirect()->route('convocatoria.admin')->with('success', 'convocatoria eliminada correctamente');
+        return redirect()->route('convocatorias.admin')->with('success', 'convocatoria eliminada correctamente');
     }
         // Eliminar imagen
         public function eliminarArchivo($slug, $campo)

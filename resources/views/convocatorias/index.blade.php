@@ -73,8 +73,46 @@
     background-color: #e19d65;
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if ($errors->any())
+<script>
+    let errorMessages = `
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-sm">• {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `;
+
+    Swal.fire({
+                title: 'Espera...',
+                html: errorMessages,
+                icon: 'error',
+                position: 'top-end', // Coloca la alerta en la esquina superior derecha
+                showConfirmButton: false, // Oculta el botón de 'OK'
+                timer: 1500,
+                timerProgressBar: true,
+                backdrop: false, // No oscurece la pantalla
+                allowOutsideClick: true,
+                customClass: {
+                    popup: 'swal-popup', 
+                    title: 'swal-title', 
+                    text: 'swal-text',
+                },
+            });
+</script>
+@endif
 <div class="container-act mt-4">
     <h2 class="text-center mb-4">Convocatorias</h2>
+    {{-- Formulario de busqueda para convocatorias --}}
+    <div class="d-flex justify-content-end align-items-center mb-4">
+        <form action="{{ route('convocatorias.buscar') }}" method="POST" class="d-flex mb-4">
+            @csrf
+            <input type="text" name="keyword" value="{{ $query ?? '' }}" placeholder="Buscar convocatorias..." class="form-control me-2">
+            <button type="submit" class="btn" style="background-color: #752e0f color: #e19d65">Buscar</button>
+        </form>
+    </div>
+    {{-- contenido del index --}}
     <div class="row">
         @foreach($convocatorias as $convocatoria)
             <div class="col-md-4 mb-5 d-flex justify-content-center">

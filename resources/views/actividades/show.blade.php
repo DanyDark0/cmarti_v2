@@ -14,7 +14,15 @@
     font-size: 16px; /* Tamaño más pequeño */
     color: gray; /* Opcional, para que se vea más sutil */
 }
-  .content {
+.btn {
+    color: #000000;
+    background-color: #b3833f;
+    border: none;
+}
+.btn:hover {
+    background-color: #db9167;
+}
+.content {
     text-align: justify; /* Justifica el texto */
     background-color: #ffffff; /* Color beige claro para el fondo */
     padding: 20px; /* Espaciado interno */
@@ -31,7 +39,7 @@
     hyphens: auto;
     word-wrap: break-word; 
     overflow-wrap: break-word; 
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
     white-space: normal; /* Permitimos el salto de línea */
 }
@@ -79,10 +87,11 @@
             @endif
         </ul>
     </div>
+        <!-- Botón de regreso -->
+        <a href="{{ route('actividades') }}" class="btn btn-primary mt-3">Volver</a>
 </div> 
     
-    <!-- Botón de regreso -->
-    <a href="{{ route('actividades') }}" class="btn btn-primary mt-3">Volver</a>
+
 </div>
     
 @endsection

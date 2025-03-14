@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-6 text-center">Directorio</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center">Administración de Directorio</h1>
 
         <!-- Botón para agregar nuevo -->
         <a href="{{ route('directorio.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4 inline-block">

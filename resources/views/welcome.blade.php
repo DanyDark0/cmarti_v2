@@ -13,9 +13,7 @@
 }
   .custom-card {
     background-color: #e6b168;
-    margin: 20px; /* Márgenes externos */
-    border-radius: 8px; /* Bordes redondeados */
-    height: 100%; /* Hace que todas las tarjetas tengan la misma altura */
+    border-radius: 8px; /* Bordes redondeados */ /* Hace que todas las tarjetas tengan la misma altura */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -38,8 +36,7 @@
     flex-grow: 1; /* Permite que el contenido de la tarjeta se expanda */
     display: flex;
     flex-direction: column;
-    min-height: 250px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 }
 
   .card-color {
@@ -48,7 +45,7 @@
   .card-title {
     text-align: center; /* Centra el texto */
     color: rgb(0, 0, 0);
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     font-weight: bold;
     overflow: hidden;
     display: -webkit-box;
@@ -68,8 +65,8 @@
     overflow-wrap: break-word;
     white-space: normal;
     text-align: left; /* O usa text-align: start; */
-    font-size: 1.2rem; /* Ajusta según necesidad */
-    line-height: 1.6; 
+    font-size: 1 rem; /* Ajusta según necesidad */
+    line-height: 1.4; 
 }
 
   .boton-act {
@@ -82,6 +79,7 @@
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
     display: inline-block;
+    margin: 10px;
 }
 
 .boton-act:hover {
@@ -90,15 +88,23 @@
     transform: scale(1.05); /* Efecto de agrandar ligeramente */
 }
 
+/* Nuevas reglas para las columnas */
+@media (min-width: 1200px) {
+    .col-lg-3 {
+        flex: 0 0 23%; /* Ajusta el tamaño de cada card para que se acomoden 4 en una fila */
+        max-width: 23%;
+    }
+}
+
 </style>
 
 <div class="container px-4 py-5" id="custom-cards">
     <h2 class="pb-2 text-center">Noticias</h2>
-    <div class="content row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 py-5">
+    <div class="content row row-cols-1 row-cols-md-2  row-cols-lg-4  py-5">
       @foreach ($noticias as $noticia)
     
       <div class="col">
-          <div class="custom-card mb-4">
+          <div class="custom-card">
               <!-- Mostrar solo la primera imagen de la noticia -->
               @if ($noticia->url_img1)
                   <img src="{{  asset($noticia->url_img1) }}" class="custom-card-img-top" alt="Imagen de noticia">
@@ -108,8 +114,8 @@
               <div class="card-body">
                   <h5 class="card-title">{{ $noticia->titulo }}</h5> 
                   <p class="card-text">{!! strip_tags(Str::limit($noticia->descripcion, 300, '...')) !!}</p> 
-                  <a href="{{ route('actividades.show', $noticia->slug) }}" class="boton-act btn">Ver más</a>
               </div>
+              <a href="{{ route('actividades.show', $noticia->slug) }}" class="boton-act btn">Ver más</a>
           </div>
       </div>
   @endforeach
