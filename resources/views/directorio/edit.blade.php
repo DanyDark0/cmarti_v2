@@ -27,7 +27,7 @@
             <input type="file" name="imagen" id="imagen" class="form-control" accept=".jpeg,.png,.jpg,.gif" onchange="previewImage(event, 'preview_img1', 'text_img1', 'btn_eliminar_img1')">
             @if(isset($directorio) && $directorio->imagen)
                     <p id="text_img1">Imagen actual:</p>
-                    <img id="preview_img1" src="{{ asset('storage/'.$directorio->imagen) }}" alt="Imagen 1" width="150">
+                    <img id="preview_img1" src="{{ asset($directorio->imagen) }}" alt="Imagen 1" width="150">
                     <button type="button" id="btn_eliminar_img1" class="btn btn-danger btn-sm mt-2" onclick="eliminarArchivo('{{ route('directorios.eliminarArchivo', ['id' => $directorio->id, 'campo' => 'imagen']) }}', 'preview_img1', 'text_img1' , 'btn_eliminar_img1', 'imagen')">Eliminar</button>
                 @else
                     <p id="text_img1" style="display:none;">Imagen seleccionada:</p>

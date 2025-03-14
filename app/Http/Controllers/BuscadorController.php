@@ -14,9 +14,13 @@ class BuscadorController extends Controller
         /* $validator = Validator::make([
             'keyword' => 'required|string|min:3',
         ]); */
-        $request->validate([
+        $validator = Validator::make( $request->all(), [
             'keyword' => 'required|string|min:3',
+        ], [
+            'keyword.required' => 'Agregue texto',
+            'keyword.min' => 'Minimo 3 caractéres',
         ]);
+
 
         // Obtener el término de búsqueda
         $query = $request->input('keyword');

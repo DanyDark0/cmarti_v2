@@ -75,7 +75,7 @@
 
             @if ($directorioFiltrado->count() > 0)
                 <div class="col-12 my-3">
-                    <h3 class="text-center text-white py-2"  style="background-color: #752e0f; border-radius: 3px;">{{ $catedra }}</h3>
+                    <h3 class="text-center text-white py-2 mb-2"  style="background-color: #752e0f; border-radius: 3px;">{{ $catedra }}</h3>
                 </div>
 
                 @foreach ($directorioFiltrado as $persona)
@@ -83,10 +83,10 @@
                     <div class="card-dir">
                             <p>
                                 <img class="img-fluid rounded-circle" 
-                                    src="{{ $persona->imagen ? asset('storage/' . $persona->imagen) : asset('catedra/Jose-Marti.jpg') }}" 
+                                    src="{{ $persona->imagen ? asset( $persona->imagen) : asset('catedra/Jose-Marti.jpg') }}" 
                                     alt="Imagen de {{ $persona->nombre }}">
                             </p>
-                            <h2 class="card-title">{{ $persona->nombre }}</h2>
+                            <h2 class="card-title mb-2">{{ $persona->nombre }}</h2>
                             @if (!empty($persona->telefono))
                                 <h5>Teléfono</h5>
                                 <p class="card-text">{{ $persona->telefono }}</p>

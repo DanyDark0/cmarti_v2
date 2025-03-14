@@ -68,18 +68,19 @@ class DocumentosController extends Controller
         $documento->titulo = $request->titulo;
         $documento->descripcion = $request->descripcion;
         $documento->slug = Str::slug($request->titulo, '-');
+        $documento->save();
 
             // Guardar archivos con nombre original
             if ($request->hasFile('doc1')) {
                 $file = $request->file('doc1');
-                $fileName = $file->getClientOriginalName();
+                $fileName = $documento->id . '_' . $file->getClientOriginalName();
                 $file->storeAs('documentos', $fileName, 'public');
                 $documento->doc1 = "storage/documentos/$fileName";
             }
     
             if ($request->hasFile('doc2')) {
                 $file = $request->file('doc2');
-                $fileName = $file->getClientOriginalName();
+                $fileName = $documento->id . '_' . $file->getClientOriginalName();
                 $file->storeAs('documentos', $fileName, 'public');
                 $documento->doc2 = "storage/documentos/$fileName";
             }   
@@ -133,14 +134,16 @@ class DocumentosController extends Controller
 
         $documento->titulo = $request->titulo;
         $documento->descripcion = $request->descripcion;
+        $documento->save();
 
                 // Actualizar archivos
                 if ($request->hasFile('doc1')) {
                     if ($documento->doc1 && file_exists(storage_path('app/public/' . str_replace('storage/', '', $documento->doc1)))) {
                         unlink(storage_path('app/public/' . str_replace('storage/', '', $documento->doc1)));
                     }
+
                     $file = $request->file('doc1');
-                    $fileName = $file->getClientOriginalName();
+                    $fileName = $documento->id . '_' . $file->getClientOriginalName();
                     $file->storeAs('documentos', $fileName, 'public');
                     $documento->doc1 = "storage/documentos/$fileName";
                 }
@@ -149,8 +152,9 @@ class DocumentosController extends Controller
                     if ($documento->doc2 && file_exists(storage_path('app/public/' . str_replace('storage/', '', $documento->doc2)))) {
                         unlink(storage_path('app/public/' . str_replace('storage/', '', $documento->doc2)));
                     }
+                    
                     $file = $request->file('doc2');
-                    $fileName = $file->getClientOriginalName();
+                    $fileName = $documento->id . '_' . $file->getClientOriginalName();
                     $file->storeAs('documentos', $fileName, 'public');
                     $documento->doc2 = "storage/documentos/$fileName";
                 }

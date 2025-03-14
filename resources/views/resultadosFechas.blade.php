@@ -11,7 +11,6 @@
         overflow: hidden;
     }
     .card-body-search {
-        background: linear-gradient(to right, #e0b883, #9b5025);
         padding: 20px; 
         border-radius: 10px;
     }

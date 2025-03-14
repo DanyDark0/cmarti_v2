@@ -72,35 +72,6 @@
     background-color: #e19d65;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@if ($errors->any())
-<script>
-    let errorMessages = `
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li class="text-sm">• {{ $error }}</li>
-                        @endforeach
-                    </ul>
-                `;
-
-    Swal.fire({
-                title: 'Espera...',
-                html: errorMessages,
-                icon: 'error',
-                position: 'top-end', // Coloca la alerta en la esquina superior derecha
-                showConfirmButton: false, // Oculta el botón de 'OK'
-                timer: 1500,
-                timerProgressBar: true,
-                backdrop: false, // No oscurece la pantalla
-                allowOutsideClick: true,
-                customClass: {
-                    popup: 'swal-popup', 
-                    title: 'swal-title', 
-                    text: 'swal-text',
-                },
-            });
-</script>
-@endif
 <div class="container-act mt-4">
     <h2 class="text-center mb-4" style="color: #752e0f">Actividades</h2>
      {{-- Formulario de buscador exclusivo de actividades --}}

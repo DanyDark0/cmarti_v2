@@ -30,7 +30,7 @@
                             </td>
                             <td class="py-3 px-6 text-center">
                                 @if($persona->imagen)
-                                    <img src="{{ asset('storage/' . $persona->imagen) }}" alt="Imagen" class="w-16 h-16 object-cover rounded-full mx-auto">
+                                    <img src="{{ asset( $persona->imagen) }}" alt="Imagen" class="w-16 h-16 object-cover rounded-full mx-auto">
                                 @else
                                     <span class="text-gray-500">Sin imagen</span>
                                 @endif

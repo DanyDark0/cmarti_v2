@@ -47,13 +47,14 @@ class directorioController extends Controller
         $directorio->catedra = $request->catedra;
         $directorio->correo = $request->correo;
         $directorio->telefono = $request->telefono;
+        $directorio->save();
 
         if ($request->hasFile('imagen')) {
-            $fileName = Str::slug($request->nombre, '_') . '.' . $request->file('imagen')->getClientOriginalExtension();
+            $fileName = $directorio->id . '_' . Str::slug($request->nombre, '_') . '.' . $request->file('imagen')->getClientOriginalExtension();
             $imagenPath = $request->file('imagen')->storeAs('directorio', $fileName, 'public');
-            $directorio->imagen = 'directorio/'. $fileName;
+            $directorio->imagen = 'storage/directorio/'. $fileName;
         }
-        
+         
         $directorio->save();
 
         return redirect()->route('directorio.admin')->with('success', 'Directorio agregado correctamente');
@@ -91,6 +92,7 @@ class directorioController extends Controller
         $directorio->catedra = $request->catedra;
         $directorio->correo = $request->correo;
         $directorio->telefono = $request->telefono;
+        $directorio->save();
 
          // Actualizar imagen
          if ($request->hasFile('imagen')) {
@@ -99,11 +101,11 @@ class directorioController extends Controller
                 Storage::delete('public/' . $directorio->imagen);
             }
 
-            $fileName = Str::slug($request->nombre, '_') . '.' . $request->file('imagen')->getClientOriginalExtension();
+            $fileName =  $directorio->id . '_' . Str::slug($request->nombre, '_') . $directorio->id . '.' . $request->file('imagen')->getClientOriginalExtension();
 
             // Guardar nueva imagen
             $imagenPath = $request->file('imagen')->storeAs('directorio/', $fileName);
-            $directorio->imagen = 'directorio/' . $fileName;
+            $directorio->imagen = '/storage/directorio/' . $fileName;
         }
 
         $directorio->save();
@@ -116,12 +118,16 @@ class directorioController extends Controller
         $directorio = Directorio::findOrFail($id);
             // Verificar si el directorio tiene archivos asociados 
 
-        // Obtener la ruta del archivo 
-        $filePath = public_path('storage/'.$directorio->imagen);
+        // Verificar si hay una imagen y eliminarla
+        if ($directorio->imagen) {
+            // Extraer la ruta relativa a `storage/app/public`
+            $relativePath = str_replace('storage/', '', $directorio->imagen);
+
         // Verificar si el archivo existe y eliminarlo
-        if ($directorio->imagen && file_exists($filePath)) {
-            unlink($filePath);
+        if (Storage::disk('public')->exists($relativePath)) {
+            Storage::disk('public')->delete($relativePath);
         }
+    }
         $directorio->delete();
         return redirect()->route('directorio.admin')->with('success', 'Se elimino el elemnto correctamente');
     }
