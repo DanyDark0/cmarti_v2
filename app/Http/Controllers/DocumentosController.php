@@ -67,6 +67,7 @@ class DocumentosController extends Controller
         $documento = new Documentos();
         $documento->titulo = $request->titulo;
         $documento->descripcion = $request->descripcion;
+        $documento->slug = Str::slug($request->titulo, '-');
 
             // Guardar archivos con nombre original
             if ($request->hasFile('doc1')) {
@@ -97,12 +98,13 @@ class DocumentosController extends Controller
     public function edit($slug)
     {
         // Buscar la documento por el Slug
-        $documentos = Documentos::where('slug', $slug)->firstOrFail();
+        $documento = Documentos::where('slug', $slug)->firstOrFail();
         // Retornar la vista con la documento encontrada
-        return view('documentos.edit', compact('documentos'));
+        return view('documentos.edit', compact('documento'));
     }
 
     public function update(Request $request, $slug) {
+
         $documento = Documentos::where('slug', $slug)->firstOrFail();
 
         $validator = Validator::make($request->all(), [
@@ -110,7 +112,7 @@ class DocumentosController extends Controller
             'required',
             'string',
             'max:255',
-            Rule::unique('actividades')->ignore($documento->id),
+            Rule::unique('documentos')->ignore($documento->id),
         ],
             'descripcion' => 'nullable|string',
             'doc1' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',

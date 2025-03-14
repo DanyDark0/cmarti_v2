@@ -102,7 +102,6 @@
 </script>
 @endif
 <div class="container-act mt-4">
-
     <h2 class="text-center mb-4" style="color: #752e0f">Actividades</h2>
      {{-- Formulario de buscador exclusivo de actividades --}}
     <div class="d-flex justify-content-end align-items-center mb-4">

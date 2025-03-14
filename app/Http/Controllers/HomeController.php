@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Actividad;
 use App\Models\Convocatorias;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
 {
@@ -57,9 +58,23 @@ rsort($years); // Ordena los años de mayor a menor
 {
     $year = $request->year;
 
+    if (!$year) {
+        return redirect()->route('welcome')->with('error', 'Debe seleccionar un año válido.');
+    }
+
     $actividades = Actividad::whereYear('fecha', $year)->get();
     $convocatorias = Convocatorias::whereYear('fecha', $year)->get();
 
-    return view('resultados_fechas', compact('year', 'actividades', 'convocatorias'));
+    $resultados = $actividades->merge($convocatorias)->sortByDesc('fecha');
+
+    $perPage = 8;
+    $currentPage = request()->input('page', 1);
+    $currentItems = $resultados->slice(($currentPage - 1) * $perPage, $perPage)->all();
+    $resultadosPaginados = new LengthAwarePaginator($currentItems, $resultados->count(), $perPage, $currentPage, [
+        'path' =>request()->url(),
+        'query' => request()->query(),
+    ]);
+
+    return view('resultadosFechas', compact('year', 'resultadosPaginados'));
 }
 }

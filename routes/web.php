@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [HomeController::class, 'welcome'])->name('home');
+Route::get('/get-years', [HomeController::class, 'getYears'])->name('get.years');
+Route::get('/filtrar-fecha', [HomeController::class, 'filtrarFecha'])->name('filtrar.fecha');
 
 Route::get('/historia', function() {
     return view('historia');
@@ -25,9 +27,7 @@ Route::get('/biografia', function() {
     return view('josemarti');
 })->name('biografia');
 
-Route::get('/galeria', function() {
-    return view('galeria.index');
-})->name('galeria');
+Route::get('/galeria', [GaleriaController::class, 'index'])->name('galeria');
 
 Route::get('/documentos', function() {
     return view('documentos.index');
@@ -43,12 +43,6 @@ Route::get('/convocatorias', function() {
 // })->name('actividades');
 
 //Ruta del filtro de años
-Route::get('/filtrar-fecha', [HomeController::class, 'getYears'])->name('filtrar.fecha');
-
-
-Route::get('/resultados-fechas', [HomeController::class, 'filtrarFecha'])->name('resultados.fechas');
-
-
 
 Route::get('galerias/crear', [GaleriaController::class, 'create'])->name('crear_Galeria');
 Route::post('galerias/store', [GaleriaController::class, 'store'])->name('galerias.store');

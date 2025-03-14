@@ -238,7 +238,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ Route('documentos') }}">Documentos</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ Route('convocatorias') }}">Convocatorias</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ Route('actividades')}}">Actividades</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ Route('galeria') }}">Galería</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('galeria') }}">Galería</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ Route('directorio.index') }}">Directorio</a></li>
                 </ul>
                 <form method="POST" action="{{ route('buscador')}}" class="custom-search-form d-flex" role="search">

@@ -13,14 +13,14 @@
         @endif
     
     <!-- Formulario para editar un documentos -->
-    <form action="{{ route('documentos.update', $documentos->slug) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+    <form action="{{ route('documentos.update', $documento->slug) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT') <!-- Método PUT para la actualización -->
 
         <!-- Campo para el título -->
         <div class="mb-3">
             <label for="titulo" class="form-label font-bold">Título</label>
-            <input type="text" class="form-control @error('titulo') is-invalid @enderror" id="titulo" name="titulo" value="{{ old('titulo', $documentos->titulo) }}">
+            <input type="text" class="form-control @error('titulo') is-invalid @enderror" id="titulo" name="titulo" value="{{ old('titulo', $documento->titulo) }}">
             @error('titulo')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -29,7 +29,7 @@
         <!-- Campo para la descripción -->
         <div class="mb-3">
             <label for="descripcion" class="form-label font-bold">Descripción</label>
-            <textarea class="form-control @error('descripcion') is-invalid @enderror" id="descripcion" name="descripcion" rows="3">{{ old('descripcion', $documentos->descripcion) }}</textarea>
+            <textarea class="form-control @error('descripcion') is-invalid @enderror" id="descripcion" name="descripcion" rows="3">{{ old('descripcion', $documento->descripcion) }}</textarea>
             @error('descripcion')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -43,9 +43,9 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
             <!-- Mostrar el archivo actual si existe -->
-            @if ($documentos->doc1)
+            @if ($documento->doc1)
                 <div class="mt-2">
-                    <a href="{{ asset('storage/' . $documentos->doc1) }}" target="_blank">Ver  {{ basename($documentos->doc1)}}</a>
+                    <a href="{{ asset('storage/' . $documento->doc1) }}" target="_blank">Ver  {{ basename($documento->doc1)}}</a>
                 </div>
             @endif
         </div>
@@ -58,9 +58,9 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
             <!-- Mostrar el archivo actual si existe -->
-            @if ($documentos->doc2)
+            @if ($documento->doc2)
                 <div class="mt-2">
-                    <a href="{{ asset('storage/' . $documentos->doc2) }}" target="_blank">Ver {{ basename($documentos->doc2)}}</a>
+                    <a href="{{ asset('storage/' . $documento->doc2) }}" target="_blank">Ver {{ basename($documento->doc2)}}</a>
                 </div>
             @endif
         </div>

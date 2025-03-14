@@ -121,7 +121,7 @@
                     <h3 class="text-lg font-semibold mt-6">Agregar nuevos archivos</h3>
                     <form id="uploadForm" action="{{ route('documentacion_galeria.store2') }}" method="POST" enctype="multipart/form-data" class="mt-4">
                         @csrf
-                        <input type="hidden" name="id_galeria" value="{{ $galeria->id }}">
+                        <input type="hidden" name="galeria_id" value="{{ $galeria->id }}">
                     
                         <label for="url_imagen" class="block text-lg font-medium text-gray-700">Seleccionar imágenes:</label>
                         <input type="file" id="url_imagen" name="url_imagen[]" accept="image/*" multiple 
@@ -154,7 +154,7 @@
 
             input.addEventListener("change", function () {
                 let formData = new FormData();
-                formData.append("url_imagen", input.files[0]);
+                formData.append("imagen", input.files[0]);
                 formData.append("_method", "PUT"); // Laravel espera un PUT
 
                 //let url = `/galerias/subir_archivos/update/${id}`;

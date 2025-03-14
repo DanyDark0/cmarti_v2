@@ -18,7 +18,7 @@ class GaleriaController extends Controller
         //$actividades = actividades::all();
         $galerias = galeria::with('fotos')->orderBy('created_at', 'desc')->paginate(3);
 
-        return view("paginas_publicas.galeria_publica", compact('galerias'));
+        return view("galerias.carusel", compact('galerias'));
         /* return response()->json([
             'success' => true,
             'data' => $galeria,
@@ -87,7 +87,7 @@ class GaleriaController extends Controller
                     $extension = $url_imagen->getClientOriginalExtension();
                     $nombreArchivo = 'url_imagen_' . uniqid() . '.' . $extension;
                     //$ruta = public_path('img/galeria/');
-                    $ruta = Storage::disk('public')->path('galeria/');
+                    $ruta = Storage::disk('public')->path('store/galeria/');
                     $url_imagen->move($ruta, $nombreArchivo);
 
                     $documentacion = new fotos();
@@ -140,7 +140,7 @@ class GaleriaController extends Controller
     public function edit(string $id)
     {
         $galeria = galeria::findOrFail($id);
-        $documentos_galeria = fotos::where('id_galeria', $id)->get();
+        $documentos_galeria = fotos::where('galeria_id', $id)->get();
 
         return view("galerias.edit", compact('galeria','documentos_galeria'));
     }

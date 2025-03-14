@@ -10,13 +10,18 @@
     margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
 }
   .custom-card {
     background-color: #e6b168;
-    border-radius: 8px; /* Bordes redondeados */ /* Hace que todas las tarjetas tengan la misma altura */
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between; /* Distribuye el contenido de manera equilibrada */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
   }
 
 
@@ -98,9 +103,9 @@
 
 </style>
 
-<div class="container px-4 py-5" id="custom-cards">
-    <h2 class="pb-2 text-center">Noticias</h2>
-    <div class="content row row-cols-1 row-cols-md-2  row-cols-lg-4  py-5">
+<div class="container-act mt-4">
+    <h2 class="mb-4 text-center">Noticias</h2>
+    <div class="content row row-cols-1 row-cols-md-2  row-cols-lg-4 g-4 py-5">
       @foreach ($noticias as $noticia)
     
       <div class="col">
@@ -126,20 +131,20 @@
     <h2 class="text-center mb-4">Filtrar por Año</h2>
     <form action="{{ route('filtrar.fecha') }}" method="GET">
       @csrf
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <select name="year" class="form-control">
-                    <option value="">Seleccione un año</option>
-                    @foreach ($years as $year)
-                        <option value="{{ $year }}">{{ $year }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Buscar</button>
-            </div>
-        </div>
-    </form>
+      <div class="row justify-content-center">
+          <div class="col-md-4">
+              <select name="year" class="form-control">
+                  <option value="">Seleccione un año</option>
+                  @foreach ($years as $year)
+                      <option value="{{ $year }}">{{ $year }}</option>
+                  @endforeach
+              </select>
+          </div>
+          <div class="col-md-2">
+              <button type="submit" class="btn btn-primary">Buscar</button>
+          </div>
+      </div>
+  </form>
 </div>
 
   @endsection

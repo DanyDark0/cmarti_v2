@@ -5,42 +5,36 @@
         </h2>
         <link href="{{ asset('vendor/lightbox2-2.11.5/dist/css/lightbox.min.css') }}" rel="stylesheet" />
         <style>
-
-            .swal-popup {
-                @apply bg-white shadow-lg rounded-xl p-6;
+            .carousel {
+                position: relative;
+                width: 100%;
+                height: 200px;
+                overflow: hidden;
             }
-
-            .swal-title {
-                @apply text-2xl font-bold text-gray-800;
+            .carousel img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: none;
             }
-
-            .swal-text {
-                @apply text-lg text-gray-600;
+            .carousel img.active {
+                display: block;
             }
-
-            /* Botón estilo */
-            #btn_agregar, #btn_buscar, #btn_regresar {
-                width: 48px;
+            .carousel button {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                border: none;
+                padding: 10px;
+                cursor: pointer;
             }
-
-            #btn_agregar:hover, #btn_buscar:hover, #btn_regresar:hover {
-                width: 140px;
-                background-color: white;
-                color: cadetblue;
-                border-color: cadetblue;
-                border-width: 2px;
+            .carousel .prev {
+                left: 10px;
             }
-
-            @media (max-width: 640px) {
-                /* Ocultar carrusel de imágenes en móviles */
-                #carrusel {
-                    display: none;
-                }
-
-                /* Asegurar que el botón de agregar y otros botones estén centrados */
-                #btn_agregar:hover, #btn_buscar:hover, #btn_regresar:hover {
-                    justify-content: center;
-                }
+            .carousel .next {
+                right: 10px;
             }
         </style>
     </x-slot>
@@ -49,41 +43,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
-                    @php
-                        $esMovil = request()->header('User-Agent') && preg_match('/(android|iphone|ipad|mobile)/i', request()->header('User-Agent'));
-                    @endphp
                     @forelse($galerias as $galeria)
                         <div class="max-w-sm h-[350px] min-h-[350px] p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col justify-between">
-                            
-                            <div>
-                                <a href="{{ route('editar_Galeria', ['id' => $galeria->id]) }}">
-                                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate min-h-[48px]">
-                                        {{ Str::limit($galeria->titulo, 50, '...') }}
-                                    </h5>
-                                </a>                      
-                                <div class="mb-0">
-                                    <div class="relative" id="carrusel">
-                                        <div class="carousel-container overflow-hidden relative h-[200px]" data-id="{{ $galeria->id }}" data-current-index="0">
-                                            <!-- Carrusel de imágenes -->
-                                            <div class="carousel-wrapper flex transition-transform duration-700 ease-in-out">
-                                                @foreach($galeria->fotos as $foto)
-                                                    <div class="carousel-item min-w-full flex-shrink-0 flex justify-center items-center h-[200px]">
-                                                        <a href="{{ asset('storage/galeria/'.$foto->url_imagen) }}">
-                                                            <img src="{{ asset('storage/galeria/'.$foto->url_imagen) }}" width="100" alt="Imagen {{ $foto->id }}">
-                                                        </a>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                            <!-- Controles del carrusel -->
-                                            <button class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-black text-white p-2 rounded-full prevBtn" data-id="{{ $galeria->id }}">
-                                                &lt;
-                                            </button>
-                                            <button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-black text-white p-2 rounded-full nextBtn" data-id="{{ $galeria->id }}">
-                                                &gt;
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate min-h-[48px]">
+                                {{ Str::limit($galeria->titulo, 50, '...') }}
+                            </h5>
+                            <div class="carousel">
+                                @foreach($galeria->fotos as $index => $foto)
+                                    <img src="{{ asset('storage/galeria/'.$foto->url_imagen) }}" class="{{ $index == 0 ? 'active' : '' }}">
+                                @endforeach
+                                <button class="prev">&#10094;</button>
+                                <button class="next">&#10095;</button>
                             </div>
                             <div class="mt-auto flex gap-2 pt-3">
                                 <a href="{{ route('editar_Galeria', ['id' => $galeria->id]) }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-full hover:bg-blue-700">
@@ -104,17 +74,16 @@
                         </div>
                     @empty
                         <div class="col-span-4 text-center">
-                            <p class="text-gray-500">No se encontraron galerias.</p>
+                            <p class="text-gray-500">No se encontraron galerías.</p>
                         </div>
                     @endforelse
                 </div>
                 <div class="mt-6">
                     {{ $galerias->links() }}
-                </div> 
+                </div>
             </div>
         </div>
     </div>
-
     <div class="fixed bottom-4 right-4">
         <a href="{{ route('crear_Galeria') }}" id="btn_agregar" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 overflow-hidden">
             <span id="btn_icono" class="transition-all duration-300">
@@ -125,73 +94,28 @@
             <span id="btn_texto" style="user-select: none" class="text-content hidden ml-2">Agregar</span>
         </a>
     </div>
-    <script src="{{ asset('vendor/lightbox2-2.11.5/dist/js/lightbox-plus-jquery.js') }}"></script>
-    <script>
-        const button = document.getElementById("btn_agregar");
-        const icon = document.getElementById("btn_icono");
-        const text = document.getElementById("btn_texto");
-    
-        button.addEventListener("mouseenter", () => {
-            icon.classList.add("hidden");
-            text.classList.remove("hidden");
-        });
-    
-        button.addEventListener("mouseleave", () => {
-            icon.classList.remove("hidden");
-            text.classList.add("hidden");
-        });
-    </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-    const prevBtns = document.querySelectorAll(".prevBtn");
-    const nextBtns = document.querySelectorAll(".nextBtn");
+            document.querySelectorAll(".carousel").forEach(carousel => {
+                let images = carousel.querySelectorAll("img");
+                let currentIndex = 0;
 
-    prevBtns.forEach(prevBtn => {
-        prevBtn.addEventListener("click", function() {
-            const id = prevBtn.getAttribute("data-id");
-            const carouselContainer = document.querySelector(`.carousel-container[data-id="${id}"]`);
-            const carouselWrapper = carouselContainer.querySelector(".carousel-wrapper");
-            const totalItems = carouselWrapper.querySelectorAll(".carousel-item").length;
-            let currentIndex = parseInt(carouselContainer.getAttribute('data-current-index'));
+                function showImage(index) {
+                    images.forEach(img => img.classList.remove("active"));
+                    images[index].classList.add("active");
+                }
 
-            // Desplazar al índice anterior
-            if (currentIndex > 0) {
-                currentIndex--;
-            } else {
-                currentIndex = totalItems - 1;  // Volver al último elemento
-            }
+                carousel.querySelector(".prev").addEventListener("click", function() {
+                    currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+                    showImage(currentIndex);
+                });
 
-            // Actualizar la propiedad de índice
-            carouselContainer.setAttribute('data-current-index', currentIndex);
-
-            // Aplicar el desplazamiento
-            carouselWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+                carousel.querySelector(".next").addEventListener("click", function() {
+                    currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+                    showImage(currentIndex);
+                });
+            });
         });
-    });
-
-    nextBtns.forEach(nextBtn => {
-        nextBtn.addEventListener("click", function() {
-            const id = nextBtn.getAttribute("data-id");
-            const carouselContainer = document.querySelector(`.carousel-container[data-id="${id}"]`);
-            const carouselWrapper = carouselContainer.querySelector(".carousel-wrapper");
-            const totalItems = carouselWrapper.querySelectorAll(".carousel-item").length;
-            let currentIndex = parseInt(carouselContainer.getAttribute('data-current-index'));
-
-            // Desplazar al índice siguiente
-            if (currentIndex < totalItems - 1) {
-                currentIndex++;
-            } else {
-                currentIndex = 0;  // Volver al primer elemento
-            }
-
-            // Actualizar la propiedad de índice
-            carouselContainer.setAttribute('data-current-index', currentIndex);
-
-            // Aplicar el desplazamiento
-            carouselWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
-        });
-    });
-});
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
 </x-app-layout>

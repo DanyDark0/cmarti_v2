@@ -19,14 +19,6 @@ class Documentos extends Model
     
     protected $fillable = ['titulo', 'descripcion', 'doc1', 'doc2', 'slug'];
 
-    public function admin()
-    {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
-        return view('documentos.admin');
-    }
     public static function boot()
     {
         parent::boot();
@@ -39,7 +31,6 @@ class Documentos extends Model
             $documento->slug = Str::slug($documento->titulo);
         });
     }
-
     public function toSearchableArray()
     {
         return [
