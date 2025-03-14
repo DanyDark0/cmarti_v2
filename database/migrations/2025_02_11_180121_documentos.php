@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('documentos', function (Blueprint $table) {
             $table->id();
             $table->string('titulo'); // Título del documento
-            $table->text('cuerpo')->nullable(); // Cuerpo del documento (opcional)
+            $table->text('descripcion')->nullable(); // Cuerpo del documento (opcional)
             $table->string('doc1')->nullable(); // Primer archivo adjunto
             $table->string('doc2')->nullable(); // Segundo archivo adjunto
             $table->softDeletes();

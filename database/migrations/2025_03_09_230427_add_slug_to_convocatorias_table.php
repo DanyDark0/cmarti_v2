@@ -18,7 +18,12 @@ return new class extends Migration
         Schema::table('convocatorias', function (Blueprint $table) {
             $table->string('slug')->unique()->after('titulo');
         });
-    }
+    
+            
+        Schema::table('documentos', function (Blueprint $table) {
+            $table->string('slug')->unique()->after('titulo');
+        });
+        }
 
     /**
      * Reverse the migrations.
