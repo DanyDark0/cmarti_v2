@@ -86,8 +86,9 @@ class convocatoriasController extends Controller
 
     public function store(Request $request)
     {
+        $convocatoria = new Convocatorias();
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
+            'titulo' => ['required','string','max:255',Rule::unique('convocatorias')->ignore($convocatoria->id), ],
             'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

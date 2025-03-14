@@ -52,7 +52,7 @@ rsort($years); // Ordena los años de mayor a menor
             ->unique()
             ->sortDesc();
 
-        return view('home', compact('years'));
+        return view('welcome', compact('years'));
     }
     public function filtrarFecha(Request $request)
 {

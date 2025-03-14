@@ -15,7 +15,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', [HomeController::class, 'welcome'])->name('home');
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 Route::get('/get-years', [HomeController::class, 'getYears'])->name('get.years');
 Route::get('/filtrar-fecha', [HomeController::class, 'filtrarFecha'])->name('filtrar.fecha');
 

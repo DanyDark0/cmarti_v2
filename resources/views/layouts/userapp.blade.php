@@ -227,7 +227,7 @@
             <a href="#" class="navbar-brand">
                 <img src="{{ asset('./catedra/Jose-Marti.jpg') }}" alt="logo Universidad de Guadalajara" class="navbar-logo">
             </a>
-            <a class="navbar-brand" href="{{ route('home')}}">Cátedra José Martí</a>
+            <a class="navbar-brand" href="{{ route('welcome')}}">Cátedra José Martí</a>
             <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -256,7 +256,7 @@
     <div class="card custom-card">
         <a class="navbar-brand">Cátedra José Martí</a>
         <div class="card-body">
-            <a href="{{ route('home')}}">
+            <a href="{{ route('welcome')}}">
                 <img src="{{ asset('./catedra/martiheader_0.jpg') }}" alt="Cátedra José Martí" class="img-fluid w-100">
             </a>
         </div>
