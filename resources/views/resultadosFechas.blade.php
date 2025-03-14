@@ -40,6 +40,6 @@
     {{ $resultadosPaginados->links() }}
     @endif
 
-    <a href="{{ route('home') }}" class="btn btn-secondary mt-3">Volver</a>
+    <a href="{{ route('welcome') }}" class="btn btn-secondary mt-3">Volver</a>
 </div>
 @endsection

@@ -47,7 +47,7 @@ class convocatoriasController extends Controller
             $convocatoria->descripcion_truncado = $this->truncateHtml($convocatoria->descripcion, 100);
         }
 
-        $totalResultados = $convocatoria->total();
+        $totalResultados = $convocatorias->total();
 
         return view ("convocatorias.search" , compact('convocatorias', 'query', 'totalResultados'));
     }   
