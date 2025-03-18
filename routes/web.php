@@ -116,7 +116,7 @@ Route::get('/convocatorias', [convocatoriasController::class, 'index'])->name('c
 Route::get('/convocatorias/{slug}', [convocatoriasController::class, 'show'])->name('convocatorias.show');
 
  //ruta del buscador
-Route::post('/buscador', [BuscadorController::class, 'search'])->name('buscador');
+Route::get('/buscador', [BuscadorController::class, 'search'])->name('buscador');
 
  //Middleware de autentificación 
  Route::middleware(['auth'])->group(function () {

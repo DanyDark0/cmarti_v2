@@ -93,6 +93,17 @@
     transform: scale(1.05); /* Efecto de agrandar ligeramente */
 }
 
+    /* Aplica el estilo solo cuando el select está abierto */
+    .custom-select {
+        max-height: 35px; /* Altura normal cuando está cerrado */
+        overflow-y: hidden;
+    }
+
+    /* Cuando se abre el select, limita la altura y activa el scroll */
+    .custom-select:focus {
+        max-height: 200px; /* Altura máxima cuando se abre */
+        overflow-y: auto;
+    }
 /* Nuevas reglas para las columnas */
 @media (min-width: 1200px) {
     .col-lg-3 {
@@ -133,7 +144,7 @@
       @csrf
       <div class="row justify-content-center">
           <div class="col-md-4">
-              <select name="year" class="form-control">
+              <select name="year" class="form-control custom-select">
                   <option value="">Seleccione un año</option>
                   @foreach ($years as $year)
                       <option value="{{ $year }}">{{ $year }}</option>

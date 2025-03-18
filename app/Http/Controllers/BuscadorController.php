@@ -21,6 +21,9 @@ class BuscadorController extends Controller
             'keyword.min' => 'Minimo 3 caractéres',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         // Obtener el término de búsqueda
         $query = $request->input('keyword');

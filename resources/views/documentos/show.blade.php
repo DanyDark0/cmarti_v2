@@ -19,7 +19,7 @@
     <div class="mb-3">
         <label for="doc1" class="form-label">Documento 1</label>
         @if ($documento->doc1)
-            <a href="{{ asset('storage/' . $documento->doc1) }}" target="_blank" class="btn btn-link">Ver {{ basename($documento->doc1)}}</a>
+            <a href="{{ asset( $documento->doc1) }}" target="_blank" class="btn btn-link">Ver {{ basename($documento->doc1)}}</a>
         @endif
     </div>
 
@@ -27,7 +27,7 @@
     <div class="mb-3">
         <label for="doc2" class="form-label">Documento 2</label>
         @if ($documento->doc2)
-            <a href="{{ asset('storage/' . $documento->doc2) }}" target="_blank" class="btn btn-link">Ver {{ basename($documento->doc2)}}</a>
+            <a href="{{ asset( $documento->doc2) }}" target="_blank" class="btn btn-link">Ver {{ basename($documento->doc2)}}</a>
         @endif
     </div>
 

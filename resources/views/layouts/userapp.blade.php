@@ -11,7 +11,25 @@
 .d-flex {
     align-items: flex-start; /* Alinea contenido y menú en la parte superior */
 }
-/* Estilo del menú lateral */
+/* Cuando el menú está activo */
+.sidebar-menu.active {
+    left: 0;
+}
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: #752e0f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+}
+/* Estilos del menú lateral */
 .sidebar-menu {
     color: #752e0f;
     position: sticky;
@@ -25,6 +43,7 @@
     padding: 20px; /* Espaciado interno */
     display: flex;
     flex-direction: column;
+    transition: left 0.3s ease-in-out;
 }
 
 .sidebar-menu ul {
@@ -214,6 +233,26 @@
     .infoFooter .widget p {
         font-size: 12px; /* Fuente más pequeña en móviles */
     }
+    /* Mostrar botón hamburguesa */
+    .menu-toggle {
+        display: block;
+    }
+
+    /* Ocultar menú lateral y hacerlo flotante */
+    .sidebar-menu {
+        left: -250px; /* Oculto fuera de la pantalla */
+        position: fixed;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        background-color: white;
+        z-index: 999;
+    }
+
+    /* Clase que se activa cuando el menú está visible */
+    .sidebar-menu.active {
+        left: 0;
+    }
 }
 
     </style>
@@ -241,9 +280,9 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('galeria') }}">Galería</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ Route('directorio.index') }}">Directorio</a></li>
                 </ul>
-                <form method="POST" action="{{ route('buscador')}}" class="custom-search-form d-flex" role="search">
+                <form method="GET" action="{{ route('buscador')}}" class="custom-search-form d-flex" role="search">
                     @csrf
-                    <input name="keyword" class="form-control rounded-pill" type="search" autocomplete="off" placeholder="Buscar..." title="Escriba lo que quiere buscar">
+                    <input name="keyword" id="keyword" class="form-control rounded-pill" type="search" autocomplete="off" placeholder="Buscar...">
                     <button class="btn btn-outline-light" type="submit">Buscar</button>
                 </form>
             </div>
@@ -265,9 +304,12 @@
     <!-- Contenido dinámico -->
 <div class="container-fluid px-4">
     <div class="d-flex">
-
+                <!-- Botón de menú hamburguesa -->
+        <button id="menu-toggle" class="menu-toggle">
+            ☰
+        </button>
         <!-- Menú lateral derecho -->
-    <div class="sidebar-menu">
+    <div class="sidebar-menu" id="sidebar">
         <h5 class="text-center">Menú</h5>
         <ul class="navbar-menu flex-column">
             <li class="nav-item"><a class="nav-link" href="{{ Route('historia') }}">Historia</a></li>
@@ -295,6 +337,16 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let menuToggle = document.getElementById("menu-toggle");
+            let sidebar = document.getElementById("sidebar");
+        
+            menuToggle.addEventListener("click", function () {
+                sidebar.classList.toggle("active");
+            });
+        });
+        </script>
     @if ($errors->any())
     <script>
         let errorMessages = `

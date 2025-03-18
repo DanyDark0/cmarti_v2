@@ -124,6 +124,7 @@ class actividadesController extends Controller
         $actividad->descripcion = $request->descripcion;
         $actividad->fecha = $request->fecha;
         $actividad->noticia = $request->has('noticia');
+        $actividad->save();
 
         if ($request->hasFile('url_img1')) {
             $fileName = Str::slug($request->titulo) . '-' . 'imagen1' . '-' . now()->timestamp . '.' . $request->file('url_img1')->getClientOriginalExtension();
@@ -139,15 +140,15 @@ class actividadesController extends Controller
 
         // Guardar archivos con nombre original
         if ($request->hasFile('archivo1')) {
-            $file = $request->file('archivo1');
-            $fileName = $file->getClientOriginalName();
+            $file =  $request->file('archivo1');
+            $fileName = $actividad->id . '_' . $file->getClientOriginalName();
             $file->storeAs('files', $fileName, 'public');
             $actividad->archivo1 = "storage/files/$fileName";
         }
 
         if ($request->hasFile('archivo2')) {
             $file = $request->file('archivo2');
-            $fileName = $file->getClientOriginalName();
+            $fileName = $actividad->id . '_' . $file->getClientOriginalName();
             $file->storeAs('files', $fileName, 'public');
             $actividad->archivo2 = "storage/files/$fileName";
         }
@@ -232,7 +233,7 @@ class actividadesController extends Controller
             }
 
             $file = $request->file('archivo1');
-            $fileName = $file->getClientOriginalName();
+            $fileName = $actividad->id . '_' . $file->getClientOriginalName();
             $file->storeAs('files', $fileName, 'public');
             $actividad->archivo1 = "storage/files/$fileName";
         }
@@ -243,7 +244,7 @@ class actividadesController extends Controller
             }
 
             $file = $request->file('archivo2');
-            $fileName = $file->getClientOriginalName();
+            $fileName = $actividad->id . '_' . $file->getClientOriginalName();
             $file->storeAs('files', $fileName, 'public');
             $actividad->archivo2 = "storage/files/$fileName";
         }

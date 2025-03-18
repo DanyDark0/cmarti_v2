@@ -6,9 +6,9 @@
     margin: 40px auto; /* Margen superior e inferior de 40px y centrado horizontal */
     padding: 20px; /* Espaciado interno */
     max-width: 1200px; /* Limita el ancho del contenedor */
-    background-color: #f8f9fa; /* Color de fondo ligero */
+    background-color: #ffffff; /* Color de fondo ligero */
     border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 .card-act {
     border-right: 5px solid #752e0f;/* Borde lateral café */
@@ -69,11 +69,11 @@
 }
 </style>
 <div class="container-act mt-4">
-        <h2 class="text-center mb-4" style="color: #752e0f">Resultados de la búsqueda</h2>
+        <h2 class="text-center mb-4" style="color: #752e0f">Resultados de la búsqueda de convocatorias</h2>
         <h6>{{ $totalResultados }} coincidencias</h6>
         
         <!-- Buscador -->
-        <form action="{{ route('convocatorias.buscar') }}" method="POST" class="custom-search-form d-flex">
+        <form action="{{ route('convocatorias.buscar') }}" method="POST" class="custom-search-form d-flex mb-4">
             @csrf
             <input type="text" name="keyword" value="{{ $query ?? '' }}" placeholder="Buscar convocatorias..." class="w-5 content-end form-control rounded-pill">
             <button type="submit" class="btn" style="background-color: #752e0f color: #e19d65">Buscar</button>

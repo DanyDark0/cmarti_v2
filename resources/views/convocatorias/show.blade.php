@@ -71,19 +71,20 @@
                 <hr>
 
             <!-- Descargar archivo -->
-            <div class="mb-4">
-                
+            <div class="mb-4">                        
                   @if ($convocatorias->archivo1)
                   <h3>Descargar archivo:</h3>
-                    <a href="{{ asset( $convocatorias->archivo1) }}" download>
+                  <ul>
+                     <li><a href="{{ asset( $convocatorias->archivo1) }}" download>
                         {{ basename($convocatorias->archivo1) }}
-                    </a>
+                    </a></li>
                     @endif
                     @if ($convocatorias->archivo2)
-                    <a href="{{ asset( $convocatorias->archivo2) }}" download>
+                    <li><a href="{{ asset( $convocatorias->archivo2) }}" download>
                         {{ basename($convocatorias->archivo2) }}
-                    </a>
+                    </a></li>
                     @endif
+                </ul>
             </div>
 
 

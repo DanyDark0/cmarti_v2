@@ -132,6 +132,7 @@ class convocatoriasController extends Controller
         $convocatoria->titulo = $request->titulo;
         $convocatoria->descripcion = $request->descripcion;
         $convocatoria->fecha = $request->fecha;
+        $convocatoria->save();
 
         if ($request->hasFile('url_img1')) {
             $fileName = Str::slug($request->titulo) . '-' . 'imagen1' . '-' . now()->timestamp . '.' . $request->file('url_img1')->getClientOriginalExtension();
@@ -148,14 +149,14 @@ class convocatoriasController extends Controller
         // Guardar archivos con nombre original
         if ($request->hasFile('archivo1')) {
             $file = $request->file('archivo1');
-            $fileName = $file->getClientOriginalName();
+            $fileName =  $convocatoria->id . '_' . $file->getClientOriginalName();
             $file->storeAs('convocatorias/files', $fileName, 'public');
             $convocatoria->archivo1 = "storage/convocatorias/files/$fileName";
         }
 
         if ($request->hasFile('archivo2')) {
             $file = $request->file('archivo2');
-            $fileName = $file->getClientOriginalName();
+            $fileName = $convocatoria->id . '_' . $file->getClientOriginalName();
             $file->storeAs('convocatorias/files', $fileName, 'public');
             $convocatoria->archivo2 = "storage/convocatorias/files/$fileName";
         }
