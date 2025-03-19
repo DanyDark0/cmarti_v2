@@ -6,40 +6,88 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    /**
-     * Muestra el formulario de registro.
-     */
-    public function showRegistrationForm()
-    {
-        return view('auth.register');
+    public function index() {
+        $users = User::all();
+        return view('usuarios.index', compact('users'));
+    }
+    public function create() {
+        return view('usuarios.create');
     }
 
-    /**
-     * Maneja el registro del usuario.
-     */
-    public function register(Request $request)
+    public function show($id) {
+        $user = User::findOrFail($id);
+        return view('usuarios.show', compact('user'));
+    }
+
+    public function store(Request $request) {
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+
+        if($validate->fails()) {
+            return response()->json([
+                'errors' => $validate->errors()
+            ], 422);
+        }
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado con éxito.');
+    }
+
+    public function edit($id) {
+        $user = User::findOrFail($id);
+        return view('usuarios.edit', compact('user'));
+
+    }
+
+    public function update(Request $request, $id)
     {
-        // Validar los datos
-        $request->validate([
+        // Buscar el usuario
+        $user = User::findOrFail($id);
+
+        // Validación de los datos de entrada
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|email|unique:users,email,' . $user->id . '|max:255',
+            'password' => 'nullable|string|min:8|confirmed',
         ]);
 
-        // Crear el usuario
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // Si la validación falla, redirige con errores
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        // Autenticar al usuario después del registro
-        Auth::login($user);
+        // Actualizar los datos del usuario
+        $user->name = $request->name;
+        $user->email = $request->email;
 
-        // Redirigir al dashboard o a otra página
-        return redirect()->route('dashboard')->with('success', 'Registro exitoso.');
+        // Si se proporciona una nueva contraseña, se actualiza
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        // Redirige con un mensaje de éxito
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado con éxito.');
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete(); // Esto no eliminará el registro, solo lo marcará como eliminado
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
     }
 }

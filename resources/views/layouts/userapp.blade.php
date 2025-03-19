@@ -101,6 +101,10 @@
     width: auto; /* Mantén la proporción original */
     object-fit: contain; /* Asegura que la imagen no se distorsione */
 }
+.nav-img {
+    font-size: 1.5rem; 
+    padding-left: 1rem;
+}
 
 /* Estilo del formulario de busqueda */
 .custom-search-form {
@@ -263,8 +267,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-xl navbar-custom">
         <div class="container-fluid">
-            <a href="#" class="navbar-brand">
-                <img src="{{ asset('./catedra/Jose-Marti.jpg') }}" alt="logo Universidad de Guadalajara" class="navbar-logo">
+            <a href="{{ route('welcome')}}" class="navbar-brand">
+                <img src="{{ asset('./catedra/Jose-Marti.jpg') }}" alt="logo Jose Marti" >
             </a>
             <a class="navbar-brand" href="{{ route('welcome')}}">Cátedra José Martí</a>
             <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -293,8 +297,8 @@
 
     <!-- Imagen Destacada -->
     <div class="card custom-card">
-        <a class="navbar-brand">Cátedra José Martí</a>
-        <div class="card-body">
+        <a class="navbar-brand nav-img font-weight-bold text-left">Cátedra José Martí</a>
+        <div>
             <a href="{{ route('welcome')}}">
                 <img src="{{ asset('./catedra/martiheader_0.jpg') }}" alt="Cátedra José Martí" class="img-fluid w-100">
             </a>

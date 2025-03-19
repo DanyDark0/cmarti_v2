@@ -26,7 +26,6 @@ class FotosController extends Controller
         $mensajes = [
 
             'url_imagen.required' => 'Debe adjuntar al menos un imagen.',
-
             'url_imagen.*.file' => 'Cada imagen debe ser un url_imagen válido.',
             'url_imagen.*.mimes' => 'Solo se permiten imagen en formato: jpeg, png, jpg o pdf.',
         ];

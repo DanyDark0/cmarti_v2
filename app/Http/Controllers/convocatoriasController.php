@@ -88,7 +88,7 @@ class convocatoriasController extends Controller
     {
         $convocatoria = new Convocatorias();
         $validator = Validator::make($request->all(), [
-            'titulo' => ['required','string','max:255',Rule::unique('convocatorias')->ignore($convocatoria->id), ],
+            'titulo' => ['required','string','max:255',Rule::unique('convocatorias')->ignore($convocatoria->id)->whereNull('deleted_at'), ],
             'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -99,6 +99,7 @@ class convocatoriasController extends Controller
             'descripcion.required' => 'Agregue una descripcion.',
             'titulo.required' => 'El título es obligatorio.',
             'titulo.string' => 'El título debe ser un texto válido.',
+            'titulo.unique' => 'Ya existe un título con este nombre',
             'fecha.required' => 'Agrega una fecha.',
             'url_img1.image' => 'El archivo debe ser una imagen.',
             'url_img1.mimes' => 'La imagen debe ser de tipo: jpeg, png, jpg, gif o svg.',
@@ -185,7 +186,7 @@ class convocatoriasController extends Controller
     {
         $convocatoria = Convocatorias::where('slug', $slug)->firstOrFail();
         $validator = Validator::make($request->all(), [
-            'titulo' => ['required','string','max:255',Rule::unique('convocatorias')->ignore($convocatoria->id), ],
+            'titulo' => ['required','string','max:255',Rule::unique('convocatorias')->ignore($convocatoria->id)->whereNull('deleted_at'), ],
             'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

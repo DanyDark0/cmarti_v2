@@ -30,14 +30,28 @@ class Actividad extends Model
     public static function boot()
     {
         parent::boot();
-
+    
         static::creating(function ($actividad) {
-            $actividad->slug = Str::slug($actividad->titulo);
+            $actividad->slug = self::generateUniqueSlug($actividad->titulo);
         });
-
+    
         static::updating(function ($actividad) {
-            $actividad->slug = Str::slug($actividad->titulo);
+            $actividad->slug = self::generateUniqueSlug($actividad->titulo, $actividad->id);
         });
+    }
+    
+    private static function generateUniqueSlug($titulo, $actividadId = null)
+    {
+        $slug = Str::slug($titulo);
+        $query = self::withTrashed()->where('slug', $slug);
+    
+        if ($actividadId) {
+            $query->where('id', '!=', $actividadId);
+        }
+    
+        $count = $query->count();
+    
+        return $count > 0 ? "{$slug}-" . ($count + 1) : $slug;
     }
 
     public function toSearchableArray()

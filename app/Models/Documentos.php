@@ -22,14 +22,28 @@ class Documentos extends Model
     public static function boot()
     {
         parent::boot();
-
+    
         static::creating(function ($documento) {
-            $documento->slug = Str::slug($documento->titulo);
+            $documento->slug = self::generateUniqueSlug($documento->titulo);
         });
-
+    
         static::updating(function ($documento) {
-            $documento->slug = Str::slug($documento->titulo);
+            $documento->slug = self::generateUniqueSlug($documento->titulo, $documento->id);
         });
+    }
+    
+    private static function generateUniqueSlug($titulo, $documentoId = null)
+    {
+        $slug = Str::slug($titulo);
+        $query = self::withTrashed()->where('slug', $slug);
+    
+        if ($documentoId) {
+            $query->where('id', '!=', $documentoId);
+        }
+    
+        $count = $query->count();
+    
+        return $count > 0 ? "{$slug}-" . ($count + 1) : $slug;
     }
     public function toSearchableArray()
     {

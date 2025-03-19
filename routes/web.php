@@ -124,6 +124,12 @@ Route::get('/buscador', [BuscadorController::class, 'search'])->name('buscador')
         return view('dashboard');
     })->name('dashboard');
 
+    Route::resource('usuarios', UserController::class)->except(['destroy']);
+
+    // Ruta para SoftDelete (Eliminar usuario sin borrarlo de la BD)
+    Route::delete('usuarios/{id}/destroy', [UserController::class, 'destroy'])->name('usuarios.destroy');
+
+
     // Rutas del perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -131,10 +137,5 @@ Route::get('/buscador', [BuscadorController::class, 'search'])->name('buscador')
 
 });
 
-
-Route::middleware(['guest'])->group(function () {
-    Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [UserController::class, 'register']);
-});
 
 require __DIR__ . '/auth.php';

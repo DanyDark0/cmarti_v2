@@ -42,8 +42,11 @@ class DocumentosController extends Controller
     }
 
     public function store(Request $request) {
+
+        $documento = new Documentos();
+
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255|unique:documentos',
+            'titulo' => ['required', 'string', 'max:255', Rule::unique('documentos')->ignore($documento->id)->whereNull('deleted_at'),],
             'descripcion' => 'required|string',
             'doc1' => 'required|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
             'doc2' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',
@@ -64,7 +67,6 @@ class DocumentosController extends Controller
                 ->withInput();
         }
 
-        $documento = new Documentos();
         $documento->titulo = $request->titulo;
         $documento->descripcion = $request->descripcion;
         $documento->slug = Str::slug($request->titulo, '-');
@@ -113,7 +115,7 @@ class DocumentosController extends Controller
             'required',
             'string',
             'max:255',
-            Rule::unique('documentos')->ignore($documento->id),
+            Rule::unique('documentos')->ignore($documento->id)->whereNull('deleted_at'),
         ],
             'descripcion' => 'nullable|string',
             'doc1' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx',

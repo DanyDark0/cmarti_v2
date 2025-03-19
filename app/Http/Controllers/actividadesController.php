@@ -88,7 +88,11 @@ class actividadesController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255|unique:actividades',
+            'titulo' => ['required', 
+                        'string',
+                        'max:255',
+                            Rule::unique('actividades')->whereNull('deleted_at')
+                        ],
             'descripcion' => 'required|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -178,7 +182,7 @@ class actividadesController extends Controller
         $actividad = Actividad::where('slug', $slug)->firstOrFail();
         
         $validator = Validator::make($request->all(), [
-            'titulo' => ['required','string','max:255',Rule::unique('actividades')->ignore($actividad->id), ],
+            'titulo' => ['required','string','max:255',Rule::unique('actividades')->ignore($actividad->id)->whereNull('deleted_at'), ],
             'descripcion' => 'nullable|string',
             'url_img1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'url_img2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

@@ -28,12 +28,31 @@ class  Convocatorias extends Model
         'fecha',
     ];
 
-    public static function boot(){
+    public static function boot()
+    {
         parent::boot();
-
+    
         static::creating(function ($convocatoria) {
-            $convocatoria->slug = Str::slug($convocatoria->titulo);
+            $convocatoria->slug = self::generateUniqueSlug($convocatoria->titulo);
         });
+    
+        static::updating(function ($convocatoria) {
+            $convocatoria->slug = self::generateUniqueSlug($convocatoria->titulo, $convocatoria->id);
+        });
+    }
+    
+    private static function generateUniqueSlug($titulo, $convocatoriaId = null)
+    {
+        $slug = Str::slug($titulo);
+        $query = self::withTrashed()->where('slug', $slug);
+    
+        if ($convocatoriaId) {
+            $query->where('id', '!=', $convocatoriaId);
+        }
+    
+        $count = $query->count();
+    
+        return $count > 0 ? "{$slug}-" . ($count + 1) : $slug;
     }
 
     public function toSearchableArray()
