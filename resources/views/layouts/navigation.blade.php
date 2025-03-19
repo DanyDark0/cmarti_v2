@@ -19,31 +19,31 @@
            
 
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('actividades.admin')" :active="request()->routeIs('actividades')">
+                <x-nav-link :href="route('actividades.admin')" :active="request()->routeIs('actividades.admin')">
                     {{ __('Actvidades') }}
                 </x-nav-link>
             </div>
 
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('documentos.admin')" :active="request()->routeIs('documentos')">
+                <x-nav-link :href="route('documentos.admin')" :active="request()->routeIs('documentos.admin')">
                     {{ __('Documentos') }}
                 </x-nav-link>
             </div>
 
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('convocatorias.admin')" :active="request()->routeIs('convocatorias')">
+                <x-nav-link :href="route('convocatorias.admin')" :active="request()->routeIs('convocatorias.admin')">
                     {{ __('Convocatorias') }}
                 </x-nav-link>
             </div>
             
             <div class="hidden text-dark space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('directorio.admin')">
+                <x-nav-link :href="route('directorio.admin')" :active="request()->routeIs('directorio.admin')">
                     {{ __('Directorio') }}
                 </x-nav-link>
             </div>
 
             <div class="hidden text-dark space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('usuarios.index')">
+                <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
                     {{ __('Usuarios') }}
                 </x-nav-link>
             </div>

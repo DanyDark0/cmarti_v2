@@ -141,31 +141,31 @@
 
 /* Efecto hover en el botón */
 .custom-search-form .btn:hover {
-    background-color: #d8910b;
-    color: rgb(0, 0, 0); 
+    background-color: #d8910b; 
     border-color: #e94702;
 }
 
 /* Estilo general del botón toggler */
 .custom-toggler {
     border: none; /* Sin borde */
-    background-color: transparent; /* Fondo transparente */
     padding: 8px 12px; /* Espaciado interno */
     border-radius: 8px; /* Bordes ligeramente redondeados */
     transition: all 0.3s ease; /* Transición suave al hover */
 }
-
 
 /* Quitar el borde negro (outline) al hacer clic */
 .custom-toggler:focus {
     outline: none; /* Elimina el contorno predeterminado */
     box-shadow: none; /* Elimina cualquier sombra que pueda aparecer */
 }
+
+
 /* Estilo del ícono */
 .custom-toggler .navbar-toggler-icon {
     width: 25px; /* Tamaño del ícono */
     height: 3px; /* Grosor de las barras */
     background-color: #d8910b; 
+    background-image: none !important;
     display: block;
     position: relative;
     transition: all 0.3s ease; /* Transiciones suaves */
@@ -267,10 +267,11 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-xl navbar-custom">
         <div class="container-fluid">
-            <a href="{{ route('welcome')}}" class="navbar-brand">
-                <img src="{{ asset('./catedra/Jose-Marti.jpg') }}" alt="logo Jose Marti" >
-            </a>
-            <a class="navbar-brand" href="{{ route('welcome')}}">Cátedra José Martí</a>
+            <div class="navbar-brand mx-auto d-xl">
+                <a href="{{ route('welcome')}}">
+                    <img src="{{ asset('./catedra/Jose-Marti.jpg') }}" alt="logo Jose Marti" class="navbar-logo">
+                </a>
+            </div>
             <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
