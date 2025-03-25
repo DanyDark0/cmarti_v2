@@ -7,7 +7,6 @@
     padding: 20px;
     background-color: #f8f8f8;
     border-radius: 10px;
-    margin: auto;
     max-width: 100%;
 }
 
@@ -46,7 +45,6 @@
 @media (max-width: 768px) {
     .view-content-ext {
         flex-direction: row; /* Apila las imágenes en columnas en móviles */
-        flex-wrap: wrap;
         align-items: center;
     }
     .col-ext {
@@ -57,34 +55,28 @@
 
 </style>
 <div class="view-content-ext">
-    <table class="views-view-grid-ext">
-        <tbody>
-            <tr class="row-ext">
-                <td class="col-ext">
-                    <a href="http://www.udg.mx" target="_blank">
-                        <img src="http://cmarti.cucsh.udg.mx/sites/default/files/images/udg_0.jpg" 
-                            alt="udg" title="udg" class="image-banner-ext" />
-                    </a>
-                </td>
-                <td class="col-ext">
-                    <a href="http://www.cucsh.udg.mx" target="_blank">
-                        <img src="http://cmarti.cucsh.udg.mx/sites/default/files/images/cucsh_0.jpg" 
-                            alt="cucsh" title="cucsh" class="image-banner-ext" />
-                    </a>
-                </td>
-                <td class="col-ext">
-                    <a href="http://www.cmarti.cucsh.udg.mx" target="_blank">
-                        <img src="http://cmarti.cucsh.udg.mx/sites/default/files/images/cemh_0.jpg" 
-                            alt="cemh" title="cemh" class="image-banner-ext" />
-                    </a>
-                </td>
-                <td class="col-ext">
-                    <a href="http://www.redmartiana.cucsh.udg.mx" target="_blank">
-                        <img src="http://cmarti.cucsh.udg.mx/sites/default/files/images/banner%20CM.jpg" 
-                            alt="banner CM" title="banner CM" class="image-banner-ext" />
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="col-ext">
+        <a href="http://www.udg.mx" target="_blank">
+            <img src="http://cmarti.cucsh.udg.mx/sites/default/files/images/udg_0.jpg" 
+                alt="udg" title="udg" class="image-banner-ext" />
+        </a>
+    </div>
+    <div class="col-ext">
+        <a href="http://www.cucsh.udg.mx" target="_blank">
+            <img src="http://cmarti.cucsh.udg.mx/sites/default/files/images/cucsh_0.jpg" 
+                alt="cucsh" title="cucsh" class="image-banner-ext" />
+        </a>
+    </div>
+    <div class="col-ext">
+        <a href="http://www.cmarti.cucsh.udg.mx" target="_blank">
+            <img src="http://cmarti.cucsh.udg.mx/sites/default/files/images/cemh_0.jpg" 
+                alt="cemh" title="cemh" class="image-banner-ext" />
+        </a>
+    </div>
+    <div class="col-ext">
+        <a href="http://www.redmartiana.cucsh.udg.mx" target="_blank">
+            <img src="http://cmarti.cucsh.udg.mx/sites/default/files/images/banner%20CM.jpg" 
+                alt="banner CM" title="banner CM" class="image-banner-ext" />
+        </a>
+    </div>
 </div>

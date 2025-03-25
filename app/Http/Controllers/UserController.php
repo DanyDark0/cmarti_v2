@@ -12,9 +12,7 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     public function index() {
-        $users = User::whereHas('roles', function ($query) {
-            $query->where('name', 'Editor');
-        })->get();
+        $users = User::where('id', '!=', Auth::id())->with('roles')->get();
         return view('usuarios.index', compact('users'));
     }
     public function create() {
@@ -34,7 +32,8 @@ class UserController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email|max:255',
-            'password' => 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8|confirmed',
+            'role' => ['required', 'string', 'exists:roles,name']
         ]);
 
         if($validate->fails()) {
@@ -48,19 +47,24 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
-
-        $user->assignRole('Editor');
+        // Asignar el rol
+        $user->assignRole($request->role);
 
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado con éxito.');
     }
 
     public function edit($id) {
-    // Verificar si se intenta editar al usuario Admin (ID = 1)
-    if ($id == 1) {
-        return redirect()->route('usuarios.index')->with('error', 'No tienes permisos para editar este usuario.');
-    }
+        $usu = User::find(Auth::id());
+        // Verificar si el ID del usuario autenticado es igual al que intenta editar
+        if ($usu && $usu->id == $id) {
+            return redirect()->route('usuarios.index');
+        }
+
         $user = User::findOrFail($id);
-        return view('usuarios.edit', compact('user'));
+        $roles = Role::all(); // Obtener todos los roles
+        $userRole = $user->roles->first()->name ?? ''; // Obtener el rol asignado al usuario
+
+        return view('usuarios.edit', compact('user', 'roles', 'userRole'));
     }
 
     public function update(Request $request, $id)
@@ -90,6 +94,9 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        // Actualizar el rol del usuario
+        $user->syncRoles([$request->role]);
 
         // Redirige con un mensaje de éxito
         return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado con éxito.');

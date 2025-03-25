@@ -117,7 +117,9 @@
         @foreach($convocatorias as $convocatoria)
             <div class="col-md-4 mb-5 d-flex justify-content-center">
                 <div class="card-act mb-4">
-                    <img src="{{ $convocatoria->url_img1 ? asset($convocatoria->url_img1) : asset('./catedra/Jose-Marti.jpg') }}" class="card-img-top-act" alt="Imagen de convocatoria">
+                    <img src="{{ $convocatoria->url_img1 ? asset($convocatoria->url_img1) : ($convocatoria->url_img2 ? asset($convocatoria->url_img2) : asset('./catedra/Jose-Marti.jpg')) }}" 
+                    class="card-img-top-act" 
+                    alt="Imagen de convocatoria">
                     <div class="card-body-act">
                         <h5 class="card-title-act">{{ $convocatoria->titulo }}</h5> <!-- Mostrar título -->
                         <p class="card-text-act">{!! $convocatoria->descripcion_truncado !!}</p> <!-- Mostrar descripción -->

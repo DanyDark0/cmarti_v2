@@ -72,7 +72,7 @@
     border-radius: 4px;
 }
 
-.custom-card {
+.custom-card-banner {
     background-color: #e6b168;
     margin: 20px; /* Márgenes externos */
     border-radius: 8px; /* Bordes redondeados */
@@ -297,7 +297,7 @@
     <div class="mb-0 p-1 bg-light"></div>
 
     <!-- Imagen Destacada -->
-    <div class="card custom-card">
+    <div class="card custom-card-banner">
         <a class="navbar-brand nav-img font-weight-bold text-left">Cátedra José Martí</a>
         <div>
             <a href="{{ route('welcome')}}">

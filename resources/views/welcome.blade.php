@@ -22,12 +22,16 @@
     justify-content: space-between; /* Distribuye el contenido de manera equilibrada */
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
+    min-width: 250px; /* Evita que las tarjetas se hagan demasiado pequeñas */
+    max-width: 300px; /* Evita que crezcan demasiado en pantallas grandes */
+    height: 100%; /* Asegura que todas tengan la misma altura */
   }
 
 
   .custom-card-img-top {
     aspect-ratio: 1/1;
     width: 100%;
+    height: auto;
     object-fit: cover; /* Mantiene la proporción de la imagen sin distorsionarla */
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -104,11 +108,17 @@
         max-height: 200px; /* Altura máxima cuando se abre */
         overflow-y: auto;
     }
+
+    .col-noticia{
+    display: flex;
+    justify-content: center;
+    }
+
 /* Nuevas reglas para las columnas */
-@media (min-width: 1200px) {
-    .col-lg-3 {
-        flex: 0 0 23%; /* Ajusta el tamaño de cada card para que se acomoden 4 en una fila */
-        max-width: 23%;
+@media (max-width: 576px) {
+    .col-noticia {
+        flex: 0 0 100%; /* Para mostrar 1 tarjeta por fila en móviles */
+        max-width: 100%;
     }
 }
 
@@ -119,7 +129,7 @@
     <div class="content row row-cols-1 row-cols-md-2  row-cols-lg-4 g-4 py-5">
       @foreach ($noticias as $noticia)
     
-      <div class="col">
+      <div class="col-noticia">
           <div class="custom-card">
               <!-- Mostrar solo la primera imagen de la noticia -->
               @if ($noticia->url_img1)
@@ -129,7 +139,7 @@
               @endif
               <div class="card-body">
                   <h5 class="card-title">{{ $noticia->titulo }}</h5> 
-                  <p class="card-text">{!! strip_tags(Str::limit($noticia->descripcion, 300, '...')) !!}</p> 
+                  <p class="card-text">{!! strip_tags(Str::limit($noticia->descripcion, 100, '...')) !!}</p> 
               </div>
               <a href="{{ route('actividades.show', $noticia->slug) }}" class="boton-act btn">Ver más</a>
           </div>

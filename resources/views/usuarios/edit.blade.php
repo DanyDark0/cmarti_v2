@@ -23,6 +23,28 @@
                 <input type="password" name="password" class="w-full px-4 py-2 border rounded-lg">
                 @error('password') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
             </div>
+
+            
+            <div class="mb-4">
+                <label class="block text-gray-700">Confirmar Contraseña</label>
+                <input type="password" name="password_confirmation" class="w-full px-4 py-2 border rounded-lg">
+                @error('password_confirmation') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="role" class="block text-gray-700 font-bold mb-2">Seleccione un rol:</label>
+                <select name="role"  
+                    class="w-full sm:w-2/5 md:w-1/3 lg:w-1/5 border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-opacity-50" 
+                    required>
+                    <option value="" disabled>Selecciona una opción</option>
+                    @foreach($roles as $role)
+                        <option value="{{ $role->name }}" 
+                            {{ $role->name == $userRole ? 'selected' : '' }}>
+                            {{ $role->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
     
             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Actualizar</button>
             <a href="{{ route('usuarios.index') }}" class="text-gray-700 ml-4">Cancelar</a>

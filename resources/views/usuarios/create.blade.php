@@ -26,6 +26,18 @@
                 <label class="block text-gray-700">Confirmar Contraseña</label>
                 <input type="password" name="password_confirmation" class="w-full px-4 py-2 border rounded-lg">
             </div>
+
+            <div class="mb-4">
+                <label for="role" class="block text-gray-700 font-bold mb-2">Seleccione un rol:</label>
+                <select name="role"  
+                    class="w-full sm:w-2/5 md:w-1/3 lg:w-1/5 border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-opacity-50" 
+                    required>
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    @foreach(\Spatie\Permission\Models\Role::all() as $role)
+                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                    @endforeach
+                </select>
+            </div>
     
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Guardar</button>
             <a href="{{ route('usuarios.index') }}" class="text-gray-700 ml-4">Cancelar</a>
