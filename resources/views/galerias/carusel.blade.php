@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Galería de Imágenes</h2>
+    <h2 class="text-center mb-4" style="color: #752e0f">Galerias</h2>
 
     @foreach ($galerias as $galeria)
     <div class="card mb-5 shadow-sm">
@@ -39,3 +39,6 @@
     </div>
 </div>
 @endsection
+
+
+lorem

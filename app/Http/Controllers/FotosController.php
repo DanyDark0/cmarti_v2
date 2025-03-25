@@ -61,7 +61,6 @@ class FotosController extends Controller
                     //$ruta = public_path('img/galeria/');
                     $ruta = Storage::disk('public')->path('galeria/');
                     $url_imagen->move($ruta, $nombreArchivo);
-    
                     $documentacion = new fotos();
                     $documentacion->galeria_id = $request->galeria_id;
                     $documentacion->url_imagen = $nombreArchivo;

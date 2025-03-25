@@ -87,8 +87,9 @@ class GaleriaController extends Controller
                     $extension = $url_imagen->getClientOriginalExtension();
                     $nombreArchivo = 'url_imagen_' . uniqid() . '.' . $extension;
                     //$ruta = public_path('img/galeria/');
-                    $ruta = Storage::disk('public')->path('store/galeria/');
-                    $url_imagen->move($ruta, $nombreArchivo);
+                    // $ruta = Storage::disk('public')->path('store/galeria/');
+                    // $url_imagen->move($ruta, $nombreArchivo);
+                    $ruta = $url_imagen->storeAs('galeria', $nombreArchivo, 'public'); // Guarda en storage/app/public/galeria
 
                     $documentacion = new fotos();
                     $documentacion->galeria_id = $galeria->id;

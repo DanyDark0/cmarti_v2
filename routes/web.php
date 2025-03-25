@@ -118,16 +118,18 @@ Route::get('/convocatorias/{slug}', [convocatoriasController::class, 'show'])->n
  //ruta del buscador
 Route::get('/buscador', [BuscadorController::class, 'search'])->name('buscador');
 
+
+Route::middleware('auth', 'role:Admin')->group(function () {
+    Route::resource('usuarios', UserController::class)->except(['destroy']);
+
+    // Ruta para SoftDelete (Eliminar usuario sin borrarlo de la BD)
+    Route::delete('usuarios/{id}/destroy', [UserController::class, 'destroy'])->name('usuarios.destroy');
+});
  //Middleware de autentificación 
  Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-
-    Route::resource('usuarios', UserController::class)->except(['destroy']);
-
-    // Ruta para SoftDelete (Eliminar usuario sin borrarlo de la BD)
-    Route::delete('usuarios/{id}/destroy', [UserController::class, 'destroy'])->name('usuarios.destroy');
 
 
     // Rutas del perfil

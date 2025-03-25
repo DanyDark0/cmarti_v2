@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index() {
-        $users = User::all();
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', 'Editor');
+        })->get();
         return view('usuarios.index', compact('users'));
     }
     public function create() {
@@ -19,6 +22,10 @@ class UserController extends Controller
     }
 
     public function show($id) {
+        $usuario = User::find(Auth::id());
+        if ($usuario->id == $id) {
+            return redirect()->route('usuarios.index')->with('error', 'No tienes permisos para editar este usuario.');
+        }
         $user = User::findOrFail($id);
         return view('usuarios.show', compact('user'));
     }
@@ -42,13 +49,18 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
+        $user->assignRole('Editor');
+
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado con éxito.');
     }
 
     public function edit($id) {
+    // Verificar si se intenta editar al usuario Admin (ID = 1)
+    if ($id == 1) {
+        return redirect()->route('usuarios.index')->with('error', 'No tienes permisos para editar este usuario.');
+    }
         $user = User::findOrFail($id);
         return view('usuarios.edit', compact('user'));
-
     }
 
     public function update(Request $request, $id)
