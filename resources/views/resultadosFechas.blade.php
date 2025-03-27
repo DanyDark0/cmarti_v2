@@ -1,5 +1,6 @@
 @extends('layouts.userapp')
 
+@section('title', 'Cátedra José Martí | Resultados por Fecha')
 @section('content')
 <style>
     a {
@@ -7,15 +8,20 @@
         color: inherit;
     }
     .card {
-        border: none;
+        border-color: black;
         overflow: hidden;
     }
     .card-body-search {
         padding: 20px; 
         border-radius: 10px;
     }
+    /* Ajuste para que el contenido no desborde el flex container */
+    .flex-grow-1 {
+        min-width: 0;
+        overflow-x: hidden;
+    }
 </style>
-<div class="container">
+<div class="flex-grow-1 px-3 mt-4 text-center">
     <h2 class="text-center">Resultados para el año {{ $year }}</h2>
 
     <h3 class="mt-4">Resultados</h3>
@@ -27,9 +33,9 @@
             <a href="{{ route($resultado instanceof \App\Models\Actividad ? 'actividades.show' : 'convocatorias.show', $resultado->slug) }}"> 
             <div class="card-body-search">
                 <h4 class="card-title">
-                        {{ Str::limit($resultado->titulo, 50, '...') }}                   
+                        {{ Str::limit($resultado->titulo, 100, '...') }}                   
                 </h4>
-                <p class="card-text">{!! Str::limit($resultado->descripcion, 200, '...') !!}</p>
+                <p class="card-text">{!! Str::limit($resultado->descripcion, 100, '...') !!}</p>
                 <small class="text-muted">{{ $resultado->fecha }}</small>
             </div>
         </a>

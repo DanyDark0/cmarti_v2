@@ -17,14 +17,14 @@ class DocumentosController extends Controller
         $truncated = Str::limit($text, $limit); // Aplica el límite
         return $truncated;
     }
-    public function search_convocatoria(Request $request) {
+    public function search_documento(Request $request) {
 
         $query = $request->input('keyword');
         $documentos = Documentos::search($query)->paginate(24);
         foreach ($documentos as $documento) {
-            $documento->descripcion_truncado = $this->truncateHtml($documento->descripcion, 100);
+            $documento->descripcion = $request->descripcion;
         }
-        return view ("convocatorias" , compact('convocatorias', 'query'));
+        return view ("documentos.search" , compact('documentos', 'query'));
     }   
     public function index() {
         $documentos = Documentos::paginate(8);

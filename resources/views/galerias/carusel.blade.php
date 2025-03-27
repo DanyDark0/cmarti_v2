@@ -1,20 +1,21 @@
 @extends('layouts.userapp')
 
+@section('title', 'Cátedra José Martí | Galerias')
 @section('content')
 <div class="container mt-4">
     <h2 class="text-center mb-4" style="color: #752e0f">Galerias</h2>
 
     @foreach ($galerias as $galeria)
-    <div class="card mb-5 shadow-sm">
-        <div class="card-body">
-            <h3 class="card-title text-center">{{ $galeria->titulo }}</h3>
+    <div class="card mb-5">
+        <h3 class="card-title text-center">{{ $galeria->titulo }}</h3>
+        <div class="card-body" style="max-width: 400px display: flex; justify-content: center; align-items: center;">
 
             @if ($galeria->fotos->count() > 0)
                 <div id="carousel{{ $galeria->id }}" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         @foreach ($galeria->fotos as $index => $foto)
-                            <div class="carousel-item justify-content-center align-items-center {{ $index == 0 ? 'active' : '' }}" style="height: 400px;">
-                                <img src="{{ asset('storage/galeria/' . $foto->url_imagen) }}"  style="width: 300px; height: auto;" class="d-block" alt="Imagen de galería">
+                            <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                <img src="{{ asset('storage/galeria/' . $foto->url_imagen) }}" class="d-block w-100 " alt="Imagen de galería">
                             </div>
                         @endforeach
                     </div>

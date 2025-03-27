@@ -1,5 +1,6 @@
 @extends('layouts.userapp')
 
+@section('title', 'Cátedra José Martí | Documentos')
 @section('content')
 <div class="container">
     <h2>Detalles del Documento</h2>
@@ -12,6 +13,7 @@
 
     <!-- Mostrar descripción -->
     <div class="mb-3">
+        <label for="titulo" class="form-label">Descripcion</label>
         <p type="text" class="form-control" id="descripcion">{{ $documento->descripcion }}</p>
     </div>
 
@@ -25,8 +27,8 @@
 
     <!-- Mostrar archivo doc2 -->
     <div class="mb-3">
-        <label for="doc2" class="form-label">Documento 2</label>
         @if ($documento->doc2)
+        <label for="doc2" class="form-label">Documento 2</label>
             <a href="{{ asset( $documento->doc2) }}" target="_blank" class="btn btn-link">Ver {{ basename($documento->doc2)}}</a>
         @endif
     </div>

@@ -1,5 +1,6 @@
 @extends('layouts.userapp')
 
+@section('title', 'Cátedra José Martí | Actividades')
 @section('content')
 <style>
     

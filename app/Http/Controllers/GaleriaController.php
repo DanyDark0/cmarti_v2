@@ -43,7 +43,6 @@ class GaleriaController extends Controller
         $mensajes = [
             'titulo.required' => 'El titulo es obligatorio.',
             'titulo.max' => 'El titulo de la galeria no debe sobrepasar los 255 caracteres.',
-            'titulo.regex' => 'El título debe contener al menos una letra y solo puede incluir letras, números, espacios y los siguientes símbolos permitidos: . , & - ( ) : ; \' "',
 
             'url_imagen.required' => 'Debe adjuntar al menos un imagen.',
 
@@ -52,7 +51,7 @@ class GaleriaController extends Controller
         ];
 
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:255|regex:/^(?=.*[A-Za-zÁÉÍÓÚáéíóúÑñ])[\wÁÉÍÓÚáéíóúÑñ\s.,&\-():;\'"]+$/u',
+                'titulo' => 'required|string|max:255',
                 'url_imagen' => ['required'],
                 'url_imagen.*' => [
                     'file',
@@ -151,7 +150,6 @@ class GaleriaController extends Controller
         $mensajes = [
             'titulo.required' => 'El titulo es obligatorio.',
             'titulo.max' => 'El titulo de la galeria no debe sobrepasar los 255 caracetres.',
-            'titulo.regex' => 'El título debe contener al menos una letra y solo puede incluir letras, números, espacios y los siguientes símbolos permitidos: . , & - ( ) : ; \' "',
 
             'url_imagen.required' => 'Debe adjuntar al menos un imagen.',
 
@@ -160,7 +158,7 @@ class GaleriaController extends Controller
         ];
 
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255|regex:/^(?=.*[A-Za-zÁÉÍÓÚáéíóúÑñ])[\wÁÉÍÓÚáéíóúÑñ\s.,&\-():;\'"]+$/u',
+            'titulo' => 'required|string|max:255',
         ], $mensajes);
 
         if ($validator->fails()) {

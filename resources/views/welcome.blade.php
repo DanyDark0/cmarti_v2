@@ -132,14 +132,11 @@
       <div class="col-noticia">
           <div class="custom-card">
               <!-- Mostrar solo la primera imagen de la noticia -->
-              @if ($noticia->url_img1)
-                  <img src="{{  asset($noticia->url_img1) }}" class="custom-card-img-top" alt="Imagen de noticia">
-              @else
-                  <img src="{{ asset('./catedra/Jose-Marti.jpg') }}" class="custom-card-img-top" alt="Imagen por defecto">
-              @endif
+              <img src="{{ $noticia->url_img1 ? asset($noticia->url_img1) : ($noticia->url_img2 ? asset($noticia->url_img2) : asset('./catedra/Jose-Marti.jpg')) }}"  class="custom-card-img-top" alt="Imagen de noticia">
               <div class="card-body">
                   <h5 class="card-title">{{ $noticia->titulo }}</h5> 
-                  <p class="card-text">{!! strip_tags(Str::limit($noticia->descripcion, 100, '...')) !!}</p> 
+                  <hr>
+                  <p class="card-text">{!! strip_tags(Str::limit($noticia->descripcion, 400, '...')) !!}</p> 
               </div>
               <a href="{{ route('actividades.show', $noticia->slug) }}" class="boton-act btn">Ver más</a>
           </div>
@@ -148,8 +145,8 @@
     </div>
   </div>
 
-  <div class="container mt-5">
-    <h2 class="text-center mb-4">Filtrar por Año</h2>
+  <div class="container flex-grow mt-5 mb-5">
+    <h2 class="text-center mb-4">Eventos por año</h2>
     <form action="{{ route('filtrar.fecha') }}" method="GET">
       @csrf
       <div class="row justify-content-center">
@@ -161,8 +158,10 @@
                   @endforeach
               </select>
           </div>
-          <div class="col-md-2">
-              <button type="submit" class="btn btn-primary">Buscar</button>
+          <div class="row justify-content-center">
+          <div class="col-md-1 mt-3">
+              <button  style="color: black; background-color: #c47a3d; border: none;" type="submit" class="btn btn-primary">Buscar</button>
+          </div>
           </div>
       </div>
   </form>

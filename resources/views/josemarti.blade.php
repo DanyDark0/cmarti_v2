@@ -1,5 +1,6 @@
 @extends('layouts.userapp')
 
+@section('title', 'Cátedra José Martí | Bibliografía')
 @section('content')
     <style>
     .text-imagen {
@@ -15,7 +16,6 @@
     text-align: justify; /* Justifica el texto */
     border-right: 5px solid #752e0f;/* Borde lateral café *//* Borde lateral café */
     padding: 20px; /* Espaciado interno */
-    margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
     }
@@ -32,7 +32,7 @@
     vertical-align: baseline;
     }
     </style>
-
+  <div class="container mb-4">
     <h1 class="title">Biografía</h1>
 
     <div class="content" style="max-width: 1000px; margin: auto;">
@@ -90,7 +90,7 @@
      </div>
     </div>
     </div>
-  </div>
+    </div>
 
     <p>Concluida la Guerra del 68 vuelve a Cuba el 31 de agosto de 1878, para radicarse en La Habana, y el 22 de noviembre
     nace José
@@ -163,36 +163,57 @@
       alt="Carmen Zayas-Bazán y su hijo José Francisco." 
       style="width: 150px; height: auto; float: right; margin-right: 15px;">
       <div class="card-body">
-        <p class="text-imagen">Martí y el General Gómez en New York, 1894.</p>
+      <p class="text-imagen">Martí y el General Gómez en New York, 1894.</p>
       </div>
       </div>
       <p>En los años 1893 y 1894 recorrió varios países de América y ciudades de Estados Unidos, uniendo a los principales
-        jefes de la Guerra del 68 y acopiando recursos para la nueva contienda. Desde mediados de 1894 aceleró los
-        preparativos del Plan Fernandina, con el cual pretendía promover una guerra corta, sin grandes desgastes y
-        destrucciones para los cubanos. El 8 de diciembre de 1894 redactó y firmó, conjuntamente con los coroneles
-        MayíaRodríguez (en representación de Máximo Gómez) y Enrique Collazo (en representación de los patriotas de la Isla),
-        el plan de alzamiento en Cuba. El Plan Fernandina fue descubierto e incautadas las naves con las cuales se iba a
-        ejecutar. A pesar del gran revés que ello significó, Martí decidió seguir adelante con los planes de pronunciamientos
-        armados en la Isla, en lo que fue apoyado por los principales jefes.</p>
+      jefes de la Guerra del 68 y acopiando recursos para la nueva contienda. Desde mediados de 1894 aceleró los
+      preparativos del Plan Fernandina, con el cual pretendía promover una guerra corta, sin grandes desgastes y
+      destrucciones para los cubanos. El 8 de diciembre de 1894 redactó y firmó, conjuntamente con los coroneles
+      MayíaRodríguez (en representación de Máximo Gómez) y Enrique Collazo (en representación de los patriotas de la Isla),
+      el plan de alzamiento en Cuba. El Plan Fernandina fue descubierto e incautadas las naves con las cuales se iba a
+      ejecutar. A pesar del gran revés que ello significó, Martí decidió seguir adelante con los planes de pronunciamientos
+      armados en la Isla, en lo que fue apoyado por los principales jefes.</p>
       </div>
     </div>
 
 
     <div style="overflow: hidden;">
       <div class="card" style="width: 210px; height: auto; float: left; margin-right: 15px;">
-        <img class="image_biblio" src="{{ asset('catedra/bibliografia/0013-Playita-270x300.jpg') }}" 
+      <img class="image_biblio" src="{{ asset('catedra/bibliografia/0013-Playita-270x300.jpg') }}" 
+      alt="Retrato de Martí al ser condenado a seis años de prisión por infidencia." 
+      style="width: 200px; height: auto; float: left; margin-right: 15px;">
+        <div class="card-body">
+        <p class="text-imagen">Lugar donde desembarcaron José Martí, Máximo Gómez y otros patriotas</p>
+        </div>
+      </div>
+      <p style="text-align: justify;">
+        El 29 de enero de 1895, junto con Mayíay Collazo, firmó la orden de alzamiento y la envió a Juan Gualberto Gómez para su ejecución. Partió de inmediato de Nueva York a Montecristi, en República Dominicana, donde lo esperaba Gómez, con quien firmó el 25 de marzo de 1895 un documento conocido como “Manifiesto de Montecristi”, programa de la nueva guerra. Ambos líderes llegan a Cuba el 11 de abril de 1895, por Playitas de Cajobabo, Baracoa.
+      </p>
+      <p>Tres días después del desembarco, hicieron contacto con las fuerzas del Comandante Félix Ruenes. El 15 de abril de 1895 los jefes allí reunidos bajo la dirección de Gómez, acordaron conferir a Martí el grado de Mayor General por sus méritos y servicios prestados.</p>
+      <p>El 28 de abril de 1895, en el campamento de Vuelta Corta, en Guantánamo, en unión de Gómez firmó la circular “Política de guerra”. Envió mensajes a los jefes indicándoles que debían enviar un representante a una asamblea de delegados para elegir un gobierno en breve tiempo. El 5 de mayo de 1895 tuvo lugar su encuentro con Gómez y Maceo en La Mejorana, donde se discutió la estrategia a seguir. El 14 de mayo de 1895 firmó la “Circular a los jefes y oficiales del Ejército Libertador”, último de los documentos organizativos de la guerra, la que elaboró conjuntamente con Máximo Gómez.</p>
+      </div>
+      <p>Siguiendo la marcha hacia el oeste de la provincia oriental, llegaron a Dos Ríos, cerca de Palma Soriano. El 19 de mayo de 1895 una columna española se desplegó en la zona y los cubanos fueron a su encuentro. Martí marchaba entre Gómez y el Mayor General Bartolomé Masó.</p>
+
+      <div style="overflow: hidden;">
+        <div class="card" style="width: 310px; height: auto; float: left; margin-right: 15px;">
+        <img class="image_biblio" src="{{ asset('catedra/bibliografia/0012-Dos-Rios-300x218.jpg') }}" 
         alt="Retrato de Martí al ser condenado a seis años de prisión por infidencia." 
-        style="width: 200px; height: auto; float: left; margin-right: 15px;">
+        style="width: 300px; height: auto; float: left; margin-right: 15px;">
           <div class="card-body">
-          <p class="text-imagen">Lugar donde desembarcaron José Martí, Máximo Gómez y otros patriotas</p>
+          <p class="text-imagen">Dos Ríos: Lugar donde cae en combate José Martí, el 19 de mayo de 1895.</p>
           </div>
         </div>
         <p style="text-align: justify;">
-          El 29 de enero de 1895, junto con Mayíay Collazo, firmó la orden de alzamiento y la envió a Juan Gualberto Gómez para su ejecución. Partió de inmediato de Nueva York a Montecristi, en República Dominicana, donde lo esperaba Gómez, con quien firmó el 25 de marzo de 1895 un documento conocido como “Manifiesto de Montecristi”, programa de la nueva guerra. Ambos líderes llegan a Cuba el 11 de abril de 1895, por Playitas de Cajobabo, Baracoa.
+          Al llegar al lugar de la acción, Gómez le indicó detenerse y permanecer en el lugar acordado. No obstante, en el
+          transcurso del combate, se separó del grueso de las fuerzas cubanas, acompañado solamente por su ayudante Ángel de la
+          Guardia. Martí cabalgó, sin saberlo, hacia un grupo de españoles ocultos en la maleza y fue alcanzado por tres disparos
+          que le provocaron heridas mortales. Cuando se conoció lo sucedido, resultó imposible rescatar su cadáver, el cual fue
+          conducido por los españoles y, tras varios enterramientos, fue finalmente sepultado el día 27, en el nicho número 134 de
+          la galería sur del Cementerio de Santa Ifigenia, en Santiago de Cuba.
         </p>
-        <p>Tres días después del desembarco, hicieron contacto con las fuerzas del Comandante Félix Ruenes. El 15 de abril de 1895 los jefes allí reunidos bajo la dirección de Gómez, acordaron conferir a Martí el grado de Mayor General por sus méritos y servicios prestados.</p>
-        <p>El 28 de abril de 1895, en el campamento de Vuelta Corta, en Guantánamo, en unión de Gómez firmó la circular “Política de guerra”. Envió mensajes a los jefes indicándoles que debían enviar un representante a una asamblea de delegados para elegir un gobierno en breve tiempo. El 5 de mayo de 1895 tuvo lugar su encuentro con Gómez y Maceo en La Mejorana, donde se discutió la estrategia a seguir. El 14 de mayo de 1895 firmó la “Circular a los jefes y oficiales del Ejército Libertador”, último de los documentos organizativos de la guerra, la que elaboró conjuntamente con Máximo Gómez.</p>
-      </div>
+        </div>
     </div>
+  </div>
 
 @endsection

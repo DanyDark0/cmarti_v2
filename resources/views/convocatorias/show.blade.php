@@ -1,7 +1,16 @@
 @extends('layouts.userapp')
 
+@section('title', 'Cátedra José Martí | Convocatorias')
 @section('content')
 <style>
+.img-fluid {
+width: 400px;
+max-width: 100%;
+height: auto;
+display: block;
+margin: auto;
+}
+
 .date-content {
     display: flex;
     justify-content: flex-end;
@@ -25,7 +34,6 @@
     padding: 20px; /* Espaciado interno */
     margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 3px 3px 10px #752e0f; /* Sombra suave */
 }
 
 .title {
@@ -41,14 +49,23 @@
     width: 100%;
     white-space: normal; /* Permitimos el salto de línea */
 }
+/* Ajuste para que el contenido no desborde el flex container */
+.flex-grow-1 {
+    min-width: 0;
+    overflow-x: hidden;
+}
+@media (max-width: 768px) {
+    .img-fluid {
+        width: 100%; /* Hace que la imagen ocupe todo el ancho disponible */
+        max-width: 100%; /* Asegura que no se desborde */
+        height: auto; /* Mantiene la proporción */
+    }
+}
 </style>
-<div class="container mt-5" style="text-align: center">
+<div class="flex-grow-1 px-3 mt-4 text-center">
     <h1 class="title">{{ $convocatorias->titulo }}</h1>
     <div class="content">
  
-
-                <!-- Separador -->
-                <hr>
                 <!-- Imágenes -->
                 <div class="text-center my-4">
                     @if($convocatorias->url_img1)
@@ -58,6 +75,9 @@
                         <img src="{{ asset($convocatorias->url_img2) }}" alt="Imagen 2" class="img-fluid rounded" style="max-width: 400px; height: auto; margin: auto;">
                     @endif
                 </div>
+                
+                <!-- Separador -->
+                <hr>
                 {{-- descripcion --}}
                 <div class="mb-4">
                     <p>{!! $convocatorias->descripcion !!}</p>
