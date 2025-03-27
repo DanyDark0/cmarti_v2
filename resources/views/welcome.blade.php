@@ -6,13 +6,10 @@
     .content {
     text-align: justify; /* Justifica el texto */
     background-color: #ffffff; /* Color beige claro para el fondo */
-    padding: 20px; /* Espaciado interno */
-    margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
     display: flex;
     flex-wrap: wrap;
-    gap: 10px; 
 }
   .custom-card {
     background-color: #e6b168;
@@ -126,7 +123,7 @@
 
 <div class="container-act mt-4">
     <h2 class="mb-4 text-center">Noticias</h2>
-    <div class="content row row-cols-1 row-cols-md-2  row-cols-lg-4 g-4 py-5">
+    <div class="content row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
       @foreach ($noticias as $noticia)
     
       <div class="col-noticia">

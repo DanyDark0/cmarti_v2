@@ -7,15 +7,10 @@
     color: gray; 
     font-size: 12px;
     }
-    .clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
-    }
     .content {
+    padding: 10px;
     text-align: justify; /* Justifica el texto */
     border-right: 5px solid #752e0f;/* Borde lateral café *//* Borde lateral café */
-    padding: 20px; /* Espaciado interno */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
     }
@@ -32,7 +27,6 @@
     vertical-align: baseline;
     }
     </style>
-  <div class="container mb-4">
     <h1 class="title">Biografía</h1>
 
     <div class="content" style="max-width: 1000px; margin: auto;">
@@ -213,7 +207,6 @@
           la galería sur del Cementerio de Santa Ifigenia, en Santiago de Cuba.
         </p>
         </div>
-    </div>
   </div>
 
 @endsection

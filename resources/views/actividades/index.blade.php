@@ -13,7 +13,6 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 .card-act {
-    border-right: 5px solid #752e0f;/* Borde lateral café */
     height: 100%; /* Para que todas las tarjetas tengan la misma altura */
     width: 100;
     max-width: 300px;
@@ -48,6 +47,7 @@
 }
 
 .card-text-act {
+    text-align: justify;
     color: antiquewhite;
     flex-grow: 1;
     overflow: hidden;
@@ -91,7 +91,7 @@
                     <img src="{{ $actividad->url_img1 ? asset($actividad->url_img1) : ($actividad->url_img2 ? asset($actividad->url_img2) : asset('./catedra/Jose-Marti.jpg')) }}" class="card-img-top-act" alt="Imagen de actividad">
                     <div class="card-body-act">
                         <h5 class="card-title-act">{{ $actividad->titulo }}</h5> <!-- Mostrar título -->
-                        <p class="card-text-act">{!! $actividad->descripcion_truncado !!}</p> <!-- Mostrar descripción -->
+                        <p class="card-text-act">{{ html_entity_decode(strip_tags($actividad->descripcion)) }}</p> <!-- Mostrar descripción -->
                         <a href="{{ route('actividades.show', $actividad->slug) }}" class="boton-act btn">Ver más</a>
                     </div>
                 </div>

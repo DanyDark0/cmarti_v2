@@ -307,7 +307,7 @@
     </div>
 
     <!-- Contenido dinámico -->
-<div class="container-fluid px-4">
+<div class="container">
     <div class="d-flex">
                 <!-- Botón de menú hamburguesa -->
         <button id="menu-toggle" class="menu-toggle">
@@ -327,7 +327,7 @@
         </ul>
     </div> 
         <!-- Contenido dinámico -->
-        <div class="flex-grow-1 px-3">
+        <div class="flex-grow-1">
             @yield('content')
         </div>
     </div>

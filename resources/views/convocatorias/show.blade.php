@@ -31,7 +31,6 @@ margin: auto;
 .content {
     text-align: justify; /* Justifica el texto */
     background-color: #ffffff; /* Color beige claro para el fondo */
-    padding: 20px; /* Espaciado interno */
     margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */
 }

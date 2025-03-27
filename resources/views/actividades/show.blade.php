@@ -34,7 +34,6 @@ margin: auto;
 .content {
     text-align: justify; /* Justifica el texto */
     background-color: #ffffff; /* Color beige claro para el fondo */
-    padding: 20px; /* Espaciado interno */
     margin: auto; /* Espacio arriba y abajo */
     max-width: 100%;
     overflow-wrap: break-word;
