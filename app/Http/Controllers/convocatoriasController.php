@@ -22,6 +22,42 @@ class convocatoriasController extends Controller
 
         return view('welcome', compact('years'));
     }
+
+    public function BuscadorAdminConvocatorias(Request $request)
+{
+    $mensajes = [
+        'keyword.required' => 'Se requiere agregar un texto.',
+        'keyword.string' => 'El dato a buscar debe ser un texto.',
+        'keyword.min' => 'Su búsqueda debe contener al menos 3 caracteres.',
+    ];
+
+    $validator = Validator::make($request->all(), [
+        'keyword' => 'required|string|min:3',
+    ], $mensajes);
+
+    if ($validator->fails()) {
+        return redirect()->route('convocatorias.admin') // Cambia por la ruta de tu formulario
+            ->withErrors($validator) // Enviar los errores a la vista
+            ->withInput();
+    }
+
+    // Obtener el término de búsqueda
+    $query = $request->input('keyword');
+
+    // Realizar la búsqueda con Scout en el modelo Convocatorias
+    $convocatorias = Convocatorias::search($query)->paginate(6);
+
+    // Obtener el total de resultados
+    $totalResultados = $convocatorias->total();
+
+    // Devolver los resultados a la vista, junto con el término de búsqueda
+    return view('convocatorias.resultados_admin', [
+        'convocatorias' => $convocatorias,
+        'query' => $query, // Pasar el término de búsqueda para mostrarlo en el input
+        'totalResultados' => $totalResultados // Pasar el total de resultados
+    ]);
+}
+
     public function search_convocatoria(Request $request) {
 
         $mensajes = [

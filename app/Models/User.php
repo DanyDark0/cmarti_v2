@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, SoftDeletes, HasRoles;
+    use HasFactory, Notifiable, Searchable, SoftDeletes, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -47,6 +48,14 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+        ];
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
         ];
     }
 }

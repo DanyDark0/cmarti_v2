@@ -6,7 +6,7 @@
   .content {
     text-align: justify; /* Justifica el texto */
     border-right: 5px solid #752e0f;/* Borde lateral café */ /* Borde lateral café */
-    padding: 20px; /* Espaciado interno */
+    padding: 10px; /* Espaciado interno */
     margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */

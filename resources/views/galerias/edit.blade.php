@@ -65,20 +65,26 @@
                         @method('PUT') 
                         
                         <div class="mb-4">
-                            <label for="titulo" class="block text-gray-700 font-bold mb-2">Título:</label>
-                            <input 
-                                type="text" 
-                                id="titulo" 
-                                name="titulo"
-                                value="{{ $galeria->titulo }}" 
-                                class="w-full border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-opacity-50" 
-                                required>
+                            <label for="titulo" class="form-label">Título:</label>
+                            <input id="titulo" name="titulo" class="form-control" required value="{{ old('titulo', $galeria->titulo) }}" autocomplete="off">
+                            @error('titulo')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Campo para la descripción -->
+                        <div class="mb-4">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control @error('descripcion') is-invalid @enderror" id="descripcion" name="descripcion" rows="4">{{ old('descripcion', $galeria->descripcion) }}</textarea>
+                            @error('descripcion')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <button 
                             type="submit"
                             class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">
-                            Actualizar titulo
+                            Actualizar texto
                         </button>
                     </form>
                     

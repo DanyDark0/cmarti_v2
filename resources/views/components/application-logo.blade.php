@@ -1,1 +1,1 @@
-<img src="{{ asset('catedra/Jose-Marti.jpg') }}" alt="José Martí" class="w-15 h-10 object-cover">
+<img src="{{ asset('catedra/Jose-Marti.jpg') }}" alt="José Martí" class="w-10 h-10 object-cover">

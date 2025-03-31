@@ -49,6 +49,7 @@ Route::post('galerias/store', [GaleriaController::class, 'store'])->name('galeri
 Route::get('galerias/edit/{id}', [GaleriaController::class, 'edit'])->name('editar_Galeria');
 Route::put('galerias/update/{id}', [GaleriaController::class, 'update'])->name('galerias.update');
 Route::delete('galerias/delete/{id}', [GaleriaController::class, 'destroy'])->name('galerias.delete');
+Route::post('galerias/buscar_admin', [GaleriaController::class, 'BuscadorAdminGaleria'])->name('galerias.buscar_admin');
 
 Route::get('galerias/auth', [GaleriaController::class, 'index_logeado'])->name('galerias.auth');
 
@@ -67,6 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/documentos/admin/{slug}/editar', [DocumentosController::class, 'edit'])->name('documentos.edit');
     Route::put('/documentos/admin/{slug}', [DocumentosController::class, 'update'])->name('documentos.update');
     Route::delete('/documentos/{id}', [DocumentosController::class, 'destroy'])->name('documentos.destroy');
+    Route::post('/documentos/buscar_admin', [DocumentosController::class, 'BuscadorAdminDocumentos'])->name('documentos.buscar_admin');
 });
 Route::get('/documentos', [DocumentosController::class, 'index'])->name('documentos');
 Route::get('/documentos/{slug}', [DocumentosController::class, 'show'])->name('documentos.show');
@@ -81,6 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/actividades/admin/{slug}', [actividadesController::class, 'update'])->name('actividades.update');
     Route::delete('/actividades/admin/{slug}', [actividadesController::class, 'destroy'])->name('actividades.destroy');
     Route::delete('/actividades/eliminarArchivo/{slug}/{campo}', [actividadesController::class, 'eliminarArchivo'])->name('actividades.eliminarArchivo');
+    Route::post('/actividades/buscar_admin', [actividadesController::class, 'BuscadorAdminActividades'])->name('actividades.buscar_admin');
 });
 Route::post('/actividades/buscar', [actividadesController::class, 'search_actividad'])->name('actividades.buscar');
 Route::get('/actividades', [actividadesController::class, 'index'])->name('actividades');
@@ -96,6 +99,7 @@ Route::get('/actividades/{slug}', [actividadesController::class, 'show'])->name(
     Route::put('/directorio/admin/{id}', [directorioController::class, 'update'])->name('directorio.update');
     Route::delete('/directorio/admin/{id}', [directorioController::class, 'destroy'])->name('directorio.destroy');
     Route::delete('/directorio/eliminarArchivo/{id}/{campo}', [directorioController::class, 'eliminarArchivo'])->name('directorios.eliminarArchivo');
+    Route::post('/directorio/buscar_admin', [directorioController::class, 'BuscadorAdminDirectorio'])->name('directorio.buscar_admin');
  });
  Route::get('/directorio', [directorioController::class, 'index'])->name('directorio.index');
 
@@ -109,6 +113,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/convocatorias/admin/{slug}', [convocatoriasController::class, 'update'])->name('convocatorias.update');
     Route::delete('/convocatorias/admin/{id}', [convocatoriasController::class, 'destroy'])->name('convocatorias.destroy');
     Route::delete('/convocatorias/eliminarArchivo/{slug}/{campo}', [convocatoriasController::class, 'eliminarArchivo'])->name('convocatorias.eliminarArchivo');
+    Route::post('/convocatorias/buscar_admin', [convocatoriasController::class, 'BuscadorAdminConvocatorias'])->name('convocatorias.buscar_admin');
 });
 //Rutas del CRUD de convocatorias sin proteccion
 Route::post('/convocatorias/buscar', [convocatoriasController::class, 'search_convocatoria'])->name('convocatorias.buscar');
@@ -121,7 +126,7 @@ Route::get('/buscador', [BuscadorController::class, 'search'])->name('buscador')
 
 Route::middleware('auth', 'role:Admin')->group(function () {
     Route::resource('usuarios', UserController::class)->except(['destroy']);
-
+    Route::post('usuarios/buscar_admin', [UserController::class, 'search'])->name('usuarios.buscar');
     // Ruta para SoftDelete (Eliminar usuario sin borrarlo de la BD)
     Route::delete('usuarios/{id}/destroy', [UserController::class, 'destroy'])->name('usuarios.destroy');
 });
@@ -135,7 +140,7 @@ Route::middleware('auth', 'role:Admin')->group(function () {
     // Rutas del perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 });
 

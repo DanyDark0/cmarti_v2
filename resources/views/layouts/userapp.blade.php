@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Cátedra José Martí')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('vendor/lightbox2/dist/css/lightbox.css') }}" rel="stylesheet" />
     <style>
 
 /* Ajustes del contenedor principal */
@@ -54,9 +55,9 @@
 
 .sidebar-menu ul li {
     font-size: 18px; /* Aumenta el tamaño de la letra */
-    padding: 12px 0; /* Agrega espacio arriba y abajo de cada elemento */
+    padding: 16px 0; /* Agrega espacio arriba y abajo de cada elemento */
     letter-spacing: 1px; /* Aumenta el espacio entre las letras */
-    line-height: 1.8; /* Aumenta el espacio entre líneas */
+    line-height: 1.2; /* Aumenta el espacio entre líneas */
 }
 
 .sidebar-menu ul li a {
@@ -75,8 +76,8 @@
 .custom-card-banner {
     background-color: #e6b168;
     margin: 20px; /* Márgenes externos */
-    border-radius: 8px; /* Bordes redondeados */
-    height: 100%; /* Hace que todas las tarjetas tengan la misma altura */
+    border-radius: 20px; /* Bordes redondeados */
+    border: none;
     display: flex;
     flex-direction: column;
   }
@@ -301,14 +302,14 @@
         <a class="navbar-brand nav-img font-weight-bold text-left">Cátedra José Martí</a>
         <div>
             <a href="{{ route('welcome')}}">
-                <img src="{{ asset('./catedra/martiheader_0.jpg') }}" alt="Cátedra José Martí" class="img-fluid w-100">
+                <img src="{{ asset('./catedra/martiheader_0.jpg') }}" alt="Cátedra José Martí" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;" class="img-fluid w-100">
             </a>
         </div>
     </div>
 
     <!-- Contenido dinámico -->
-<div class="container">
-    <div class="d-flex">
+<div class="container-fluid">
+    <div class="d-flex gap-3">
                 <!-- Botón de menú hamburguesa -->
         <button id="menu-toggle" class="menu-toggle">
             ☰
@@ -317,6 +318,7 @@
     <div class="sidebar-menu" id="sidebar">
         <h5 class="text-center">Menú</h5>
         <ul class="navbar-menu flex-column">
+            <li class="nav-item"><a class="nav-link" href="{{ Route('welcome') }}">Inicio</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ Route('historia') }}">Historia</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ Route('biografia')}}">José Martí</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ Route('documentos') }}">Documentos</a></li>
@@ -380,5 +382,6 @@
                 });
     </script>
     @endif
+    <script src="{{ asset('vendor/lightbox2/dist/js/lightbox-plus-jquery.js') }}"></script>
 </body>
 </html>

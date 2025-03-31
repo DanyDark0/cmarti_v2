@@ -1,6 +1,24 @@
 <x-app-layout>
-    <div class="container mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-6 text-center">Administración de Directorio</h1>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Directorio') }}
+        </h2>
+       </x-slot>
+
+    <div class="container p-2">
+
+    <h1 class="text-2xl font-bold mb-6 text-center">Administración de Directorio</h1>
+
+    {{-- Formulario de buscador --}}
+    <div class="flex justify-end items-center mb-4">
+        <form action="{{ route('directorio.buscar_admin') }}" method="POST" class="flex mb-4">
+            @csrf
+            <input type="text" name="keyword" value="{{ $query ?? '' }}" placeholder="Buscar persona..." class="form-input w-60 sm:w-96 p-2 border border-gray-300 rounded-md mr-2">
+            <button type="submit" class="bg-gray-400 hover:text-white text-dark px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none">
+                Buscar
+            </button>
+        </form>
+    </div>
 
         <!-- Botón para agregar nuevo -->
         <a href="{{ route('directorio.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4 inline-block">
@@ -46,6 +64,7 @@
                                     </a>
 
                                     <!-- Botón Eliminar -->
+                                    @can('Eliminar directorio')
                                     <form action="{{ route('directorio.destroy', $persona->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este registro?');">
                                         @csrf
                                         @method('DELETE')
@@ -53,6 +72,7 @@
                                             Eliminar
                                         </button>
                                     </form>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

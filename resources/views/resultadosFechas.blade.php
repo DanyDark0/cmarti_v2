@@ -7,7 +7,7 @@
         text-decoration: none;
         color: inherit;
     }
-    .card {
+    .card-date {
         border-color: black;
         overflow: hidden;
     }
@@ -29,7 +29,7 @@
     <p>No hay registros para este año.</p>
 @else
     @foreach ($resultadosPaginados as $resultado)
-        <div class="card my-3">
+        <div class="card card-date my-3">
             <a href="{{ route($resultado instanceof \App\Models\Actividad ? 'actividades.show' : 'convocatorias.show', $resultado->slug) }}"> 
             <div class="card-body-search">
                 <h4 class="card-title">

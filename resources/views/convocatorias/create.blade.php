@@ -18,7 +18,7 @@
             <!-- Título -->
             <div>
                 <label for="titulo" class="block text-gray-700 font-semibold">Título</label>
-                <input type="text" name="titulo" id="titulo" class="w-full p-2 border rounded-lg" value="{{ old('titulo')}}">
+                <input type="text" name="titulo" id="titulo" class="w-full p-2 border rounded-lg" value="{{ old('titulo')}}" autocomplete="off">
                 <!-- Manejo de errores en el validador-->
                 @error('titulo')
                     <small class="text-danger">{{ $message }}</small>
@@ -28,7 +28,7 @@
             <!-- Descripción -->
             <div class="mb-3">
                 <label for="descripcion" class="form-label font-bold">Descripción</label>
-                <textarea name="descripcion" id="descripcion" class="form-control" rows="4">{{ old('descripcion')}}</textarea>
+                <textarea name="descripcion" id="descripcion" class="form-control  @error('descripcion') is-invalid @enderror" rows="4">{{ old('descripcion')}}</textarea>
                             <!-- Manejo de errores en el validador-->
                             @error('descripcion')
                             <small class="text-danger">{{ $message }}</small>

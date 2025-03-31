@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\actividades;
-use App\Models\fotos;
-use App\Models\galeria;
+use App\Models\Fotos;
+use App\Models\Galeria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -12,11 +12,41 @@ use Illuminate\Support\Facades\Storage;
 
 class GaleriaController extends Controller
 {
+    public function BuscadorAdminGaleria(Request $request) {
+        $mensajes = [
+            'keyword.required' => 'Se requiere agregar un texto.',
+            'keyword.string' => 'El dato a buscar debe ser un texto.',
+            'keyword.min' => 'Su busqueda debe contener minimo 3 caracteres.',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'keyword' => 'required|string|min:3',
+        ],$mensajes);
+
+        if ($validator->fails()) {
+            return redirect()->route('galerias.auth') // Cambia por la ruta de tu formulario
+                ->withErrors($validator) // Enviar errores a la vista
+                ->withInput();
+        }
+
+            // Obtener el término de búsqueda
+            $query = $request->input('keyword');
+        // Realizar la búsqueda con Scout
+        $galerias = Galeria::search($query)->paginate(6);
+
+        $totalResultados = $galerias->total();
+            // Devolver los resultados a la vista, junto con el término de búsqueda
+            return view('galerias.resultados_admin', [
+                'galerias' => $galerias,
+                'query' => $query, // Pasar el término de búsqueda para mostrarlo en el input
+                'totalResultados' => $totalResultados
+            ]);
+    }
     //
     public function index()
     {
         //$actividades = actividades::all();
-        $galerias = galeria::with('fotos')->orderBy('created_at', 'desc')->paginate(3);
+        $galerias = Galeria::with('fotos')->orderBy('created_at', 'desc')->paginate(3);
 
         return view("galerias.carusel", compact('galerias'));
         /* return response()->json([
@@ -28,7 +58,7 @@ class GaleriaController extends Controller
 
     public function index_logeado()
     {
-        $galerias = galeria::with('fotos')->orderBy('created_at', 'desc')->paginate(24);
+        $galerias = Galeria::with('fotos')->orderBy('created_at', 'desc')->paginate(24);
 
         return view("galerias.index", compact('galerias'));
     }
@@ -43,6 +73,7 @@ class GaleriaController extends Controller
         $mensajes = [
             'titulo.required' => 'El titulo es obligatorio.',
             'titulo.max' => 'El titulo de la galeria no debe sobrepasar los 255 caracteres.',
+            'descripcion.max' => 'La descripcion no debe ser mayor a 250 caráteres',
 
             'url_imagen.required' => 'Debe adjuntar al menos un imagen.',
 
@@ -51,7 +82,8 @@ class GaleriaController extends Controller
         ];
 
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:255',
+                'titulo' => 'required|string|max:200',
+                'descripcion' => 'nullable|string|max:250',
                 'url_imagen' => ['required'],
                 'url_imagen.*' => [
                     'file',
@@ -73,9 +105,10 @@ class GaleriaController extends Controller
 
         try {
 
-            $galeria = new galeria();
+            $galeria = new Galeria();
 
             $galeria->titulo = $request->titulo;
+            $galeria->descripcion = $request->descripcion;
 
             $galeria->save();
 
@@ -90,7 +123,7 @@ class GaleriaController extends Controller
                     // $url_imagen->move($ruta, $nombreArchivo);
                     $ruta = $url_imagen->storeAs('galeria', $nombreArchivo, 'public'); // Guarda en storage/app/public/galeria
 
-                    $documentacion = new fotos();
+                    $documentacion = new Fotos();
                     $documentacion->galeria_id = $galeria->id;
                     $documentacion->url_imagen = $nombreArchivo;
                     $documentacion->save();
@@ -139,8 +172,8 @@ class GaleriaController extends Controller
 
     public function edit(string $id)
     {
-        $galeria = galeria::findOrFail($id);
-        $documentos_galeria = fotos::where('galeria_id', $id)->get();
+        $galeria = Galeria::findOrFail($id);
+        $documentos_galeria = Fotos::where('galeria_id', $id)->get();
 
         return view("galerias.edit", compact('galeria','documentos_galeria'));
     }
@@ -150,6 +183,7 @@ class GaleriaController extends Controller
         $mensajes = [
             'titulo.required' => 'El titulo es obligatorio.',
             'titulo.max' => 'El titulo de la galeria no debe sobrepasar los 255 caracetres.',
+            'descripcion.max' => 'La descripcion no debe ser mayor a 250 caráteres',
 
             'url_imagen.required' => 'Debe adjuntar al menos un imagen.',
 
@@ -159,6 +193,7 @@ class GaleriaController extends Controller
 
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string|max:255',
+            'descripcion' => 'nullable|string|max:250',
         ], $mensajes);
 
         if ($validator->fails()) {
@@ -168,13 +203,14 @@ class GaleriaController extends Controller
         }
 
         try {
-            $galeria = galeria::find($id);
+            $galeria = Galeria::find($id);
 
             if (!$galeria) {
                 return response()->json(['message' => 'Galeria no encontrada'], 404);
             }
 
             $galeria->titulo = $request->titulo;
+            $galeria->descripcion = $request->descripcion;
 
             $galeria->save();
 
@@ -218,7 +254,7 @@ class GaleriaController extends Controller
     public function destroy($id)
     {
         try {
-            $galeria = galeria::find($id);
+            $galeria = Galeria::find($id);
 
             if (!$galeria) {
                 return response()->json(['message' => 'Galeria no encontrada'], 404);

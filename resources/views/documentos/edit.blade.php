@@ -20,7 +20,7 @@
         <!-- Campo para el título -->
         <div class="mb-3">
             <label for="titulo" class="form-label font-bold">Título</label>
-            <input type="text" class="form-control @error('titulo') is-invalid @enderror" id="titulo" name="titulo" value="{{ old('titulo', $documento->titulo) }}">
+            <input type="text" class="form-control @error('titulo') is-invalid @enderror" id="titulo" name="titulo" value="{{ old('titulo', $documento->titulo) }}" autocomplete="off">
             @error('titulo')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -69,4 +69,28 @@
         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
     </form>
 </div>
+
+<script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
+        <script>
+            tinymce.init({
+                selector: '#descripcion', // Selector del textarea
+                plugins: 'link image media table codesample fullscreen',
+                toolbar: 'undo redo | styleselect | bold italic | link image media | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table codesample fullscreen',
+                height: 300,
+                menubar: false,
+                branding: false,
+                automatic_uploads: true,
+            });
+    
+            document.addEventListener("DOMContentLoaded", function () {
+    
+            fechaInput.addEventListener("input", function () {
+                let partes = this.value.split("/");
+                if (partes.length === 3) {
+                    let nuevaFecha = `${partes[2]}-${partes[1]}-${partes[0]}`;
+                    this.value = nuevaFecha;
+                }
+            });
+        });
+    </script>
 </x-app-layout>

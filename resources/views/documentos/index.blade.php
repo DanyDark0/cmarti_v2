@@ -40,8 +40,8 @@
           <div class="card-body">
             <h5 class="card-title">{{ Str::limit($documento->titulo, 50) }}</h5>
             <p class="card-text">
-                {{ Str::limit($documento->descripcion, 100)  }}
-            </p>
+              {{ Str::limit(html_entity_decode(strip_tags($documento->descripcion)), 100) }}
+          </p>
           </div>
         </div>
       </div>

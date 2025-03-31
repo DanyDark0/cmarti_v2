@@ -43,6 +43,7 @@ margin: auto;
     color: #6F4E37; /* Color café para el título */
     font-weight: bold;
     display: inline-block;
+    text-align: center;
     margin-bottom: 15px;
     hyphens: auto;
     word-wrap: break-word; 
@@ -68,15 +69,19 @@ margin: auto;
     <h1 class="title">{{ $actividad->titulo }}</h1>
     <div class="content">
     <!-- Imágenes -->
-    <div class="text-center my-4">
+    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 my-4">
         @if($actividad->url_img1)
+        <a href="{{ asset($actividad->url_img1) }}" data-lightbox="actividades" data-title="Imagen 1">
             <img src="{{ asset($actividad->url_img1) }}" alt="Imagen 1" class="img-fluid rounded mb-3">
+        </a>
         @endif
         @if($actividad->url_img2)
+        <a href="{{ asset($actividad->url_img2) }}" data-lightbox="actividades" data-title="Imagen 2">
             <img src="{{ asset($actividad->url_img2) }}" alt="Imagen 2" class="img-fluid rounded">
+        </a>
         @endif
     </div>
-    
+
     <!-- Separador -->
     <hr>
     

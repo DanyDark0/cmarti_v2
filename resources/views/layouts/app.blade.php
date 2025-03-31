@@ -32,5 +32,28 @@
                 {{ $slot }}
             </main>
         </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert para Errores -->
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Errores de validación',
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+            });
+        </script>
+    @endif
+
+    <!-- SweetAlert para Éxito -->
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
     </body>
 </html>

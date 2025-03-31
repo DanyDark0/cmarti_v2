@@ -18,7 +18,7 @@
         <!-- Campo para el título -->
         <div class="mb-3">
             <label for="titulo" class="block text-gray-700 font-semibold">Título</label>
-            <input type="text"  name="titulo" id="titulo" class="form-control @error('titulo') is-invalid @enderror" value="{{ old('titulo')}}">
+            <input type="text"  name="titulo" id="titulo" class="form-control @error('titulo') is-invalid @enderror" value="{{ old('titulo')}}" autocomplete="off">
             @error('titulo')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -26,8 +26,8 @@
 
         <!-- Campo para la descripción -->
         <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción</label>
-            <textarea class="form-control @error('descripcion') is-invalid @enderror" id="descripcion" name="descripcion" rows="4">{{ old('descripcion') }}</textarea>
+            <label for="descripcion" class="form-label font-bold">Descripción</label>
+            <textarea name="descripcion" id="descripcion" class="form-control @error('descripcion') is-invalid @enderror" rows="4">{{ old('descripcion') }}</textarea>
             @error('descripcion')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -57,4 +57,59 @@
 
     </form>
 </div>
+
+<script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    tinymce.init({
+        selector: '#descripcion',
+        plugins: 'link image media table codesample fullscreen',
+        toolbar: 'undo redo | styleselect | bold italic | link image media | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table codesample fullscreen',
+        height: 300,
+        menubar: false,
+        branding: false,
+        automatic_uploads: true,
+        setup: function(editor) {
+            editor.on('init', function() {
+                // Cargar el valor de old() en TinyMCE al iniciar
+                editor.setContent(document.getElementById('descripcion').value);
+            });
+
+            editor.on('change', function() {
+                tinymce.triggerSave(); // Sincroniza el contenido con el textarea oculto
+            });
+        }
+    });
+
+    document.querySelector("form").addEventListener("submit", function(event) {
+        tinymce.triggerSave(); // Asegura que TinyMCE pase los datos al textarea
+
+        let descripcion = document.querySelector("#descripcion");
+        let fecha = document.querySelector("#fecha");
+
+        // Verifica manualmente si los campos tienen valores
+        if (!descripcion.value.trim()) {
+            alert("Por favor, ingresa una descripción.");
+            event.preventDefault();
+            return;
+        }
+
+        if (!fecha.value.trim()) {
+            alert("Por favor, selecciona una fecha.");
+            event.preventDefault();
+            return;
+        }
+    });
+});
+
+function copyDoc2ToDoc1() {
+        var doc2 = document.getElementById('doc2');
+        var doc1 = document.getElementById('doc1');
+
+        // Si hay un archivo en doc2, copiarlo a doc1
+        if (doc2.files.length > 0) {
+            doc1.files = doc2.files; // Asignar el archivo de doc2 a doc1
+        }
+    }
+</script>
 </x-app-layout>

@@ -37,7 +37,7 @@ rsort($years); // Ordena los años de mayor a menor
         return view('welcome', compact('noticias', 'years'));
     }
 
-    public function getYears()
+    public function getYears(Request $request)
     {
         $years = Actividad::selectRaw('YEAR(fecha) as year')
             ->distinct()
@@ -51,6 +51,12 @@ rsort($years); // Ordena los años de mayor a menor
             )
             ->unique()
             ->sortDesc();
+
+                // Validar si se seleccionó un año
+        if (!$request->has('year') || !in_array($request->year, $years->toArray())) {
+            // Retornar con un mensaje de error a la vista
+            return back()->with('error', 'Debe seleccionar un año válido.');
+        }
 
         return view('welcome', compact('years'));
     }

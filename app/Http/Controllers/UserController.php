@@ -11,6 +11,34 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function search(Request $request){
+        $mensajes = [
+            'keyword.required' => 'Se requiere agregar un texto.',
+            'keyword.string' => 'El dato a buscar debe ser un texto.',
+            'keyword.min' => 'Su busqueda debe contener minimo 3 caracteres.',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'keyword' => 'required|string|min:3',
+        ],$mensajes);
+
+        if ($validator->fails()) {
+            return redirect()->route('usuarios.index') // Cambia por la ruta de tu formulario
+                ->withErrors($validator) // Enviar errores a la vista
+                ->withInput();
+        }
+        
+        $query = $request->input('keyword');
+
+        $usuarios = User::search($query)->paginate(6);
+        $totalResultados = $usuarios->total();
+
+        return view('usuarios.resultados', [
+            'usuarios' => $usuarios,
+            'query' => $query,
+            'totalResultados' => $totalResultados,
+        ]);
+    }
     public function index() {
         $users = User::where('id', '!=', Auth::id())->with('roles')->get();
         return view('usuarios.index', compact('users'));
@@ -34,12 +62,17 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|string|min:8|confirmed',
             'role' => ['required', 'string', 'exists:roles,name']
+        ], [
+            'name.required' => 'El nombre es obligatorio',
+            'name.max' => 'El nombre no debe ser mayor a 100 carácteres',
+            'email.required' => 'El email es obligatorio',
+            'email.unique' => 'El email ya ha sido registrado',
+            'password.required' => 'La contraseña es obligatorio',
+            'role.required' => 'Seleccione un rol',
         ]);
 
-        if($validate->fails()) {
-            return response()->json([
-                'errors' => $validate->errors()
-            ], 422);
+        if ($validate->fails()) {
+            return redirect()->back()->withErrors($validate)->withInput();
         }
 
         $user = new User();

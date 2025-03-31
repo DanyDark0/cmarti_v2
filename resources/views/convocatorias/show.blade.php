@@ -65,50 +65,55 @@ margin: auto;
     <h1 class="title">{{ $convocatorias->titulo }}</h1>
     <div class="content">
  
-                <!-- Imágenes -->
-                <div class="text-center my-4">
-                    @if($convocatorias->url_img1)
-                        <img src="{{ asset($convocatorias->url_img1) }}" alt="Imagen 1" class="img-fluid rounded mb-3" style="max-width: 400px; height: auto; margin: auto;">
-                    @endif
-                    @if($convocatorias->url_img2)
-                        <img src="{{ asset($convocatorias->url_img2) }}" alt="Imagen 2" class="img-fluid rounded" style="max-width: 400px; height: auto; margin: auto;">
-                    @endif
-                </div>
+        <!-- Imágenes -->
+        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 my-4">
+            @if($convocatorias->url_img1)
+            <a href="{{ asset($convocatorias->url_img1) }}" data-lightbox="convocatorias" data-title="Imagen 1">
+                <img src="{{ asset($convocatorias->url_img1) }}" alt="Imagen 1" class="img-fluid rounded" style="max-width: 400px; height: auto;">
+            </a>
+            @endif
+            @if($convocatorias->url_img2)
+            <a href="{{ asset($convocatorias->url_img2) }}" data-lightbox="convocatorias" data-title="Imagen 2">
+                <img src="{{ asset($convocatorias->url_img2) }}" alt="Imagen 2" class="img-fluid rounded" style="max-width: 400px; height: auto;">
+            </a>
+            @endif
+        </div>
                 
-                <!-- Separador -->
-                <hr>
-                {{-- descripcion --}}
-                <div class="mb-4">
-                    <p>{!! $convocatorias->descripcion !!}</p>
-                </div>
+        <!-- Separador -->
+        <hr>
+        {{-- descripcion --}}
+        <div class="mb-4">
+            <p>{!! $convocatorias->descripcion !!}</p>
+        </div>
 
-                <!-- Fecha de Publicación -->
-                <div class="date-content">
-                <p class="fecha-publicacion"><strong>Fecha de Publicación:</strong> {{ $convocatorias->fecha }}</p> 
-                </div>
-                <!-- Separador -->
-                <hr>
+        <!-- Fecha de Publicación -->
+        <div class="date-content">
+        <p class="fecha-publicacion"><strong>Fecha de Publicación:</strong> {{ $convocatorias->fecha }}</p> 
+        </div>
+        <!-- Separador -->
+        <hr>
 
-            <!-- Descargar archivo -->
-            <div class="mb-4">                        
-                  @if ($convocatorias->archivo1)
-                  <h3>Descargar archivo:</h3>
-                  <ul>
-                     <li><a href="{{ asset( $convocatorias->archivo1) }}" download>
-                        {{ basename($convocatorias->archivo1) }}
-                    </a></li>
-                    @endif
-                    @if ($convocatorias->archivo2)
-                    <li><a href="{{ asset( $convocatorias->archivo2) }}" download>
-                        {{ basename($convocatorias->archivo2) }}
-                    </a></li>
-                    @endif
-                </ul>
-            </div>
+    <!-- Descargar archivo -->
+    <div class="mb-4">                        
+            @if ($convocatorias->archivo1)
+            <h3>Descargar archivo:</h3>
+            <ul>
+                <li><a href="{{ asset( $convocatorias->archivo1) }}" download>
+                {{ basename($convocatorias->archivo1) }}
+            </a></li>
+            @endif
+            @if ($convocatorias->archivo2)
+            <li><a href="{{ asset( $convocatorias->archivo2) }}" download>
+                {{ basename($convocatorias->archivo2) }}
+            </a></li>
+            @endif
+        </ul>
+    </div>
 
 
 
     <a href="{{ route('convocatorias') }}" class="btn mt-3">Volver</a>
 </div>
 </div>
+
 @endsection

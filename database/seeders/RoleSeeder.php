@@ -23,15 +23,13 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'Crear actividad'])->syncRoles([$role1,$role2]);
         Permission::create(['name' => 'Editar actividad'])->syncRoles([$role1,$role2]);
-        Permission::create(['name' => 'Eliminar actividad'])->syncRoles([$role1,$role2]);
+        Permission::create(['name' => 'Eliminar actividad'])->syncRoles([$role1]);
 
-        Permission::create(['name' => 'Subir archivo actividad'])->syncRoles([$role1,$role2]);
-        Permission::create(['name' => 'Actualizar archivo actividad'])->syncRoles([$role1,$role2]);
-        Permission::create(['name' => 'Eliminar archivo actividad'])->syncRoles([$role1,$role2]);
+        Permission::create(['name' => 'Eliminar documentos'])->syncRoles([$role1]);
 
         Permission::create(['name' => 'Crear convocatoria'])->syncRoles([$role1,$role2]);
         Permission::create(['name' => 'Editar convocatoria'])->syncRoles([$role1,$role2]);
-        Permission::create(['name' => 'Eliminar convocatoria'])->syncRoles([$role1,$role2]);
+        Permission::create(['name' => 'Eliminar convocatorias'])->syncRoles([$role1]);
 
         Permission::create(['name' => 'Subir archivo convocatoria'])->syncRoles([$role1,$role2]);
         Permission::create(['name' => 'Actualizar archivo convocatoria'])->syncRoles([$role1,$role2]);
@@ -39,7 +37,7 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'Crear galeria'])->syncRoles([$role1,$role2]);
         Permission::create(['name' => 'Editar galeria'])->syncRoles([$role1,$role2]);
-        Permission::create(['name' => 'Eliminar galeria'])->syncRoles([$role1,$role2]);
+        Permission::create(['name' => 'Eliminar galerias'])->syncRoles([$role1]);
 
         Permission::create(['name' => 'Subir foto galeria'])->syncRoles([$role1,$role2]);
         Permission::create(['name' => 'Actualizar foto galeria'])->syncRoles([$role1,$role2]);
@@ -47,7 +45,7 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'Crear directorio'])->syncRoles([$role1,$role2]);
         Permission::create(['name' => 'Editar directorio'])->syncRoles([$role1,$role2]);
-        Permission::create(['name' => 'Eliminar directorio'])->syncRoles([$role1,$role2]);
+        Permission::create(['name' => 'Eliminar directorio'])->syncRoles([$role1]);
 
         // Crear usuario de prueba con el rol "Admin"
         $user = User::firstOrCreate(

@@ -8,13 +8,13 @@
     font-size: 12px;
     }
     .content {
-    padding: 10px;
     text-align: justify; /* Justifica el texto */
-    border-right: 5px solid #752e0f;/* Borde lateral café *//* Borde lateral café */
+    border-right: 5px solid #752e0f;/* Borde lateral café */ /* Borde lateral café */
+    padding: 10px; /* Espaciado interno */
+    margin: 20px 0; /* Espacio arriba y abajo */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
     }
-
     .title {
     color: #6F4E37; /* Color café para el título */
     font-weight: bold;
@@ -29,7 +29,7 @@
     </style>
     <h1 class="title">Biografía</h1>
 
-    <div class="content" style="max-width: 1000px; margin: auto;">
+    <div class="content">
     <p>José Julián Martí Pérez nació en la calle Paula No. 41, La Habana, el 28 de enero de 1853. En 1866, matriculó en el 
     Instituto de Segunda Enseñanza de La Habana. También ingresó en la clase de Dibujo Elemental en la Escuela Profesional 
     de Pintura y Escultura de La Habana, más conocida como San Alejandro.</p>

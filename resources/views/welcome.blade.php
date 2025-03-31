@@ -3,14 +3,6 @@
 
 @section('content')
 <style>
-    .content {
-    text-align: justify; /* Justifica el texto */
-    background-color: #ffffff; /* Color beige claro para el fondo */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    display: flex;
-    flex-wrap: wrap;
-}
   .custom-card {
     background-color: #e6b168;
     border-radius: 8px;
@@ -18,8 +10,7 @@
     flex-direction: column;
     justify-content: space-between; /* Distribuye el contenido de manera equilibrada */
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-    min-width: 250px; /* Evita que las tarjetas se hagan demasiado pequeñas */
+    min-width: 200px; /* Evita que las tarjetas se hagan demasiado pequeñas */
     max-width: 300px; /* Evita que crezcan demasiado en pantallas grandes */
     height: 100%; /* Asegura que todas tengan la misma altura */
   }
@@ -120,14 +111,25 @@
 }
 
 </style>
+@if (session('error'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: '{{ session('error') }}',
+            confirmButtonText: 'Aceptar'
+        });
+    </script>
+@endif
 
-<div class="container-act mt-4">
+<div class="container mt-4">
     <h2 class="mb-4 text-center">Noticias</h2>
-    <div class="content row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4 px-3 py-5">
       @foreach ($noticias as $noticia)
     
-      <div class="col-noticia">
-          <div class="custom-card">
+      <div class="col col-noticia">
+          <div class="custom-card h-100">
               <!-- Mostrar solo la primera imagen de la noticia -->
               <img src="{{ $noticia->url_img1 ? asset($noticia->url_img1) : ($noticia->url_img2 ? asset($noticia->url_img2) : asset('./catedra/Jose-Marti.jpg')) }}"  class="custom-card-img-top" alt="Imagen de noticia">
               <div class="card-body">

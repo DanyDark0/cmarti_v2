@@ -56,13 +56,22 @@
                     <form id="convocatoriaForm" action="{{ route('galerias.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         
+                        {{-- Campo para el Titulo  --}}
                         <div class="mb-4">
-                            <label for="titulo" class="block text-gray-700 font-bold mb-2">Título:</label>
-                            <input 
-                                id="titulo" 
-                                name="titulo" 
-                                class="w-full border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-opacity-50" 
-                                required>
+                            <label for="titulo" class="form-label">Título:</label>
+                            <input id="titulo" name="titulo" class="form-control" required value="{{ old('titulo') }}" autocomplete="off">
+                            @error('titulo')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                                <!-- Campo para la descripción -->
+                        <div class="mb-4">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control @error('descripcion') is-invalid @enderror" id="descripcion" name="descripcion" rows="4">{{ old('descripcion') }}</textarea>
+                            @error('descripcion')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <label for="url_imagen" class="block text-lg font-medium text-gray-700">Seleccionar imágenes:</label>
@@ -77,7 +86,7 @@
                         <button 
                             type="button" 
                             id="submitButton"
-                            class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">
+                            class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow my-3 hover:bg-blue-600">
                             Guardar
                         </button>
                     </form>
@@ -120,36 +129,21 @@
 
 <script>
     document.getElementById('url_imagen').addEventListener('change', function(event) {
-let previewContainer = document.getElementById('preview');
-previewContainer.innerHTML = ''; // Limpiar previas selecciones
+        const preview = document.getElementById('preview');
+        preview.innerHTML = '';  // Limpiar imágenes previas
 
-Array.from(event.target.files).forEach(file => {
-    let fileType = file.type;
-    let reader = new FileReader();
-
-    if (fileType.includes("image")) {
-        // Si es imagen, mostrar previsualización
-        reader.onload = function(e) {
-            let imgElement = document.createElement('img');
-            imgElement.src = e.target.result;
-            imgElement.className = "w-20 h-20 object-cover rounded-md border";
-            previewContainer.appendChild(imgElement);
-        };
-        reader.readAsDataURL(file);
-    } else if (fileType === "application/pdf") {
-        // Si es PDF, mostrar ícono de archivo
-        let pdfIcon = document.createElement('div');
-        pdfIcon.innerHTML = `
-        <div class="w-20 h-20 flex items-center justify-center rounded-md border">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-red-500">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-            </svg>
-        </div>
-        `;
-        previewContainer.appendChild(pdfIcon);
-    }
-});
-});
+        // Mostrar las imágenes seleccionadas
+        Array.from(event.target.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.classList.add('w-32', 'h-32', 'object-cover', 'rounded-md');
+                preview.appendChild(imgElement);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
     </script>
 
 </x-app-layout>
