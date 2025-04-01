@@ -5,9 +5,9 @@
 
 <style>
 .img-fluid {
-width: 400px;
-max-width: 100%;
-height: auto;
+width: auto;
+max-height: 100%;
+height: 400px;
 display: block;
 margin: auto;
 }
@@ -58,9 +58,9 @@ margin: auto;
 }
 @media (max-width: 768px) {
     .img-fluid {
-        width: 100%; /* Hace que la imagen ocupe todo el ancho disponible */
-        max-width: 100%; /* Asegura que no se desborde */
-        height: auto; /* Mantiene la proporción */
+        height: 100%; /* Hace que la imagen ocupe todo el ancho disponible */
+        max-height: 100%; /* Asegura que no se desborde */
+        width: auto; /* Mantiene la proporción */
     }
 }
 </style>

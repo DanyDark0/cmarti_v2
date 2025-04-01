@@ -30,7 +30,9 @@ class UserController extends Controller
         
         $query = $request->input('keyword');
 
-        $usuarios = User::search($query)->paginate(6);
+        $usuarios = User::search($query)
+        ->where('id', '!=', Auth::id())
+        ->paginate(6);
         $totalResultados = $usuarios->total();
 
         return view('usuarios.resultados', [
