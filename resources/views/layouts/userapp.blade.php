@@ -302,7 +302,7 @@
         <a class="navbar-brand nav-img font-weight-bold text-left">Cátedra José Martí</a>
         <div>
             <a href="{{ route('welcome')}}">
-                <img src="{{ asset('./catedra/martiheader_0.jpg') }}" alt="Cátedra José Martí" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;" class="img-fluid w-100">
+                <img src="{{ asset('./catedra/martiheader_0.jpg') }}" alt="Cátedra José Martí" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;" class="img-fluid-banner w-100">
             </a>
         </div>
     </div>

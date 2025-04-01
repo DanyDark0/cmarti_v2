@@ -4,12 +4,13 @@
 @section('content')
 <style>
 .img-fluid {
-width: 400px;
-max-width: 100%;
-height: auto;
+width: auto;
+max-height: 100%;
+height: 400px;
 display: block;
 margin: auto;
 }
+
 
 .date-content {
     display: flex;
